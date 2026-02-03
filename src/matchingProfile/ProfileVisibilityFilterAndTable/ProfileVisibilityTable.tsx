@@ -138,7 +138,7 @@ export const ProfileVisibilityTable = () => {
                 console.log("Request Body:", requestBody);
 
                 const response = await fetch(
-                    'https://app.vysyamala.com/api/Get_visibility_list_match/',
+                    'http://20.84.40.134:8000/api/Get_visibility_list_match/',
                     {
                         method: 'POST',
                         headers: {

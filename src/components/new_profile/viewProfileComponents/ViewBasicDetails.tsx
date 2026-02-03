@@ -58,7 +58,7 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
   const getAddonPackages = async () => {
     try {
       const response = await axios.post(
-        `https://app.vysyamala.com/auth/Get_addon_packages/`,
+        `http://20.84.40.134:8000/auth/Get_addon_packages/`,
       );
       const data = Object.values(response.data.data);
       setAddonPackages(data);
@@ -112,7 +112,7 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
   const getMaritalStatus = async () => {
     try {
       const response = await axios.post(
-        'https://app.vysyamala.com/auth/Get_Marital_Status/',
+        'http://20.84.40.134:8000/auth/Get_Marital_Status/',
       );
       const options = Object.values(response.data);
       setMaritialStatus(options);
@@ -169,7 +169,7 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
   const getPlaneDetais = async () => {
     try {
       const response = await axios.post(
-        `https://app.vysyamala.com/auth/Get_palns/`,
+        `http://20.84.40.134:8000/auth/Get_palns/`,
       );
       const data = Object.values(response.data.data);
       setPlane(data);

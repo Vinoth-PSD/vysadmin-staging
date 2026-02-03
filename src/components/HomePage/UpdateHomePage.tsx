@@ -105,7 +105,7 @@ const EditHomepageForm: React.FC = () => {
               data={field.value || ""}
               config={{
                 ckfinder: {
-                  uploadUrl: 'https://app.vysyamala.com/api/upload-image/',
+                  uploadUrl: 'http://20.84.40.134:8000/api/upload-image/',
                 },
                 toolbar: [
                   'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',

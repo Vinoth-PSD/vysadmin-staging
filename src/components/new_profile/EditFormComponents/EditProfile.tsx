@@ -671,7 +671,7 @@ const EditViewProfile: React.FC<pageProps> = ({
   const fetchAddOnPackages = async () => {
     try {
       const response = await axios.post(
-        'https://app.vysyamala.com/auth/Get_addon_packages/',
+        'http://20.84.40.134:8000/auth/Get_addon_packages/',
       );
       if (response.data.status === 'success') {
         console.log(response.data.data);
@@ -730,7 +730,7 @@ const EditViewProfile: React.FC<pageProps> = ({
       return;
     }
 
-    const url = `https://app.vysyamala.com/api/whatsapp-share/${profileId}/`;
+    const url = `http://20.84.40.134:8000/api/whatsapp-share/${profileId}/`;
 
     window.open(url, "_blank"); // open in new tab
   };

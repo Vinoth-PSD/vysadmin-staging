@@ -23,8 +23,8 @@ import { GrEdit } from 'react-icons/gr';
 import { FaRegEye } from 'react-icons/fa';
 
 // --- 1. Updated API endpoint ---
-const RENEWAL_API_URL = 'https://app.vysyamala.com/api/renewal-profiles/';
-const API_URL = 'https://app.vysyamala.com/api'; // Base API for delete
+const RENEWAL_API_URL = 'http://20.84.40.134:8000/api/renewal-profiles/';
+const API_URL = 'http://20.84.40.134:8000/api'; // Base API for delete
 
 // --- 2. Updated data fetching function ---
 export const getRenewalProfiles = async (
@@ -261,7 +261,7 @@ const RenewalProfiles: React.FC = () => {
     const generateShortProfilePDF = async (profileIds: string[]) => {
         try {
             const response = await axios.post(
-                'https://app.vysyamala.com/api/generate_short_profile_pdf/',
+                'http://20.84.40.134:8000/api/generate_short_profile_pdf/',
                 {
                     profile_id: profileIds.join(','),
                 },

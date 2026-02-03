@@ -41,7 +41,7 @@ const EditAward: React.FC = () => {
     const fetchAward = async () => {
       try {
         const response = await axios.get(
-          ` https://app.vysyamala.com/api/awards/${id}/`,
+          ` http://20.84.40.134:8000/api/awards/${id}/`,
         );
         const { name, description, status, image } = response.data;
 
@@ -86,7 +86,7 @@ const EditAward: React.FC = () => {
 
       // Sending form data to the edit API
       const response = await axios.put(
-        ` https://app.vysyamala.com/api/awards/edit/${id}/`,
+        ` http://20.84.40.134:8000/api/awards/edit/${id}/`,
         formData,
         {
           headers: {
@@ -176,7 +176,7 @@ const EditAward: React.FC = () => {
                 'sourceEditing',
               ],
               ckfinder: {
-                uploadUrl: ' https://app.vysyamala.com/api/upload-image/', // Update as necessary
+                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/', // Update as necessary
               },
             }}
           />

@@ -39,7 +39,7 @@ export const ViewAlertSettings: React.FC = () => {
     if (profileId) {
       axios
         .post<AlertSettingsResponse>(
-          'https://app.vysyamala.com/auth/Get_alert_settings/',
+          'http://20.84.40.134:8000/auth/Get_alert_settings/',
         )
         .then((response) => {
           const { data } = response.data;
@@ -63,7 +63,7 @@ export const ViewAlertSettings: React.FC = () => {
       // Fetch enabled notifications for the profile
       axios
         .post<EnabledNotificationsResponse>(
-          'https://app.vysyamala.com/auth/Get_enabled_notifications/',
+          'http://20.84.40.134:8000/auth/Get_enabled_notifications/',
           { profile_id: profileId },
         )
         .then((response) => {

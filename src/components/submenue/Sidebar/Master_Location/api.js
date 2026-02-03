@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API_URL = 'https://app.vysyamala.com/api/accounts';
+const API_URL = 'http://20.84.40.134:8000/api/accounts';
 
-// const API_URL = 'https://app.vysyamala.com/api/';
+// const API_URL = 'http://20.84.40.134:8000/api/';
 
 export const getCountries = () => axios.get(`${API_URL}/countries/`);
 export const addCountry = (country) => axios.post(`${API_URL}/countries/`, country);

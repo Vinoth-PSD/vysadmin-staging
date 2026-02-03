@@ -213,7 +213,7 @@ const ViewPartnerSettings: React.FC<pageProps> = ({
     const fetchStatePreferences = async () => {
       try {
         const response = await axios.post(
-          `https://app.vysyamala.com/auth/Get_State_Pref/`
+          `http://20.84.40.134:8000/auth/Get_State_Pref/`
         );
 
         console.log("fffffffffffffffffffffff", response);

@@ -90,7 +90,7 @@ const AddProfileForm: React.FC<AddProfileForm> = ({
   useEffect(() => {
     const fetchHeight = async () => {
       try {
-        const response = await axios.post(`https://app.vysyamala.com/auth/Get_Height/`);
+        const response = await axios.post(`http://20.84.40.134:8000/auth/Get_Height/`);
         const options = Object.values(response.data) as HeightOption[];
         setHeightOptions(options);
       } catch (error) {
@@ -171,7 +171,7 @@ const AddProfileForm: React.FC<AddProfileForm> = ({
   const getMaritalStatus = async () => {
     try {
       const response = await axios.post(
-        ' https://app.vysyamala.com/auth/Get_Marital_Status/',
+        ' http://20.84.40.134:8000/auth/Get_Marital_Status/',
       );
       const options: MaritalStatusOption[] = Object.values(response.data);
       console.log(options)

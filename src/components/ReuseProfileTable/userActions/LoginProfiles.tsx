@@ -48,7 +48,7 @@ const getLoginLogs = async (date: string, fromDate: string, toDate: string, page
   params.append('page_number', (page + 1).toString());
   params.append('per_page', rowsPerPage.toString());
 
-  const url = `https://app.vysyamala.com/api/login-logs/?${params.toString()}`;
+  const url = `http://20.84.40.134:8000/api/login-logs/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };

@@ -47,8 +47,8 @@ const getViewedProfiles = async (fromDate: string, toDate: string, page: number,
     params.append('mutual_only', '1');
   }
 
-  // const url = `https://app.vysyamala.com/api/viewed-profiles/?from_date=${fromDate}&to_date=${toDate}&page=${page + 1}&limit=${rowsPerPage}`;
-  const url = `https://app.vysyamala.com/api/viewed-profiles/?${params.toString()}`;
+  // const url = `http://20.84.40.134:8000/api/viewed-profiles/?from_date=${fromDate}&to_date=${toDate}&page=${page + 1}&limit=${rowsPerPage}`;
+  const url = `http://20.84.40.134:8000/api/viewed-profiles/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };

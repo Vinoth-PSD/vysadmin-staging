@@ -49,7 +49,7 @@
 //       formData.append("Admin_comments", adminComments);
 
 //       const response = await axios.put(
-//         `https://app.vysyamala.com/api/update-admincomments/${profileId}/`,
+//         `http://20.84.40.134:8000/api/update-admincomments/${profileId}/`,
 //         formData
 //       );
 
@@ -151,7 +151,7 @@ const ProfileForm: React.FC<PageProps> = ({ profileId, EditData }) => {
       formData.append("admin_user_id", adminUserID ?? "");
 
       const response = await axios.put( // ✅ Use POST if the API requires FormData
-        `https://app.vysyamala.com/api/update-admincomments/${profileId}/`,
+        `http://20.84.40.134:8000/api/update-admincomments/${profileId}/`,
         formData
       );
 

@@ -20,7 +20,7 @@ const AddonPackegesEdit: React.FC<pageProps> = ({
   const toggleSection5 = () => {
     // setAddOnOpen(!addonOpen);
   };
-  const API_URL = 'https://app.vysyamala.com/auth';
+  const API_URL = 'http://20.84.40.134:8000/auth';
   const [data, setPlane] = useState<any[]>([]);
   const [addOnPackages, setAddonPackages] = useState<any[]>([]);
   const [selectedValues, setSelectedValues] = useState<number[]>([]);

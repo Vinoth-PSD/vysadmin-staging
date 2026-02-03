@@ -42,7 +42,7 @@ const getWishlistsProfile = async (fromDate: string, toDate: string, page: numbe
     rowsPerPage: rowsPerPage.toString()
   });
 
-  const url = `https://app.vysyamala.com/api/bookmarks/?${params.toString()}`;
+  const url = `http://20.84.40.134:8000/api/bookmarks/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };

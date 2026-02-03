@@ -89,7 +89,7 @@ const CKEditorComponent: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(' https://app.vysyamala.com/api/page/', {
+      const response = await axios.post(' http://20.84.40.134:8000/api/page/', {
         page_name: formData.pageName,
         meta_title: formData.metaTitle,
         meta_description: formData.metaDescription,
@@ -211,7 +211,7 @@ const CKEditorComponent: React.FC = () => {
                 ]
               },
               ckfinder: {
-                uploadUrl: ' https://app.vysyamala.com/api/upload-image/' // Update this URL as needed
+                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/' // Update this URL as needed
               },
             }}
           />

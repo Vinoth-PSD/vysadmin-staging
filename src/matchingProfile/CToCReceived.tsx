@@ -374,7 +374,7 @@
 // import { MdVerified } from "react-icons/md";
 // import { GoUnverified } from "react-icons/go";
 
-// const API_URL = "https://app.vysyamala.com/api/call_action_received/";
+// const API_URL = "http://20.84.40.134:8000/api/call_action_received/";
 
 // interface ProfileType {
 //   profile_id: string;
@@ -531,7 +531,7 @@ import {
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
-const API_URL = "https://app.vysyamala.com/api/call_action_received/";
+const API_URL = "http://20.84.40.134:8000/api/call_action_received/";
 
 interface ProfileType {
   profile_id: string;

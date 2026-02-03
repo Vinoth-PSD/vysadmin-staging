@@ -59,7 +59,7 @@ const CsmManagementComponent: React.FC = () => {
 
     const fetchPages = async () => {
         try {
-            const response = await axios.get<Page[]>(' https://app.vysyamala.com/api/page-list/');
+            const response = await axios.get<Page[]>(' http://20.84.40.134:8000/api/page-list/');
             setPages(response.data);
         } catch (error) {
             console.error('There was an error fetching the data!', error);
@@ -89,7 +89,7 @@ const CsmManagementComponent: React.FC = () => {
 
         try {
             if (isEditing && currentPageId !== null) {
-                await axios.put(` https://app.vysyamala.com/api/page/${currentPageId}/`, {
+                await axios.put(` http://20.84.40.134:8000/api/page/${currentPageId}/`, {
                     page_name: formData.pageName,
                     meta_title: formData.metaTitle,
                     meta_description: formData.metaDescription,
@@ -99,7 +99,7 @@ const CsmManagementComponent: React.FC = () => {
                 });
                 notify('Successfully Updated');
             } else {
-                await axios.post(' https://app.vysyamala.com/api/page/', {
+                await axios.post(' http://20.84.40.134:8000/api/page/', {
                     page_name: formData.pageName,
                     meta_title: formData.metaTitle,
                     meta_description: formData.metaDescription,
@@ -135,7 +135,7 @@ const CsmManagementComponent: React.FC = () => {
 
         if (isConfirmed) {
             try {
-                await axios.delete(` https://app.vysyamala.com/api/page/delete/${id}/`);
+                await axios.delete(` http://20.84.40.134:8000/api/page/delete/${id}/`);
                 notifyDelete('Successfully Deleted');
                 setPages(pages.filter((page) => page.id !== id));
             } catch (error) {
@@ -243,7 +243,7 @@ const CsmManagementComponent: React.FC = () => {
                                     ],
                                 },
                                 ckfinder: {
-                                    uploadUrl: ' https://app.vysyamala.com/api/upload_image',
+                                    uploadUrl: ' http://20.84.40.134:8000/api/upload_image',
                                 },
                             }}
                         />

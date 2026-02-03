@@ -1103,7 +1103,7 @@ export const uploadProofFiles = async (
 
 
 export const deleteFile = async (profileId, modelType, fieldName) => {
-    const url = 'https://app.vysyamala.com/api/delete-file/';
+    const url = 'http://20.84.40.134:8000/api/delete-file/';
     const body = {
         model_type: modelType,
         profile_id: profileId,

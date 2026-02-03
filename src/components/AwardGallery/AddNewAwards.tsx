@@ -78,7 +78,7 @@ const AddAward: React.FC = () => {
 
       // Sending form data to the API
       const response = await axios.post(
-        ' https://app.vysyamala.com/api/awards/',
+        ' http://20.84.40.134:8000/api/awards/',
         formData,
         {
           headers: {
@@ -217,7 +217,7 @@ const AddAward: React.FC = () => {
                 ],
               },
               ckfinder: {
-                uploadUrl: ' https://app.vysyamala.com/api/upload-image/', // Update this URL as needed
+                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/', // Update this URL as needed
               },
             }}
           />

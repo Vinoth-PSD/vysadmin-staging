@@ -423,7 +423,7 @@ const ViewProfile: React.FC<pageProps> = ({
   // Fetch additional data
   useEffect(() => {
     axios
-      .get<FamilyStatus[]>('https://app.vysyamala.com/api/family-statuses/')
+      .get<FamilyStatus[]>('http://20.84.40.134:8000/api/family-statuses/')
       .then((response) => {
         const filteredStatuses = response.data.filter(
           (status) => !status.is_deleted,
@@ -438,7 +438,7 @@ const ViewProfile: React.FC<pageProps> = ({
   useEffect(() => {
     axios
       .post<AlertSettingsResponse>(
-        'https://app.vysyamala.com/auth/Get_alert_settings/',
+        'http://20.84.40.134:8000/auth/Get_alert_settings/',
       )
       .then((response) => {
         if (response.data.status === '1') {
@@ -456,7 +456,7 @@ const ViewProfile: React.FC<pageProps> = ({
   const fetchAddOnPackages = async () => {
     try {
       const response = await axios.post(
-        'https://app.vysyamala.com/auth/Get_addon_packages/',
+        'http://20.84.40.134:8000/auth/Get_addon_packages/',
       );
       if (response.data.status === 'success') {
         setAddonPackage(response.data.data);
@@ -478,7 +478,7 @@ const ViewProfile: React.FC<pageProps> = ({
       return;
     }
 
-    const url = `https://app.vysyamala.com/api/whatsapp-share/${profileId}/`;
+    const url = `http://20.84.40.134:8000/api/whatsapp-share/${profileId}/`;
 
     window.open(url, "_blank"); // open in new tab
   };
@@ -665,7 +665,7 @@ const ViewProfile: React.FC<pageProps> = ({
                   <img
                     src={
                       profile[6].profile_image ||
-                      'https://app.vysyamala.com/media/default_groom.png'
+                      'http://20.84.40.134:8000/media/default_groom.png'
                     }
                     alt="Profile"
                     className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-red-500 shadow-md object-cover"

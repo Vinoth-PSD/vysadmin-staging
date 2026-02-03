@@ -28,7 +28,7 @@ const LoginDetailsTempList = () => {
 
     const fetchLoginDetails = async () => {
         try {
-            const response = await axios.get('https://app.vysyamala.com/api/logindetails_temp/');
+            const response = await axios.get('http://20.84.40.134:8000/api/logindetails_temp/');
             const filteredData = response.data.filter(detail => detail.status !== 0);
             setLoginDetails(filteredData);
         } catch (error) {
@@ -38,7 +38,7 @@ const LoginDetailsTempList = () => {
 
     const handleAccept = async (id) => {
         try {
-            const response = await axios.patch(`https://app.vysyamala.com/api/logindetails_temp/${id}/accept/`);
+            const response = await axios.patch(`http://20.84.40.134:8000/api/logindetails_temp/${id}/accept/`);
             fetchLoginDetails();
             setShowSuccessPopup(true);
         } catch (error) {
@@ -48,7 +48,7 @@ const LoginDetailsTempList = () => {
 
     const handleDecline = async (id) => {
         try {
-            await axios.patch(`https://app.vysyamala.com/api/logindetails_temp/${id}/`, { status: 0 });
+            await axios.patch(`http://20.84.40.134:8000/api/logindetails_temp/${id}/`, { status: 0 });
             fetchLoginDetails();
             setShowDeclinePopup(true);
         } catch (error) {

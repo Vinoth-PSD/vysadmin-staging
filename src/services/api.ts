@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { notify } from '../components/TostNotification';
 
-export const API_URL = 'https://app.vysyamala.com/api'; // Replace with your actual API URL
-export const API_URL_Auth = ' https://app.vysyamala.com/auth';
+export const API_URL = 'http://20.84.40.134:8000/api'; // Replace with your actual API URL
+export const API_URL_Auth = ' http://20.84.40.134:8000/auth';
 const adminUserID = sessionStorage.getItem('id') || localStorage.getItem('id');
 // export const API_URL = 'https://gl9hwr3r-8000.inc1.devtunnels.ms/api'; // Replace with your actual API URL
 // export const API_URL_Auth = ' https://gl9hwr3r-8000.inc1.devtunnels.ms/auth';
@@ -26,7 +26,7 @@ export const ExpressIntrest = `${API_URL}/express-interest/`;
 
 export const fetchStatePreferences = async () => {
   const response = await axios.post(
-    'https://app.vysyamala.com/auth/Get_State_Pref/',
+    'http://20.84.40.134:8000/auth/Get_State_Pref/',
   );
   return Object.values(response.data); // Convert response to array
 };
@@ -48,7 +48,7 @@ export const downloadExcel = async () => {
 
 
 // export const downloadProfilePdf = async (profileId: string, format: string) => {
-//   //const apiUrl = 'https://app.vysyamala.com/api/generate_short_profile_pdf/';
+//   //const apiUrl = 'http://20.84.40.134:8000/api/generate_short_profile_pdf/';
 //   const apiUrl = `${API_URL}/admin-pdf-with-format/`;
 //   try {
 //     // Show loading indicator
@@ -102,7 +102,7 @@ export const downloadExcel = async () => {
 
 
 export const downloadProfilePdf = async (profileId: string, format: string) => {
-  const apiUrl = `https://app.vysyamala.com/api/admin-pdf-with-format/?profile_id=${encodeURIComponent(profileId)}&pdf_format=${encodeURIComponent(format)}`;
+  const apiUrl = `http://20.84.40.134:8000/api/admin-pdf-with-format/?profile_id=${encodeURIComponent(profileId)}&pdf_format=${encodeURIComponent(format)}`;
 
   try {
     // Show loading indicator
@@ -156,7 +156,7 @@ export const downloadProfilePdf = async (profileId: string, format: string) => {
 //     page_size:rowsPerPage.toString
 //   });
 
-//   const url = `https://app.vysyamala.com/api/express-interest/?${params.toString()}`;
+//   const url = `http://20.84.40.134:8000/api/express-interest/?${params.toString()}`;
 //   const response = await axios.get(url);
 //   console.log(response.data)
 //   return response.data;
@@ -186,7 +186,7 @@ export const getExpressIntrest = async (
     params.append('status', status);
   }
 
-  const url = `https://app.vysyamala.com/api/express-interest/?${params.toString()}`;
+  const url = `http://20.84.40.134:8000/api/express-interest/?${params.toString()}`;
 
   try {
     const response = await axios.get(url);
@@ -880,8 +880,8 @@ export const apiService = {
     axios.delete(`${API_URL}/dasa-balances/${id}/`),
 };
 
-export const BirthStarApi = ' https://app.vysyamala.com/api/birth-stars/';
-export const GothramApi = ' https://app.vysyamala.com/api/gothrams/';
+export const BirthStarApi = ' http://20.84.40.134:8000/api/birth-stars/';
+export const GothramApi = ' http://20.84.40.134:8000/api/gothrams/';
 
 //rasi api
 
@@ -942,7 +942,7 @@ export const profileImgApproval = `${API_URL}/get_profile-images_approval/`;
 export const photoRequest = `${API_URL}/photo-requests/`;
 
 //addOrUpdateProfileHolder
-export const addOrUpdateProfileHolder = `https://app.vysyamala.com/api/profile-holders/`;
+export const addOrUpdateProfileHolder = `http://20.84.40.134:8000/api/profile-holders/`;
 
 ///cms page
 export const cmsFetchData = `${API_URL}/page-list/`;
@@ -968,6 +968,6 @@ export const adminsettings = `${API_URL}/admin-settings/`;
 export const adminSettingsUpdate = ` ${API_URL}/admin-settings/update/`;
 
 //edit profile page
-export const getParentOccupation = `https://app.vysyamala.com/auth/Get_Parent_Occupation/`;
+export const getParentOccupation = `http://20.84.40.134:8000/auth/Get_Parent_Occupation/`;
 //vys assist
 export const vysAssistApi = `${API_URL}/profile-vys-assist/`;

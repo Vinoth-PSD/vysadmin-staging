@@ -283,7 +283,7 @@ export const UserProfileVisibilityFilter = () => {
         setLoadingVisibility(true);
         try {
             const response = await fetch(
-                'https://app.vysyamala.com/auth/Get_profile_visibility/',
+                'http://20.84.40.134:8000/auth/Get_profile_visibility/',
                 {
                     method: 'POST',
                     headers: {

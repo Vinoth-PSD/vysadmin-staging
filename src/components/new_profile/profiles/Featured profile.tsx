@@ -21,7 +21,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Feature Profiles</h1>
-      <DataTable columns={newProfileColumns} apiEndpoint="https://app.vysyamala.com/api/Get_all_profiles/featured/" />
+      <DataTable columns={newProfileColumns} apiEndpoint="http://20.84.40.134:8000/api/Get_all_profiles/featured/" />
     </div>
   );
 };

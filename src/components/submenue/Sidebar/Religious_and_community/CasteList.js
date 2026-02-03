@@ -36,13 +36,13 @@ const CasteList = () => {
     }, [castes, showPopup, deleteConfirmation]);
 
     const fetchCastes = async () => {
-        const response = await axios.get('https://app.vysyamala.com/api/castes/');
+        const response = await axios.get('http://20.84.40.134:8000/api/castes/');
         setCastes(response.data);
     };
 
     const addCaste = async () => {
         if (newCaste.name.trim() === '') return; 
-        await axios.post('https://app.vysyamala.com/api/castes/', newCaste);
+        await axios.post('http://20.84.40.134:8000/api/castes/', newCaste);
         setNewCaste({ name: '' });
         setShowPopup(false);
         setShowSuccessPopup(true); // Show success popup
@@ -50,13 +50,13 @@ const CasteList = () => {
     };
 
     const deleteCaste = async (id) => {
-        await axios.delete(`https://app.vysyamala.com/api/castes/${id}/`);
+        await axios.delete(`http://20.84.40.134:8000/api/castes/${id}/`);
         fetchCastes();
     };
 
     const editCaste = async () => {
         if (editingCaste.name.trim() === '') return;
-        await axios.put(`https://app.vysyamala.com/api/castes/${editingCaste.id}/`, editingCaste);
+        await axios.put(`http://20.84.40.134:8000/api/castes/${editingCaste.id}/`, editingCaste);
         setEditingCaste({ id: null, name: '' });
         setShowPopup(false);
         setShowSuccessPopup(true); // Show success popup

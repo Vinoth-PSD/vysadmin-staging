@@ -202,7 +202,7 @@ const DataTable: React.FC = () => {
   const generateShortProfilePDF = async (profileData: number[]) => {
     try {
       const response = await axios.post(
-        'https://app.vysyamala.com/api/generate_short_profile_pdf/',
+        'http://20.84.40.134:8000/api/generate_short_profile_pdf/',
         {
           profile_id: profileData.join(','),
         },

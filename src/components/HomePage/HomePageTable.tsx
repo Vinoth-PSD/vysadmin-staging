@@ -41,7 +41,7 @@
 //     // Fetch data from API
 //     const fetchData = async () => {
 //       const response = await axios.get(
-//         " https://app.vysyamala.com/api/homepage/"
+//         " http://20.84.40.134:8000/api/homepage/"
 //       );
 //       setData(response.data);
 //     };
@@ -72,7 +72,7 @@
 //   };
 
 //   const handleDelete = async (id: number) => {
-//     await axios.delete(` https://app.vysyamala.com/api/homepage/${id}`);
+//     await axios.delete(` http://20.84.40.134:8000/api/homepage/${id}`);
 //     setData(data.filter((item) => item.id !== id));
 //   };
 
@@ -80,7 +80,7 @@
 //     if (editData) {
 //       // Update existing data
 //       await axios.put(
-//         ` https://app.vysyamala.com/api/homepage/${editData.id}`,
+//         ` http://20.84.40.134:8000/api/homepage/${editData.id}`,
 //         formData
 //       );
 //       setData(
@@ -91,7 +91,7 @@
 //     } else {
 //       // Add new data
 //       const response = await axios.post(
-//         " https://app.vysyamala.com/api/homepage/",
+//         " http://20.84.40.134:8000/api/homepage/",
 //         formData
 //       );
 //       setData([...data, response.data]);
@@ -211,7 +211,7 @@
 //   // Fetch API data
 //   const fetchData = async () => {
 //     try {
-//       const response = await axios.get(' https://app.vysyamala.com/api/homepage-list/');
+//       const response = await axios.get(' http://20.84.40.134:8000/api/homepage-list/');
 //       setHomepageData(response.data);
 //     } catch (error) {
 //       console.error('Error fetching data:', error);
@@ -342,7 +342,7 @@ const HomepageTable: React.FC = () => {
   // Fetch API data
   const fetchData = async () => {
     try {
-      const response = await axios.get(' https://app.vysyamala.com/api/homepage-list/');
+      const response = await axios.get(' http://20.84.40.134:8000/api/homepage-list/');
       setHomepageData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -368,7 +368,7 @@ const HomepageTable: React.FC = () => {
   const handleDelete = async () => {
     if (selectedId !== null) {
       try {
-        await axios.delete(` https://app.vysyamala.com/api/homepage/delete/${selectedId}/`);
+        await axios.delete(` http://20.84.40.134:8000/api/homepage/delete/${selectedId}/`);
         
         // Remove deleted item from the state
         setHomepageData(homepageData.filter((item) => item.id !== selectedId));
