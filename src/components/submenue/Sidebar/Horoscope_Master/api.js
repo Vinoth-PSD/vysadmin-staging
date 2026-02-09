@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://20.84.40.134:8000/api/accounts';
+const API_URL = 'http://20.246.74.138:5173/api/accounts';
 
 
 

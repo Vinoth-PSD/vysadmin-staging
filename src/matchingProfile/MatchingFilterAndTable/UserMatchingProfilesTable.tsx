@@ -278,7 +278,7 @@
 // //         }
 // //         try {
 // //             setIsPrintProfile(true);
-// //             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=print`;
+// //             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=print`;
 
 // //             const params = new URLSearchParams({
 // //                 pdf_format: printFormat,
@@ -313,7 +313,7 @@
 // //         }
 // //         try {
 // //             setIsWhatsappProfile(true);
-// //             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=whatsapp`;
+// //             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=whatsapp`;
 
 // //             const params = new URLSearchParams({
 // //                 pdf_format: whatsappFormat,
@@ -350,7 +350,7 @@
 // //         try {
 // //             setIsSendingEmail(true);
 
-// //             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/`;
+// //             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`;
 
 // //             const query = new URLSearchParams({
 // //                 action_type: "email",
@@ -1158,7 +1158,7 @@
 //         }
 //         try {
 //             setIsPrintProfile(true);
-//             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=print`;
+//             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=print`;
 
 //             const params = new URLSearchParams({
 //                 pdf_format: printFormat,
@@ -1193,7 +1193,7 @@
 //         }
 //         try {
 //             setIsWhatsappProfile(true);
-//             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=whatsapp`;
+//             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=whatsapp`;
 
 //             const params = new URLSearchParams({
 //                 pdf_format: whatsappFormat,
@@ -1230,7 +1230,7 @@
 //         try {
 //             setIsSendingEmail(true);
 
-//             const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/`;
+//             const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`;
 
 //             const query = new URLSearchParams({
 //                 action_type: "email",
@@ -2324,7 +2324,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
         }
         try {
             setIsPrintProfile(true);
-            const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=print`;
+            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=print`;
 
             const params = new URLSearchParams({
                 pdf_format: printFormat,
@@ -2361,7 +2361,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
         }
         try {
             setIsWhatsappProfile(true);
-            const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/?action_type=whatsapp`;
+            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/?action_type=whatsapp`;
 
             const params = new URLSearchParams({
                 pdf_format: whatsappFormat,
@@ -2400,7 +2400,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
         try {
             setIsSendingEmail(true);
 
-            const apiUrl = `http://20.84.40.134:8000/api/admin-match-pdf-with-format/`;
+            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`;
 
             const query = new URLSearchParams({
                 action_type: "email",

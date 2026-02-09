@@ -1,6 +1,7 @@
 // src/pages/AdminPage.tsx
 import React from 'react';
 import DataTable from '../../../components/DataTablel';
+import { apiUrl } from '../../../api/apiUrl';
 
 const newProfileColumns = [
   { id: 'ProfileId', label: 'Profile ID', minWidth: 100 },
@@ -21,7 +22,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Deleted Profiles</h1>
-      <DataTable columns={newProfileColumns} apiEndpoint="http://20.84.40.134:8000/api/Get_all_profiles/deleted/" />
+      <DataTable columns={newProfileColumns} apiEndpoint={`${apiUrl.apiUrlConfig}api/Get_all_profiles/deleted/`} />
     </div>
   );
 };

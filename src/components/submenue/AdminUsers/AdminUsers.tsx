@@ -51,7 +51,7 @@ const AdminUserForm: React.FC = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(' http://20.84.40.134:8000/api/admin-users/roles/');
+        const response = await axios.get(' http://20.246.74.138:5173/api/admin-users/roles/');
         setRoles(response.data);
       } catch (error) {
         console.error('Error fetching roles:', error);
@@ -63,7 +63,7 @@ const AdminUserForm: React.FC = () => {
 
   const onSubmit = async (data: AdminUserFormValues) => {
     try {
-      const response = await axios.post(' http://20.84.40.134:8000/api/admin-user/add/', data);
+      const response = await axios.post(' http://20.246.74.138:5173/api/admin-user/add/', data);
       if (response.status >= 200 && response.status <= 201) {
         notify('Admin User Successfully Added');  // Trigger notification
       }

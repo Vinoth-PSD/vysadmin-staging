@@ -21,6 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Notification, { notify, notifyDelete } from '../TostNotification';
 import './Toolbars.css';
+import { apiUrl } from '../../api/apiUrl';
 
 interface Page {
     id: number;
@@ -59,7 +60,7 @@ const CsmManagementComponent: React.FC = () => {
 
     const fetchPages = async () => {
         try {
-            const response = await axios.get<Page[]>(' http://20.84.40.134:8000/api/page-list/');
+            const response = await axios.get<Page[]>(`${apiUrl.apiUrlConfig}api/page-list/`);
             setPages(response.data);
         } catch (error) {
             console.error('There was an error fetching the data!', error);
@@ -89,7 +90,7 @@ const CsmManagementComponent: React.FC = () => {
 
         try {
             if (isEditing && currentPageId !== null) {
-                await axios.put(` http://20.84.40.134:8000/api/page/${currentPageId}/`, {
+                await axios.put(`${apiUrl.apiUrlConfig}api/page/${currentPageId}/`, {
                     page_name: formData.pageName,
                     meta_title: formData.metaTitle,
                     meta_description: formData.metaDescription,
@@ -99,7 +100,7 @@ const CsmManagementComponent: React.FC = () => {
                 });
                 notify('Successfully Updated');
             } else {
-                await axios.post(' http://20.84.40.134:8000/api/page/', {
+                await axios.post(`${apiUrl.apiUrlConfig}api/page/`, {
                     page_name: formData.pageName,
                     meta_title: formData.metaTitle,
                     meta_description: formData.metaDescription,
@@ -135,7 +136,7 @@ const CsmManagementComponent: React.FC = () => {
 
         if (isConfirmed) {
             try {
-                await axios.delete(` http://20.84.40.134:8000/api/page/delete/${id}/`);
+                await axios.delete(`${apiUrl.apiUrlConfig}api/page/delete/${id}/`);
                 notifyDelete('Successfully Deleted');
                 setPages(pages.filter((page) => page.id !== id));
             } catch (error) {
@@ -243,7 +244,7 @@ const CsmManagementComponent: React.FC = () => {
                                     ],
                                 },
                                 ckfinder: {
-                                    uploadUrl: ' http://20.84.40.134:8000/api/upload_image',
+                                    uploadUrl: `${apiUrl.apiUrlConfig}api/upload_image`,
                                 },
                             }}
                         />

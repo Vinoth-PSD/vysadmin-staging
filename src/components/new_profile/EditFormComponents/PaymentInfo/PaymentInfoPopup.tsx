@@ -234,7 +234,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     try {
       setAddonsLoading(true);
       const response = await apiAxios.post<AddonApiResponse>(
-        "http://20.84.40.134:8000/auth/Get_addon_packages/",
+        "auth/Get_addon_packages/",
         {} // empty payload if required, or add any required parameters
       );
 
@@ -409,7 +409,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     }
 
     // Construct the invoice URL with the subscription_id
-    const invoiceUrl = `http://20.84.40.134:8000/api/generate-invoice/?subscription_id=${payment.id}&admin_user_id=${adminUserID}`;
+    const invoiceUrl = `${apiUrl.apiUrlConfig}api/generate-invoice/?subscription_id=${payment.id}&admin_user_id=${adminUserID}`;
 
     // Open the invoice in a new tab
     window.open(invoiceUrl, '_blank', 'noopener,noreferrer');
@@ -426,7 +426,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     setSendingEmail(payment.id); // Set loading state
     try {
       const response = await apiAxios.get(
-        `http://20.84.40.134:8000/api/send-invoice/?subscription_id=${payment.id}`, {
+        `api/send-invoice/?subscription_id=${payment.id}`, {
         params: {
           // subscription_id: payment.id,
           admin_user_id: adminUserID       // 👈 Added here
@@ -464,7 +464,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     try {
       setPackagesLoading(true);
       const response = await apiAxios.post<PlansApiResponse>(
-        "http://20.84.40.134:8000/api/renewal-plan/",
+        "api/renewal-plan/",
         { type } // Send type as empty string for "all", "renewal", or "new"
       );
 

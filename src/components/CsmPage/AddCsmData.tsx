@@ -8,6 +8,7 @@ import { z } from 'zod';
 import './Toolbars.css'; // Import your custom CSS file for styling
 import { useNavigate } from 'react-router-dom';
 import Notification, { notify } from '../TostNotification';
+import { apiUrl } from '../../api/apiUrl';
 
 // Zod schema for form validation
 const contentSchema = z.object({
@@ -89,7 +90,7 @@ const CKEditorComponent: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(' http://20.84.40.134:8000/api/page/', {
+      const response = await axios.post(`${apiUrl.apiUrlConfig}api/page/`, {
         page_name: formData.pageName,
         meta_title: formData.metaTitle,
         meta_description: formData.metaDescription,
@@ -211,7 +212,7 @@ const CKEditorComponent: React.FC = () => {
                 ]
               },
               ckfinder: {
-                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/' // Update this URL as needed
+                uploadUrl: `${apiUrl.apiUrlConfig}api/upload-image/` // Update this URL as needed
               },
             }}
           />

@@ -67,7 +67,7 @@ const getTransactionHistory = async (params: FilterParams) => {
     if (params.t_status) queryParams.t_status = params.t_status;
     if (params.a_status) queryParams.a_status = params.a_status;
 
-    const url = `http://20.84.40.134:8000/api/transaction-history/`;
+    const url = `http://20.246.74.138:5173/api/transaction-history/`;
     const response = await axios.get(url, { params: queryParams });
     return response.data;
 };
@@ -276,7 +276,7 @@ const TransactionHistoryNew: React.FC = () => {
         if (debouncedSearch) params.search = debouncedSearch;
 
         try {
-            const url = `http://20.84.40.134:8000/api/transaction-export/`;
+            const url = `http://20.246.74.138:5173/api/transaction-export/`;
             const response = await axios.get(url, {
                 params,
                 responseType: 'blob',

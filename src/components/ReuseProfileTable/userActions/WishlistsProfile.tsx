@@ -42,7 +42,7 @@ const getWishlistsProfile = async (fromDate: string, toDate: string, page: numbe
     rowsPerPage: rowsPerPage.toString()
   });
 
-  const url = `http://20.84.40.134:8000/api/bookmarks/?${params.toString()}`;
+  const url = `http://20.246.74.138:5173/api/bookmarks/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -75,6 +75,7 @@ const WishlistsProfile: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string>('');
   const [toastSeverity, setToastSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('info');
   const navigate = useNavigate();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // This effect runs only when pagination changes AFTER initial data load
   useEffect(() => {
@@ -181,6 +182,53 @@ const WishlistsProfile: React.FC = () => {
 
     // Fetch data with the selected dates
     fetchData(localFromDate, localToDate);
+  };
+
+  const handleDownloadExcel = async () => {
+    if (!fromDate || !toDate) {
+      showToast("Please select dates and click Submit first", "warning");
+      return;
+    }
+    setIsDownloading(true);
+
+    try {
+      const params = new URLSearchParams({
+        from_date: fromDate,
+        to_date: toDate,
+        export: 'xlsx',
+      });
+
+      const response = await axios.get(
+        'http://20.246.74.138:5173/api/bookmarks/',
+        {
+          params,
+          responseType: 'blob', // Important for binary file data
+        }
+      );
+
+      // Create a Blob from the response
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      // Create a download link and click it programmatically
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Wishlist_Profiles_${fromDate}_to_${toDate}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      // showToast("Download started successfully", "success");
+    } catch (error: any) {
+      console.error('Error downloading Wishlist Excel:', error);
+      showToast("Failed to download Excel file", "error");
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleGoToPage = () => {
@@ -319,6 +367,15 @@ const WishlistsProfile: React.FC = () => {
 
             <Button variant="contained" onClick={handleSubmit}>
               Submit
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ ml: 2 }}
+              onClick={handleDownloadExcel}
+              disabled={isDownloading || data.results.length === 0}
+            >
+              {isDownloading ? 'Downloading…' : 'Download Excel'}
             </Button>
           </div>
           <TextField

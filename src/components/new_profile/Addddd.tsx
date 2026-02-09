@@ -5,6 +5,7 @@ import RasiGrid from '../HoroDetails/RasiGrid';
 import AmsamGrid from '../HoroDetails/AmsamGrid';
 import MatchingStars from '../PartnerPreference/MatchingStars';
 import { MatchingStar } from './profile_form_components/Partner_preference';
+import { apiAxios } from '../../api/apiUrl';
 
 interface ComplexionOption {
   complexion_id: number;
@@ -321,7 +322,7 @@ const Add = () => {
     }
 
     try {
-      const loginDetailsResponse = await axios.post('http://20.84.40.134:8000/api/logindetails/', basicDetails, {
+      const loginDetailsResponse = await apiAxios.post('api/logindetails/', basicDetails, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -329,7 +330,7 @@ const Add = () => {
 
       const profileId = loginDetailsResponse.data.ProfileId;
 
-      await axios.post('http://20.84.40.134:8000/api/profile-familydetails/', {
+      await apiAxios.post('api/profile-familydetails/', {
         profile_id: profileId,
         ...familyDetails,
       }, {
@@ -338,7 +339,7 @@ const Add = () => {
         },
       });
 
-      await axios.post('http://20.84.40.134:8000/api/profile-edudetails/', {
+      await apiAxios.post('api/profile-edudetails/', {
         profile_id: profileId,
         ...educationDetails,
       }, {
@@ -347,7 +348,7 @@ const Add = () => {
         },
       });
 
-      await axios.post('http://20.84.40.134:8000/api/profile-partner-pref/', {
+      await apiAxios.post('api/profile-partner-pref/', {
         profile_id: profileId,
         ...partnerPreferences,
       }, {
@@ -384,7 +385,7 @@ const Add = () => {
  useEffect(() => {
   const fetchComplexionStatus = async () => {
     try {
-      const response = await axios.post(" http://20.84.40.134:8000/auth/Get_Complexion/");
+      const response = await apiAxios.post("auth/Get_Complexion/");
       const options = Object.values(response.data) as ComplexionOption[];
       setComplexionOptions(options);
     } catch (error) {
@@ -397,7 +398,7 @@ const Add = () => {
   useEffect(() => {
     const fetchFamilyTypes = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyType/`);
+        const response = await apiAxios.post(`auth/Get_FamilyType/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyType[];
         setFamilyTypes(familyTypesArray);
@@ -420,7 +421,7 @@ const Add = () => {
   useEffect(() => {
     const fetchFamilyStatus = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyStatus/`);
+        const response = await apiAxios.post(`auth/Get_FamilyStatus/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyStatus[];
         setFamilyStatus(familyTypesArray);
@@ -444,7 +445,7 @@ const Add = () => {
   useEffect(() => {
     const fetchFamilyValue = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyValue/`);
+        const response = await apiAxios.post(`auth/Get_FamilyValue/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyValue[];
         setFamilyValue(familyTypesArray);
@@ -536,7 +537,7 @@ const Add = () => {
   useEffect(() => {
     const fetchMaritalStatuses = async () => {
       try {
-        const response = await axios.post<{ [key: string]: MaritalStatus }>(` http://20.84.40.134:8000/auth/Get_Marital_Status/`);
+        const response = await apiAxios.post<{ [key: string]: MaritalStatus }>(`auth/Get_Marital_Status/`);
         const options = Object.values(response.data);
         setMaritalStatuses(options);
       } catch (error) {
@@ -551,7 +552,7 @@ const Add = () => {
   useEffect(() => {
     const fetchPropertyWorth = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Property_Worth/`);
+        const response = await apiAxios.post(`auth/Get_Property_Worth/`);
         const options = Object.values(response.data) as Propertyworth[];
         console.log(options);
         setPropertyworth(options);
@@ -565,7 +566,7 @@ const Add = () => {
   useEffect(() => {
     const fetchAnnualIncome = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Annual_Income/`);
+        const response = await apiAxios.post(`auth/Get_Annual_Income/`);
         const options = Object.values(response.data) as AnnualIncome[];
         setAnnualIncome(options);
       } catch (error) {
@@ -578,7 +579,7 @@ const Add = () => {
   useEffect(() => {
     const fetchStatePref = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_State_Pref/`);
+        const response = await apiAxios.post(`auth/Get_State_Pref/`);
         const options = Object.values(response.data) as StatePref[];
         setStatePref(options);
       } catch (error) {
@@ -597,7 +598,7 @@ const Add = () => {
     if (storedBirthStar && storedGender) {
       const fetchMatchingStars = async () => {
         try {
-          const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Matchstr_Pref/`, {
+          const response = await apiAxios.post(`auth/Get_Matchstr_Pref/`, {
             birth_star_id: storedBirthStar,
             gender: storedGender,
           });
@@ -618,7 +619,7 @@ const Add = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('http://20.84.40.134:8000/api/api/countries/');
+        const response = await apiAxios.get('api/api/countries/');
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -631,7 +632,7 @@ const Add = () => {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get('http://20.84.40.134:8000/api/api/states/');
+        const response = await apiAxios.get('api/api/states/');
         setStates(response.data);
       } catch (error) {
         console.error("Error fetching states:", error);
@@ -647,7 +648,7 @@ const Add = () => {
   useEffect(() => {
     const fetchHighestEdu = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Highest_Education/`);
+        const response = await apiAxios.post(`auth/Get_Highest_Education/`);
         const options = Object.values(response.data) as HighesEducation[];
         setHighestEdu(options);
       } catch (error) {
@@ -662,7 +663,7 @@ const Add = () => {
   useEffect(() => {
     const fetchUgDegree = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Ug_Degree/`);
+        const response = await apiAxios.post(`auth/Get_Ug_Degree/`);
         const options = Object.values(response.data) as Ugdegree[];
         setUgdegree(options);
       } catch (error) {
@@ -677,7 +678,7 @@ const Add = () => {
   useEffect(() => {
     const fetchAnnualIncome = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Annual_Income/`);
+        const response = await apiAxios.post(`auth/Get_Annual_Income/`);
         const options = Object.values(response.data) as AnnualIncome[];
         setAnnualIncome(options);
       } catch (error) {
@@ -686,19 +687,6 @@ const Add = () => {
     };
     fetchAnnualIncome();
   }, []);
-  // useEffect(() => {
-  
-  //   const fetchAnnualIncomes = async () => {
-  //     try {
-  //       const response = await axios.get(' http://20.84.40.134:8000/auth/Get_Annual_Income/');
-  //       setAnnualIncomes(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching annual incomes:", error);
-  //     }
-  //   };
-
-  //   fetchAnnualIncomes();
-  // }, []);
 
   const [isBasicDetailsOpen, setIsBasicDetailsOpen] = useState(true);
   const [isFamilyDetailsOpen, setIsFamilyDetailsOpen] = useState(true);
@@ -739,8 +727,8 @@ const Add = () => {
     if (storedBirthStar && storedGender) {
       const fetchMatchingStars = async () => {
         try {
-          const response = await axios.post(
-            ` http://20.84.40.134:8000/auth/Get_Matchstr_Pref/`,
+          const response = await apiAxios.post(
+            `auth/Get_Matchstr_Pref/`,
             {
               birth_star_id: storedBirthStar,
               gender: storedGender,
@@ -788,7 +776,7 @@ const Add = () => {
     if (selectedBirthStarId) {
       const fetchStateStatus = async () => {
         try {
-          const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Rasi/`, { birth_id: selectedBirthStarId });
+          const response = await apiAxios.post(`auth/Get_Rasi/`, { birth_id: selectedBirthStarId });
           const options = Object.values(response.data) as Rasi[];
           setRasiOptions(options);
         } catch (error) {

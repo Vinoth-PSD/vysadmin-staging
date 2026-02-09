@@ -23,8 +23,8 @@ import { GrEdit } from 'react-icons/gr';
 import { FaRegEye } from 'react-icons/fa';
 
 // --- 1. Updated API endpoint ---
-const RENEWAL_API_URL = 'http://20.84.40.134:8000/api/renewal-profiles/';
-const API_URL = 'http://20.84.40.134:8000/api'; // Base API for delete
+const RENEWAL_API_URL = 'http://20.246.74.138:5173/api/renewal-profiles/';
+const API_URL = 'http://20.246.74.138:5173/api'; // Base API for delete
 
 // --- 2. Updated data fetching function ---
 export const getRenewalProfiles = async (
@@ -154,9 +154,9 @@ const RenewalProfiles: React.FC = () => {
     const [, setSelectAll] = useState<boolean>(false);
     const [selectedRows, setSelectedRows] = useState<string[]>([]); // Store ProfileId (string)
     const [totalCount, setTotalCount] = useState<number>(0);
-    // Add state for date filters
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
+    const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -261,7 +261,7 @@ const RenewalProfiles: React.FC = () => {
     const generateShortProfilePDF = async (profileIds: string[]) => {
         try {
             const response = await axios.post(
-                'http://20.84.40.134:8000/api/generate_short_profile_pdf/',
+                'http://20.246.74.138:5173/api/generate_short_profile_pdf/',
                 {
                     profile_id: profileIds.join(','),
                 },
@@ -282,6 +282,58 @@ const RenewalProfiles: React.FC = () => {
         } finally {
             setSelectedRows([]);
             setSelectAll(false);
+        }
+    };
+
+    const handleDownloadRenewalExcel = async () => {
+        setIsDownloading(true);
+
+        try {
+            const params = new URLSearchParams();
+
+            if (fromDate) {
+                params.append('from_date', fromDate);
+            }
+            if (toDate) {
+                params.append('to_date', toDate);
+            }
+            params.append('export', 'xlsx');
+
+            const response = await axios.get(
+                `http://20.246.74.138:5173/api/renewal-profiles/`,
+                {
+                    params,
+                    responseType: 'blob',
+                }
+            );
+
+            const blob = new Blob([response.data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            let fileName = 'Renewal_Profiles.xlsx';
+            if (fromDate && toDate) {
+                fileName = `Renewal_Profiles_${fromDate}_to_${toDate}.xlsx`;
+            } else if (fromDate) {
+                fileName = `Renewal_Profiles_from_${fromDate}.xlsx`;
+            } else if (toDate) {
+                fileName = `Renewal_Profiles_to_${toDate}.xlsx`;
+            }
+
+            link.href = url;
+            link.download = fileName;
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading Renewal Profiles Excel:', error);
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -514,6 +566,14 @@ const RenewalProfiles: React.FC = () => {
                                 disabled={selectedRows.length === 0}
                             >
                                 Download Short Profile(s)
+                            </Button>
+                            <Button
+                                onClick={handleDownloadRenewalExcel}
+                                variant="contained"
+                                color="success"
+                                disabled={isDownloading}
+                            >
+                                {isDownloading ? 'Downloading…' : 'Download Excel'}
                             </Button>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { TextField, Button, Select, MenuItem, Input } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { notify } from '../TostNotification';
+import { apiUrl } from '../../api/apiUrl';
 
 interface IFormInput {
   name: string;
@@ -78,7 +79,7 @@ const AddAward: React.FC = () => {
 
       // Sending form data to the API
       const response = await axios.post(
-        ' http://20.84.40.134:8000/api/awards/',
+        `${apiUrl.apiUrlConfig}api/awards/`,
         formData,
         {
           headers: {
@@ -217,7 +218,7 @@ const AddAward: React.FC = () => {
                 ],
               },
               ckfinder: {
-                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/', // Update this URL as needed
+                uploadUrl: `${apiUrl.apiUrlConfig}api/upload-image/`, // Update this URL as needed
               },
             }}
           />

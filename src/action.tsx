@@ -18,10 +18,11 @@ import {
 import { MatchingStar } from './components/new_profile/profile_form_components/Partner_preference';
 import { ProfileType } from './matchingProfile/matchingProfile';
 import { string } from 'zod';
+import { apiUrl } from './api/apiUrl';
 
 //family detail api's
-const API_URL = 'http://20.84.40.134:8000/auth';
-export const API = 'http://20.84.40.134:8000/api';
+const API_URL = `${apiUrl.apiUrlConfig}auth`;
+export const API = `${apiUrl.apiUrlConfig}api`;
 
 // const API_URL = 'https://gl9hwr3r-8000.inc1.devtunnels.ms/auth';
 // const API = 'https://gl9hwr3r-8000.inc1.devtunnels.ms/api';
@@ -168,21 +169,6 @@ export const fetchFamilyStatuses = async (): Promise<getFamilyStatus[]> => {
   return response.data;
 };
 
-// export const getEditProfileViewStatus = async ():Promise<getEditProfileView>=>{
-//   try{
-// const response = await axios.get('http://20.84.40.134:8000/api/get_status_master/')
-// // const data=response.data
-// if(response.data?.status == "success"){
-//   const data = response.data.data;
-//   console.log(data)
-//   return data
-// }
-//   }catch(error){
-// console.error('Errror fetching status:0',error)
-// return [];
-//   }
-// }
-
 
 export const getEditProfileViewStatus = async (): Promise<getEditProfileView[]> => {
   try {
@@ -201,30 +187,6 @@ export const getEditProfileViewStatus = async (): Promise<getEditProfileView[]> 
   }
 };
 
-// export const getProfilePrimaryStatus = async (status:string|number): Promise<getPrimaryStatus[]>=>{
-//   console.log("ffff222222222222222222222222222222222222222222222",status)
-//   if (!status) {
-//     console.error("Primary status is missing or invalid");
-//     return [];  // You might also want to return a default value here
-//   }
-
-//   try {
-//      const response = await axios.post(`http://20.84.40.134:8000/api/get_sub_status_master/`,{
-//       primary_status: status,
-//     })
-//     console.log("fffff4444444444444444444444444444",response)
-//     console.log(response.data)
-//     if(response.data?.status === 'success'&& Array.isArray(response.data?.data)){
-//       return response.data.data as getPrimaryStatus[];
-//     }
-//     console.warn("Unexpected response format:", response.data);
-//     return[]
-//   } catch (error) {
-//     console.error('Error fetching status:', error);
-//     return [];
-//   }
-// }
-
 export const getProfilePrimaryStatus = async (status: string | number): Promise<getPrimaryStatus[]> => {
   console.log("Status received:", status);
 
@@ -237,7 +199,7 @@ export const getProfilePrimaryStatus = async (status: string | number): Promise<
   try {
     const ownerID = localStorage.getItem('id') || localStorage.getItem('id');
     const response = await axios.post(
-      `http://20.84.40.134:8000/api/get_sub_status_master/`,
+      `${apiUrl.apiUrlConfig}api/get_sub_status_master/`,
       {
         primary_status: String(status),
         admin_user_id: ownerID,
@@ -264,7 +226,7 @@ export const getProfileSecondaryStatus = async (secondaryStatus: string): Promis
     return [];  // You might also want to return a default value here
   }
   try {
-    const response = await axios.post(`http://20.84.40.134:8000/api/get_plan_bystatus/`, {
+    const response = await axios.post(`${apiUrl.apiUrlConfig}api/get_plan_bystatus/`, {
       secondary_status: secondaryStatus,
     })
     console.log(response.data)
@@ -283,7 +245,7 @@ export const getProfileSecondaryStatus = async (secondaryStatus: string): Promis
 export const getStatus = async (): Promise<StatusOption[]> => {
   try {
     const response = await axios.get(
-      `http://20.84.40.134:8000/api/get_status_master/`,
+      `${apiUrl.apiUrlConfig}api/get_status_master/`,
     );
     const data = Object.values(response.data.data) as StatusOption[];
     console.log(data)
@@ -311,7 +273,7 @@ export const fetchCountryStatus = async (): Promise<Country[]> => {
 
 
 export const fetchAddOnPackage = async (): Promise<AddOnPackage[]> => {
-  const response = await axios.post(`http://20.84.40.134:8000/auth/Get_addon_packages/`);
+  const response = await axios.post(`${apiUrl.apiUrlConfig}auth/Get_addon_packages/`);
   const option = Object.values(response.data) as AddOnPackage[];
   console.log(option)
   return option

@@ -9,6 +9,7 @@ import { useFormContext } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { fetchFamilyStatuses, getFamilyStatus, getStatus } from '../../../action';
 import { profileView } from '../../../types/EditProfilrSchema';
+import { apiAxios } from '../../../api/apiUrl';
 
 
 interface pageProps {
@@ -208,7 +209,7 @@ const ProfileView: React.FC<pageProps> = ({ isViewDetais, setViewDetail, EditDat
 
   useEffect(() => {
     // Fetch alert settings from the API
-    axios.post<AlertSettingsResponse>('http://20.84.40.134:8000/auth/Get_alert_settings/')
+    apiAxios.post<AlertSettingsResponse>('auth/Get_alert_settings/')
       .then(response => {
         if (response.data.status === '1') {
           setEmailAlerts(response.data.data['Email Alerts']);
@@ -225,7 +226,7 @@ const ProfileView: React.FC<pageProps> = ({ isViewDetais, setViewDetail, EditDat
 
   const fetchAddOnPackages = async () => {
     try {
-      const response = await axios.post('http://20.84.40.134:8000/auth/Get_addon_packages/');
+      const response = await apiAxios.post('auth/Get_addon_packages/');
       if (response.data.status === 'success') {
         setAddonPackage(response.data.data)
       }

@@ -38,7 +38,7 @@ const ProfileHolderList = () => {
     }, []);
 
     const fetchProfileHolders = () => {
-        axios.get('http://20.84.40.134:8000/api/accounts/profile-holders/')
+        axios.get('http://20.246.74.138:5173/api/accounts/profile-holders/')
             .then(response => {
                 setProfileHolders(response.data);
             }).catch(error => {
@@ -48,7 +48,7 @@ const ProfileHolderList = () => {
 
     const handleAddOrEditHolder = () => {
         if (editHolderId) {
-            axios.put(`http://20.84.40.134:8000/api/accounts/profile-holders/${editHolderId}/`, newProfileHolder)
+            axios.put(`http://20.246.74.138:5173/api/accounts/profile-holders/${editHolderId}/`, newProfileHolder)
                 .then(response => {
                     setProfileHolders(profileHolders.map(holder => holder.id === editHolderId ? response.data : holder));
                     resetForm();
@@ -57,7 +57,7 @@ const ProfileHolderList = () => {
                     console.error(error);
                 });
         } else {
-            axios.post('http://20.84.40.134:8000/api/accounts/profile-holders/', newProfileHolder)
+            axios.post('http://20.246.74.138:5173/api/accounts/profile-holders/', newProfileHolder)
                 .then(response => {
                     setProfileHolders([...profileHolders, response.data]);
                     resetForm();
@@ -81,7 +81,7 @@ const ProfileHolderList = () => {
     };
 
     const confirmDeleteHolder = () => {
-        axios.delete(`http://20.84.40.134:8000/api/accounts/profile-holders/${holderToDelete}/`)
+        axios.delete(`http://20.246.74.138:5173/api/accounts/profile-holders/${holderToDelete}/`)
             .then(() => {
                 setProfileHolders(profileHolders.filter(holder => holder.id !== holderToDelete));
                 setHolderToDelete(null);

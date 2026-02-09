@@ -8,6 +8,7 @@ import { z } from 'zod';
 import './Toolbars.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import Notification, { notify } from '../TostNotification';
+import { apiAxios, apiUrl } from '../../api/apiUrl';
 
 const contentSchema = z.object({
   pageName: z.string().nonempty('Page Name is required'),
@@ -35,7 +36,7 @@ const CsmEditorComponent: React.FC = () => {
   useEffect(() => {
     const fetchPageData = async () => {
       try {
-        const response = await axios.get(` http://20.84.40.134:8000/api/page-list/${id}/`);
+        const response = await axios.get(`${apiUrl.apiUrlConfig}api/page-list/${id}/`);
         const pageData = response.data;
         setPageName(pageData.page_name);
         setStatus(pageData.status);
@@ -116,7 +117,7 @@ const CsmEditorComponent: React.FC = () => {
         admin_user_id: adminUserID
       };
 
-      const response = await axios.put(` http://20.84.40.134:8000/api/page/edit/${id}/`, formData);
+      const response = await apiAxios.put(`api/page/edit/${id}/`, formData);
       if (response.status >= 200 || response.status <= 299) {
         notify('Successfully Updated');
 
@@ -233,7 +234,7 @@ const CsmEditorComponent: React.FC = () => {
                 ]
               },
               ckfinder: {
-                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/' // Update this URL as needed
+                uploadUrl: `${apiUrl.apiUrlConfig}api/upload-image/` // Update this URL as needed
               },
             }}
           />

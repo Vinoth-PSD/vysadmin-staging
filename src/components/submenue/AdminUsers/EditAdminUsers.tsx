@@ -92,7 +92,7 @@ const EditAdminUserForm: React.FC = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          ` http://20.84.40.134:8000/api/admin-users/`,
+          ` http://20.246.74.138:5173/api/admin-users/`,
         );
         const users = response.data;
         console.log('Fetched Users:', users);
@@ -119,7 +119,7 @@ const EditAdminUserForm: React.FC = () => {
     const fetchRoles = async () => {
       try {
         const response = await axios.get(
-          ' http://20.84.40.134:8000/api/admin-users/roles/',
+          ' http://20.246.74.138:5173/api/admin-users/roles/',
         );
         setRoles(response.data);
       } catch (error) {
@@ -134,7 +134,7 @@ const EditAdminUserForm: React.FC = () => {
   const onSubmit = async (data: EditAdminUserFormValues) => {
     try {
       let response = await axios.put(
-        ` http://20.84.40.134:8000/api/admin-user/edit/${id}/`,
+        ` http://20.246.74.138:5173/api/admin-user/edit/${id}/`,
         data,
       );
       if (response.status >= 200 || response.status <= 299) {

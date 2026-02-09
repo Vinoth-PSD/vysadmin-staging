@@ -10,6 +10,7 @@ import { getStatus } from '../../../action';
 
 import { useForm } from 'react-hook-form';
 import { Watch } from '@mui/icons-material';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface pageProps{
     profile:any;
@@ -108,8 +109,8 @@ const addOn=profileView.Addon_package?.split(',');
   });
 console.log(Status)
   useEffect(() => {
-    axios
-      .get<FamilyStatus[]>('http://20.84.40.134:8000/api/family-statuses/')
+    apiAxios
+      .get<FamilyStatus[]>('api/family-statuses/')
       .then(response => {
         const filteredStatuses = response.data.filter(status => !status.is_deleted);
         setFamilyStatuses(filteredStatuses);
@@ -120,7 +121,7 @@ console.log(Status)
   }, []);
   useEffect(() => {
     // Fetch alert settings from the API
-    axios.post<AlertSettingsResponse>('http://20.84.40.134:8000/auth/Get_alert_settings/')
+    apiAxios.post<AlertSettingsResponse>('auth/Get_alert_settings/')
       .then(response => {
         if (response.data.status === '1') {
           setEmailAlerts(response.data.data['Email Alerts']);
@@ -137,7 +138,7 @@ console.log(Status)
   
   const fetchAddOnPackages = async ()=>{
     try{
-    const response = await axios.post('http://20.84.40.134:8000/auth/Get_addon_packages/');
+    const response = await apiAxios.post('auth/Get_addon_packages/');
     if(response.data.status === 'success'){
       console.log(response.data.data)
 setAddonPackage(response.data.data)

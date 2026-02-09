@@ -26,7 +26,7 @@ const DashBoard: React.FC = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch('http://20.84.40.134:8000/api/dashboard_counts/');
+        const response = await fetch('http://20.246.74.138:5173/api/dashboard_counts/');
         const data = await response.json();
         setDashboardData(data);
       } catch (error) {

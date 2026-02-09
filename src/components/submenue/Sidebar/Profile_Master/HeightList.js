@@ -34,7 +34,7 @@ const HeightList = () => {
     }, []);
 
     const fetchHeights = () => {
-        axios.get('http://20.84.40.134:8000/api/heights/')
+        axios.get('http://20.246.74.138:5173/api/heights/')
             .then(response => {
                 setHeights(response.data);
             }).catch(error => {
@@ -44,7 +44,7 @@ const HeightList = () => {
 
     const handleAddOrEditHeight = () => {
         if (editHeightId) {
-            axios.put(`http://20.84.40.134:8000/api/heights/${editHeightId}/`, newHeight)
+            axios.put(`http://20.246.74.138:5173/api/heights/${editHeightId}/`, newHeight)
                 .then(response => {
                     setHeights(heights.map(height => height.id === editHeightId ? response.data : height));
                     resetForm();
@@ -53,7 +53,7 @@ const HeightList = () => {
                     console.error(error);
                 });
         } else {
-            axios.post('http://20.84.40.134:8000/api/heights/', newHeight)
+            axios.post('http://20.246.74.138:5173/api/heights/', newHeight)
                 .then(response => {
                     setHeights([...heights, response.data]);
                     resetForm();
@@ -77,7 +77,7 @@ const HeightList = () => {
     };
 
     const confirmDeleteHeight = () => {
-        axios.delete(`http://20.84.40.134:8000/api/heights/${heightToDelete}/`)
+        axios.delete(`http://20.246.74.138:5173/api/heights/${heightToDelete}/`)
             .then(() => {
                 setHeights(heights.filter(height => height.id !== heightToDelete));
                 setHeightToDelete(null);

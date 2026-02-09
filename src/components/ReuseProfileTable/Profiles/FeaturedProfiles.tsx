@@ -25,9 +25,9 @@ import { Add } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { hasPermission } from '../../utils/auth';
 
-const FEATURED_API_URL = 'http://20.84.40.134:8000/api/featured-profiles/';
-const API_URL = 'http://20.84.40.134:8000/api'; // Base API for delete
-const ADD_PROFILE_API_URL = 'http://20.84.40.134:8000/api/featured-profiles-add/';
+const FEATURED_API_URL = 'http://20.246.74.138:5173/api/featured-profiles/';
+const API_URL = 'http://20.246.74.138:5173/api'; // Base API for delete
+const ADD_PROFILE_API_URL = 'http://20.246.74.138:5173/api/featured-profiles-add/';
 
 export const getFeaturedProfiles = async (
     search: string,
@@ -105,6 +105,7 @@ const FeaturedProfiles: React.FC = () => {
     const [tempFromDate, setTempFromDate] = useState<string>('');
     const [tempToDate, setTempToDate] = useState<string>('');
     const adminUserID = sessionStorage.getItem('id') || localStorage.getItem('id');
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const handleAddProfile = async () => {
         const newErrors: { profileId?: string; startDate?: string; endDate?: string } = {};
@@ -183,6 +184,54 @@ const FeaturedProfiles: React.FC = () => {
         setToDate(tempToDate);
         setPage(0); // Reset page
         fetchData();
+    };
+
+    const handleDownloadFeaturedExcel = async () => {
+        setIsDownloading(true);
+
+        try {
+            const params = new URLSearchParams();
+
+            if (tempFromDate) params.append('from_date', tempFromDate);
+            if (tempToDate) params.append('to_date', tempToDate);
+            params.append('export', 'xlsx');
+
+            const response = await axios.get(
+                `http://20.246.74.138:5173/api/featured-profiles/`,
+                {
+                    params,
+                    responseType: 'blob',
+                }
+            );
+
+            const blob = new Blob([response.data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            let fileName = 'Featured_Profiles.xlsx';
+            if (fromDate && toDate) {
+                fileName = `Featured_Profiles_${fromDate}_to_${toDate}.xlsx`;
+            } else if (fromDate) {
+                fileName = `Featured_Profiles_from_${fromDate}.xlsx`;
+            } else if (toDate) {
+                fileName = `Featured_Profiles_to_${toDate}.xlsx`;
+            }
+
+            link.href = url;
+            link.download = fileName;
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading Renewal Profiles Excel:', error);
+        } finally {
+            setIsDownloading(false);
+        }
     };
 
     const handleRequestSort = (property: keyof FeaturedProfile) => {
@@ -412,7 +461,7 @@ const FeaturedProfiles: React.FC = () => {
             </div>
         );
     };
-    
+
     return (
         <div className="p-4">
             <h1 className="text-2xl text-black font-bold mb-4">
@@ -561,6 +610,14 @@ const FeaturedProfiles: React.FC = () => {
                         onClick={handleDateFilterSubmit}
                     >
                         Submit
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleDownloadFeaturedExcel}
+                        color="success"
+                        disabled={isDownloading}
+                    >
+                        {isDownloading ? 'Downloading…' : 'Download Excel'}
                     </Button>
                 </Box>
 

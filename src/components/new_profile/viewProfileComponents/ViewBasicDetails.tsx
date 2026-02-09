@@ -18,6 +18,7 @@ import {
 import axios from 'axios';
 import { API_URL_Auth } from '../../../services/api';
 import { HeightOption } from '../profile_form_components/AddProfileForm';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface pageProps {
   profile: any;
@@ -57,8 +58,8 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
   };
   const getAddonPackages = async () => {
     try {
-      const response = await axios.post(
-        `http://20.84.40.134:8000/auth/Get_addon_packages/`,
+      const response = await apiAxios.post(
+        `auth/Get_addon_packages/`,
       );
       const data = Object.values(response.data.data);
       setAddonPackages(data);
@@ -111,8 +112,8 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
 
   const getMaritalStatus = async () => {
     try {
-      const response = await axios.post(
-        'http://20.84.40.134:8000/auth/Get_Marital_Status/',
+      const response = await apiAxios.post(
+        'auth/Get_Marital_Status/',
       );
       const options = Object.values(response.data);
       setMaritialStatus(options);
@@ -168,8 +169,8 @@ const ViewBasicDetails: React.FC<pageProps> = ({ profile, setGennder }) => {
 
   const getPlaneDetais = async () => {
     try {
-      const response = await axios.post(
-        `http://20.84.40.134:8000/auth/Get_palns/`,
+      const response = await apiAxios.post(
+        `auth/Get_palns/`,
       );
       const data = Object.values(response.data.data);
       setPlane(data);

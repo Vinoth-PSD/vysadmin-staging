@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { notify, notifyDelete } from '../TostNotification';
-import { apiAxios } from '../../api/apiUrl';
+import { apiAxios, apiUrl } from '../../api/apiUrl';
 
 interface FormData {
   why_vysyamala: string;
@@ -105,7 +105,7 @@ const EditHomepageForm: React.FC = () => {
               data={field.value || ""}
               config={{
                 ckfinder: {
-                  uploadUrl: 'http://20.84.40.134:8000/api/upload-image/',
+                  uploadUrl: `${apiUrl.apiUrlConfig}api/upload-image/`,
                 },
                 toolbar: [
                   'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',

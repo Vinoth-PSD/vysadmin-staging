@@ -1,5 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
+import { apiAxios } from '../../../api/apiUrl';
 
 
 type Alert = {
@@ -30,9 +31,9 @@ export const AlertSettings: React.FC<propType> = ({ setAlretSetting }) => {
 
   useEffect(() => {
     // Fetch all available alerts
-    axios
+    apiAxios
       .post<AlertSettingsResponse>(
-        'http://20.84.40.134:8000/auth/Get_alert_settings/',
+        'auth/Get_alert_settings/',
       )
       .then((response) => {
         const { data } = response.data;

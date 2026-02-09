@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../css/EditProfilePage.css';
 import RasiGrid from './HoroDetails/RasiGrid';
 import AmsamGrid from './HoroDetails/AmsamGrid';
+import { apiUrl } from '../api/apiUrl';
 
 const EditProfilePage: React.FC = () => {
   const { ContentId } = useParams<{ ContentId: string }>();
@@ -103,18 +104,18 @@ const EditProfilePage: React.FC = () => {
 
     const fetchDetails = async () => {
       try {
-        const profileResponse = await axios.get(`http://20.84.40.134:8000/api/logindetails/${ContentId}/`);
+        const profileResponse = await axios.get(`${apiUrl.apiUrlConfig}api/logindetails/${ContentId}/`);
         setProfile(profileResponse.data);
 
         const profileId = profileResponse.data.ProfileId;
         if (profileId) {
-          const familyResponse = await axios.get(`http://20.84.40.134:8000/api/profile-familydetails/${profileId}/`);
+          const familyResponse = await axios.get(`${apiUrl.apiUrlConfig}api/profile-familydetails/${profileId}/`);
           setFamilyDetails(familyResponse.data);
 
-          const educationResponse = await axios.get(`http://20.84.40.134:8000/api/profile-edudetails/${profileId}/`);
+          const educationResponse = await axios.get(`${apiUrl.apiUrlConfig}api/profile-edudetails/${profileId}/`);
           setEducationDetails(educationResponse.data);
 
-          const partnerPrefResponse = await axios.get(`http://20.84.40.134:8000/api/profile-partner-pref/${profileId}/`);
+          const partnerPrefResponse = await axios.get(`${apiUrl.apiUrlConfig}api/profile-partner-pref/${profileId}/`);
           setPartnerPreferences(partnerPrefResponse.data);
         } else {
           setError('ProfileId is missing from profile data');
@@ -152,7 +153,7 @@ const EditProfilePage: React.FC = () => {
   useEffect(() => {
     const fetchOccupations = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Parent_Occupation/`);
+        const response = await axios.post(`${apiUrl.apiUrlConfig}auth/Get_Parent_Occupation/`);
         const options = Object.values(response.data) as Occupation[];
         setOccupations(options);
       } catch (error) {
@@ -165,7 +166,7 @@ const EditProfilePage: React.FC = () => {
   useEffect(() => {
     const fetchComplexionStatus = async () => {
       try {
-        const response = await axios.post(" http://20.84.40.134:8000/auth/Get_Complexion/");
+        const response = await axios.post(`${apiUrl.apiUrlConfig}auth/Get_Complexion/`);
         const options = Object.values(response.data) as ComplexionOption[];
         setComplexionOptions(options);
       } catch (error) {
@@ -177,12 +178,12 @@ const EditProfilePage: React.FC = () => {
 
   const handleChange = async () => {
     try {
-      await axios.put(`http://20.84.40.134:8000/api/logindetails/${ContentId}/`, profile);
+      await axios.put(`${apiUrl.apiUrlConfig}api/logindetails/${ContentId}/`, profile);
 
       if (profile?.ProfileId) {
-        await axios.put(`http://20.84.40.134:8000/api/profile-familydetails/${profile.ProfileId}/`, familyDetails);
-        await axios.put(`http://20.84.40.134:8000/api/profile-edudetails/${profile.ProfileId}/`, educationDetails);
-        await axios.put(`http://20.84.40.134:8000/api/profile-partner-pref/${profile.ProfileId}/`, partnerPreferences);
+        await axios.put(`${apiUrl.apiUrlConfig}api/profile-familydetails/${profile.ProfileId}/`, familyDetails);
+        await axios.put(`${apiUrl.apiUrlConfig}api/profile-edudetails/${profile.ProfileId}/`, educationDetails);
+        await axios.put(`${apiUrl.apiUrlConfig}api/profile-partner-pref/${profile.ProfileId}/`, partnerPreferences);
       }
 
       if (refreshData) {
@@ -196,12 +197,12 @@ const EditProfilePage: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://20.84.40.134:8000/api/logindetails/${ContentId}/`);
+      await axios.delete(`${apiUrl.apiUrlConfig}api/logindetails/${ContentId}/`);
 
       if (profile?.ProfileId) {
-        await axios.delete(`http://20.84.40.134:8000/api/profile-familydetails/${profile.ProfileId}/`);
-        await axios.delete(`http://20.84.40.134:8000/api/profile-edudetails/${profile.ProfileId}/`);
-        await axios.delete(`http://20.84.40.134:8000/api/profile-partner-pref/${profile.ProfileId}/`);
+        await axios.delete(`${apiUrl.apiUrlConfig}api/profile-familydetails/${profile.ProfileId}/`);
+        await axios.delete(`${apiUrl.apiUrlConfig}api/profile-edudetails/${profile.ProfileId}/`);
+        await axios.delete(`${apiUrl.apiUrlConfig}api/profile-partner-pref/${profile.ProfileId}/`);
       }
 
       if (refreshData) {

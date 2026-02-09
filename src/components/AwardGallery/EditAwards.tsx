@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { TextField, Button, Select, MenuItem, Input } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { notify } from '../TostNotification';
+import { apiUrl } from '../../api/apiUrl';
 
 interface IFormInput {
   name: string;
@@ -41,7 +42,7 @@ const EditAward: React.FC = () => {
     const fetchAward = async () => {
       try {
         const response = await axios.get(
-          ` http://20.84.40.134:8000/api/awards/${id}/`,
+          `${apiUrl.apiUrlConfig}api/awards/${id}/`,
         );
         const { name, description, status, image } = response.data;
 
@@ -86,7 +87,7 @@ const EditAward: React.FC = () => {
 
       // Sending form data to the edit API
       const response = await axios.put(
-        ` http://20.84.40.134:8000/api/awards/edit/${id}/`,
+        `${apiUrl.apiUrlConfig}api/awards/edit/${id}/`,
         formData,
         {
           headers: {
@@ -176,7 +177,7 @@ const EditAward: React.FC = () => {
                 'sourceEditing',
               ],
               ckfinder: {
-                uploadUrl: ' http://20.84.40.134:8000/api/upload-image/', // Update as necessary
+                uploadUrl: `${apiUrl.apiUrlConfig}api/upload-image/`, // Update as necessary
               },
             }}
           />

@@ -21,7 +21,7 @@ import { MyProfileShare } from '../WhatsUpShare/MyProfileShare';
 import { notify } from '../../TostNotification';
 import PaymentPopup from '../EditFormComponents/PaymentInfo/PaymentInfoPopup';
 import { District } from '../profile_form_components/EducationalDetails';
-import { apiAxios } from '../../../api/apiUrl';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 import { toast } from 'react-toastify';
 import { hasPermission } from '../../utils/auth';
 
@@ -422,8 +422,8 @@ const ViewProfile: React.FC<pageProps> = ({
   };
   // Fetch additional data
   useEffect(() => {
-    axios
-      .get<FamilyStatus[]>('http://20.84.40.134:8000/api/family-statuses/')
+    apiAxios
+      .get<FamilyStatus[]>('api/family-statuses/')
       .then((response) => {
         const filteredStatuses = response.data.filter(
           (status) => !status.is_deleted,
@@ -436,9 +436,9 @@ const ViewProfile: React.FC<pageProps> = ({
   }, []);
 
   useEffect(() => {
-    axios
+    apiAxios
       .post<AlertSettingsResponse>(
-        'http://20.84.40.134:8000/auth/Get_alert_settings/',
+        'auth/Get_alert_settings/',
       )
       .then((response) => {
         if (response.data.status === '1') {
@@ -455,8 +455,8 @@ const ViewProfile: React.FC<pageProps> = ({
 
   const fetchAddOnPackages = async () => {
     try {
-      const response = await axios.post(
-        'http://20.84.40.134:8000/auth/Get_addon_packages/',
+      const response = await apiAxios.post(
+        'auth/Get_addon_packages/',
       );
       if (response.data.status === 'success') {
         setAddonPackage(response.data.data);
@@ -478,7 +478,7 @@ const ViewProfile: React.FC<pageProps> = ({
       return;
     }
 
-    const url = `http://20.84.40.134:8000/api/whatsapp-share/${profileId}/`;
+    const url = `${apiUrl.apiUrlConfig}api/whatsapp-share/${profileId}/`;
 
     window.open(url, "_blank"); // open in new tab
   };
@@ -665,7 +665,7 @@ const ViewProfile: React.FC<pageProps> = ({
                   <img
                     src={
                       profile[6].profile_image ||
-                      'http://20.84.40.134:8000/media/default_groom.png'
+                      `${apiUrl.apiUrlConfig}media/default_groom.png`
                     }
                     alt="Profile"
                     className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-red-500 shadow-md object-cover"

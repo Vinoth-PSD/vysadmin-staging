@@ -32,7 +32,7 @@ import { CallManagementModel } from '../viewProfileComponents/ProfileViwePopup/C
 import { AdminDetailsPopup } from '../viewProfileComponents/ProfileViwePopup/AdminDetailsPopup';
 import { DataHistoryPopup } from '../viewProfileComponents/ProfileViwePopup/DataHistoryPopup';
 import VerifyOTPPopup from '../verifyotp/verifyotppopup';
-import { apiAxios } from '../../../api/apiUrl';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 import { MyProfileShare } from '../WhatsUpShare/MyProfileShare';
 import PaymentPopup from './PaymentInfo/PaymentInfoPopup';
 import { District } from './EducationalDetails';
@@ -670,8 +670,8 @@ const EditViewProfile: React.FC<pageProps> = ({
 
   const fetchAddOnPackages = async () => {
     try {
-      const response = await axios.post(
-        'http://20.84.40.134:8000/auth/Get_addon_packages/',
+      const response = await apiAxios.post(
+        'auth/Get_addon_packages/',
       );
       if (response.data.status === 'success') {
         console.log(response.data.data);
@@ -730,7 +730,7 @@ const EditViewProfile: React.FC<pageProps> = ({
       return;
     }
 
-    const url = `http://20.84.40.134:8000/api/whatsapp-share/${profileId}/`;
+    const url = `${apiUrl.apiUrlConfig}api/whatsapp-share/${profileId}/`;
 
     window.open(url, "_blank"); // open in new tab
   };

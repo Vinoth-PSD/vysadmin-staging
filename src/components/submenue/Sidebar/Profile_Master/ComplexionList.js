@@ -40,12 +40,12 @@ const ComplexionList = () => {
     }, [complexions, currentPage, showAddPopup, showEditPopup, deleteConfirmation]);
 
     const fetchComplexions = async () => {
-        const response = await axios.get('http://20.84.40.134:8000/api/accounts/complexions/');
+        const response = await axios.get('http://20.246.74.138:5173/api/accounts/complexions/');
         setComplexions(response.data);
     };
 
     const addComplexion = async () => {
-        await axios.post('http://20.84.40.134:8000/api/accounts/complexions/', { type: newComplexion });
+        await axios.post('http://20.246.74.138:5173/api/accounts/complexions/', { type: newComplexion });
         setNewComplexion('');
         fetchComplexions();
         setShowAddPopup(false);
@@ -59,7 +59,7 @@ const ComplexionList = () => {
     };
 
     const confirmDeleteComplexion = async () => {
-        await axios.delete(`http://20.84.40.134:8000/api/accounts/complexions/${complexionToDelete}/`);
+        await axios.delete(`http://20.246.74.138:5173/api/accounts/complexions/${complexionToDelete}/`);
         setDeleteConfirmation(false);
         setComplexionToDelete(null);
         fetchComplexions();
@@ -71,7 +71,7 @@ const ComplexionList = () => {
     };
 
     const editComplexion = async () => {
-        await axios.put(`http://20.84.40.134:8000/api/accounts/complexions/${editComplexionData.id}/`, editComplexionData);
+        await axios.put(`http://20.246.74.138:5173/api/accounts/complexions/${editComplexionData.id}/`, editComplexionData);
         fetchComplexions();
         setShowEditPopup(false);
         setShowSuccessPopup(true);

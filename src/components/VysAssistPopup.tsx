@@ -22,6 +22,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import axios from "axios";
+import { apiUrl } from "../api/apiUrl";
 
 // Interface for comment templates
 interface AdminCommentTemplate {
@@ -78,7 +79,7 @@ const VysAssistPopup: React.FC<VysAssistPopupProps> = ({ vysassistId, onClose })
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://20.84.40.134:8000/api/Vysfollowups/?assist_id=${vysassistId}`
+        `${apiUrl.apiUrlConfig}api/Vysfollowups/?assist_id=${vysassistId}`
       );
       setFollowUpData(response.data.followups || response.data || []);
     } catch (error) {
@@ -120,7 +121,7 @@ const VysAssistPopup: React.FC<VysAssistPopupProps> = ({ vysassistId, onClose })
     e.preventDefault();
     try {
       await axios.post(
-        "http://20.84.40.134:8000/api/Vysfollowups/",
+        `${apiUrl.apiUrlConfig}api/Vysfollowups/`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );

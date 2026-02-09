@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { apiAxios } from '../../../api/apiUrl';
 
 type Alert = {
   id: number;
@@ -37,9 +38,9 @@ export const ViewAlertSettings: React.FC = () => {
   useEffect(() => {
     // Fetch all available alerts
     if (profileId) {
-      axios
+      apiAxios
         .post<AlertSettingsResponse>(
-          'http://20.84.40.134:8000/auth/Get_alert_settings/',
+          'auth/Get_alert_settings/',
         )
         .then((response) => {
           const { data } = response.data;
@@ -60,10 +61,9 @@ export const ViewAlertSettings: React.FC = () => {
           console.error('Error fetching alert settings:', error);
         });
 
-      // Fetch enabled notifications for the profile
-      axios
+      apiAxios
         .post<EnabledNotificationsResponse>(
-          'http://20.84.40.134:8000/auth/Get_enabled_notifications/',
+          'auth/Get_enabled_notifications/',
           { profile_id: profileId },
         )
         .then((response) => {

@@ -6,6 +6,7 @@ import AmsamGrid from '../HoroDetails/AmsamGrid';
 import MatchingStars from '../PartnerPreference/MatchingStars';
 import { ChangeEvent } from 'react';
 import { MatchingStar } from './profile_form_components/Partner_preference';
+import { apiAxios } from '../../api/apiUrl';
 
 interface MaritalStatusOption {
   marital_sts_id: number;
@@ -307,8 +308,8 @@ const ProfileForm = () => {
     }
 
     try {
-      const loginDetailsResponse = await axios.post(
-        'http://20.84.40.134:8000/api/logindetails/',
+      const loginDetailsResponse = await apiAxios.post(
+        'api/logindetails/',
         basicDetails,
         {
           headers: {
@@ -319,8 +320,8 @@ const ProfileForm = () => {
 
       const profileId = loginDetailsResponse.data.ProfileId;
 
-      await axios.post(
-        'http://20.84.40.134:8000/api/profile-familydetails/',
+      await apiAxios.post(
+        'api/profile-familydetails/',
         {
           profile_id: profileId,
           ...familyDetails,
@@ -332,8 +333,8 @@ const ProfileForm = () => {
         },
       );
 
-      await axios.post(
-        'http://20.84.40.134:8000/api/profile-edudetails/',
+      await apiAxios.post(
+        'api/profile-edudetails/',
         {
           profile_id: profileId,
           ...educationDetails,
@@ -345,8 +346,8 @@ const ProfileForm = () => {
         },
       );
 
-      await axios.post(
-        'http://20.84.40.134:8000/api/profile-partner-pref/',
+      await apiAxios.post(
+        'api/profile-partner-pref/',
         {
           profile_id: profileId,
           ...partnerPreferences,
@@ -364,7 +365,7 @@ const ProfileForm = () => {
       setEducationDetails(initialEducationDetails); // Reset education details form
       setPartnerPreferences(initialPartnerPreferences); // Reset partner preferences form
       setFormKey((prevKey) => prevKey + 1); // Update the formKey to trigger re-render
-    } catch (error) {
+    } catch (error:any) {
       console.error('Error creating profile:', error);
       if (error.response) {
         console.error('Error response data:', error.response.data);
@@ -440,9 +441,9 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchMaritalStatuses = async () => {
       try {
-        const response = await axios.post<{
+        const response = await apiAxios.post<{
           [key: string]: MaritalStatusOption;
-        }>(' http://20.84.40.134:8000/auth/Get_Marital_Status/');
+        }>('auth/Get_Marital_Status/');
         const options = Object.values(response.data);
         setMaritalStatuses(options);
       } catch (error) {
@@ -458,7 +459,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchComplexionStatus = async () => {
       try {
-        const response = await axios.post(" http://20.84.40.134:8000/auth/Get_Complexion/");
+        const response = await apiAxios.post("auth/Get_Complexion/");
         const options = Object.values(response.data) as ComplexionOption[];
         setComplexionOptions(options);
       } catch (error) {
@@ -474,7 +475,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchCountryStatus = async () => {
       try {
-        const response = await axios.post(" http://20.84.40.134:8000/auth/Get_Country/");
+        const response = await apiAxios.post("auth/Get_Country/");
         const options = Object.values(response.data) as CountryOption[];
         setCountryOptions(options);
       } catch (error) {
@@ -499,8 +500,8 @@ const ProfileForm = () => {
     const fetchStateStatus = async () => {
       try {
         if (selectedCountryId) {
-          const response = await axios.post(
-            ' http://20.84.40.134:8000/auth/Get_State/',
+          const response = await apiAxios.post(
+            'auth/Get_State/',
             { country_id: selectedCountryId }
           );
           const options = Object.values(response.data) as StateOption[];
@@ -521,7 +522,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchHighestEdu = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Highest_Education/`);
+        const response = await apiAxios.post(`auth/Get_Highest_Education/`);
         const options = Object.values(response.data) as HighesEducation[];
         setHighestEdu(options);
       } catch (error) {
@@ -536,7 +537,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchUgDegree = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Ug_Degree/`);
+        const response = await apiAxios.post(`auth/Get_Ug_Degree/`);
         const options = Object.values(response.data) as Ugdegree[];
         setUgdegree(options);
       } catch (error) {
@@ -552,7 +553,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchAnnualIncome = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Annual_Income/`);
+        const response = await apiAxios.post(`auth/Get_Annual_Income/`);
         const options = Object.values(response.data) as AnnualIncome[];
         setAnnualIncome(options);
       } catch (error) {
@@ -567,7 +568,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchOccupations = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Parent_Occupation/`);
+        const response = await apiAxios.post(`auth/Get_Parent_Occupation/`);
         const options = Object.values(response.data) as Occupation[];
         setOccupations(options);
       } catch (error) {
@@ -583,7 +584,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchPropertyworth = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Property_Worth/`);
+        const response = await apiAxios.post(`auth/Get_Property_Worth/`);
         const options = Object.values(response.data) as PropertyWorth[];
         setPropertyworth(options);
       } catch (error) {
@@ -598,7 +599,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchBirthStar = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Birth_Star/`, { state_id: " " });
+        const response = await apiAxios.post(`auth/Get_Birth_Star/`, { state_id: " " });
         const options = Object.values(response.data) as BirthStar[];
         setBirthStar(options);
       } catch (error) {
@@ -624,7 +625,7 @@ const ProfileForm = () => {
     if (selectedBirthStarId) {
       const fetchStateStatus = async () => {
         try {
-          const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Rasi/`, { birth_id: selectedBirthStarId });
+          const response = await apiAxios.post(`auth/Get_Rasi/`, { birth_id: selectedBirthStarId });
           const options = Object.values(response.data) as Rasi[];
           setRasiOptions(options);
         } catch (error) {
@@ -643,7 +644,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchLagnam = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_Lagnam_Didi/`);
+        const response = await apiAxios.post(`auth/Get_Lagnam_Didi/`);
         const options = Object.values(response.data) as Lagnam[];
         setLagnamOptions(options);
       } catch (error) {
@@ -666,7 +667,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchFamilyTypes = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyType/`);
+        const response = await apiAxios.post(`auth/Get_FamilyType/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyType[];
         setFamilyTypes(familyTypesArray);
@@ -689,7 +690,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchFamilyStatus = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyStatus/`);
+        const response = await apiAxios.post(`auth/Get_FamilyStatus/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyStatus[];
         setFamilyStatus(familyTypesArray);
@@ -713,7 +714,7 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchFamilyValue = async () => {
       try {
-        const response = await axios.post(` http://20.84.40.134:8000/auth/Get_FamilyValue/`);
+        const response = await apiAxios.post(`auth/Get_FamilyValue/`);
         const data = response.data;
         const familyTypesArray = Object.values(data) as FamilyValue[];
         setFamilyValue(familyTypesArray);
@@ -811,8 +812,8 @@ const ProfileForm = () => {
     if (storedBirthStar && storedGender) {
       const fetchMatchingStars = async () => {
         try {
-          const response = await axios.post(
-            ` http://20.84.40.134:8000/auth/Get_Matchstr_Pref/`,
+          const response = await apiAxios.post(
+            `auth/Get_Matchstr_Pref/`,
             {
               birth_star_id: storedBirthStar,
               gender: storedGender,
@@ -836,8 +837,8 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get(
-          'http://20.84.40.134:8000/api/api/countries/',
+        const response = await apiAxios.get(
+          'api/api/countries/',
         );
         setCountries(response.data);
       } catch (error) {
@@ -851,8 +852,8 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get(
-          'http://20.84.40.134:8000/api/api/states/',
+        const response = await apiAxios.get(
+          'api/api/states/',
         );
         setStates(response.data);
       } catch (error) {
@@ -866,8 +867,8 @@ const ProfileForm = () => {
   useEffect(() => {
     const fetchHighestEducations = async () => {
       try {
-        const response = await axios.get(
-          'http://20.84.40.134:8000/api/api/highest-educations/',
+        const response = await apiAxios.get(
+          'api/api/highest-educations/',
         );
         setHighestEducations(response.data);
       } catch (error) {
@@ -882,8 +883,8 @@ const ProfileForm = () => {
 
     const fetchAnnualIncomes = async () => {
       try {
-        const response = await axios.get(
-          'http://20.84.40.134:8000/api/api/annual-incomes/',
+        const response = await apiAxios.get(
+          'api/api/annual-incomes/',
         );
         fetchAnnualIncomes(response.data);
       } catch (error) {

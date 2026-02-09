@@ -1,5 +1,6 @@
 import React from 'react';
 import DataTable from '../../../components/DataTablel';
+import { apiUrl } from '../../../api/apiUrl';
 
 const newProfileColumns = [
   { id: 'ProfileId', label: 'Profile ID', minWidth: 100 },
@@ -20,7 +21,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Paid Profiles</h1>
-      <DataTable columns={newProfileColumns} apiEndpoint="http://20.84.40.134:8000/api/Get_all_profiles/paid/" />
+      <DataTable columns={newProfileColumns} apiEndpoint={`${apiUrl.apiUrlConfig}api/Get_all_profiles/paid/`} />
     </div>
   );
 };

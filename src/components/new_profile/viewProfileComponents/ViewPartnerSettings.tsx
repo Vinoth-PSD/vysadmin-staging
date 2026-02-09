@@ -212,8 +212,8 @@ const ViewPartnerSettings: React.FC<pageProps> = ({
   useEffect(() => {
     const fetchStatePreferences = async () => {
       try {
-        const response = await axios.post(
-          `http://20.84.40.134:8000/auth/Get_State_Pref/`
+        const response = await apiAxios.post(
+          `auth/Get_State_Pref/`
         );
 
         console.log("fffffffffffffffffffffff", response);
