@@ -37,12 +37,12 @@ const HighestEducationList = () => {
     }, [highestEducations, showAddPopup, showEditPopup, deleteConfirmation]); // Replace icons after render
 
     const fetchHighestEducations = async () => {
-        const response = await axios.get('http://20.246.74.138:5173/api/accounts/highest-educations/');
+        const response = await axios.get('http://20.84.40.134:8080/api/accounts/highest-educations/');
         setHighestEducations(response.data);
     };
 
     const addHighestEducation = async () => {
-        await axios.post('http://20.246.74.138:5173/api/accounts/highest-educations/', { degree: newHighestEducation });
+        await axios.post('http://20.84.40.134:8080/api/accounts/highest-educations/', { degree: newHighestEducation });
         setNewHighestEducation('');
         setShowAddPopup(false);
         fetchHighestEducations();
@@ -56,7 +56,7 @@ const HighestEducationList = () => {
     };
 
     const confirmDeleteEducation = async () => {
-        await axios.delete(`http://20.246.74.138:5173/api/accounts/highest-educations/${educationToDelete}/`);
+        await axios.delete(`http://20.84.40.134:8080/api/accounts/highest-educations/${educationToDelete}/`);
         setDeleteConfirmation(false);
         setEducationToDelete(null);
         fetchHighestEducations();
@@ -68,7 +68,7 @@ const HighestEducationList = () => {
     };
 
     const editHighestEducation = async () => {
-        await axios.put(`http://20.246.74.138:5173/api/accounts/highest-educations/${editHighestEducationData.id}/`, editHighestEducationData);
+        await axios.put(`http://20.84.40.134:8080/api/accounts/highest-educations/${editHighestEducationData.id}/`, editHighestEducationData);
         setEditHighestEducationData(null);
         setShowEditPopup(false);
         fetchHighestEducations();

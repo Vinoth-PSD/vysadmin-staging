@@ -43,7 +43,7 @@ const AdminTable: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          ' http://20.246.74.138:5173/api/admin-users/',
+          ' http://20.84.40.134:8080/api/admin-users/',
         );
         const data = response.data.map((item: any) => ({
           id: item.id,
@@ -82,7 +82,7 @@ const AdminTable: React.FC = () => {
 
     try {
       let response = await axios.delete(
-        ` http://20.246.74.138:5173/api/admin-user/delete/${selectedUserId}/`,
+        ` http://20.84.40.134:8080/api/admin-user/delete/${selectedUserId}/`,
       );
 
       if (response.status >= 200 && response.status <= 299) {

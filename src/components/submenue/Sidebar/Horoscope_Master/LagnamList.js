@@ -37,16 +37,16 @@ const LagnamList = () => {
     }, [lagnams, showPopup, deleteConfirmation]);
 
     const fetchLagnams = async () => {
-        const response = await axios.get('http://20.246.74.138:5173/api/accounts/lagnams/');
+        const response = await axios.get('http://20.84.40.134:8080/api/accounts/lagnams/');
         setLagnams(response.data);
     };
 
     const addOrUpdateLagnam = async () => {
         const lagnamData = { name: newLagnam };
         if (editLagnamId) {
-            await axios.put(`http://20.246.74.138:5173/api/accounts/lagnams/${editLagnamId}/`, lagnamData);
+            await axios.put(`http://20.84.40.134:8080/api/accounts/lagnams/${editLagnamId}/`, lagnamData);
         } else {
-            await axios.post('http://20.246.74.138:5173/api/accounts/lagnams/', lagnamData);
+            await axios.post('http://20.84.40.134:8080/api/accounts/lagnams/', lagnamData);
         }
         setNewLagnam('');
         setShowPopup(false);
@@ -61,7 +61,7 @@ const LagnamList = () => {
     };
 
     const confirmDeleteLagnam = async () => {
-        await axios.delete(`http://20.246.74.138:5173/api/accounts/lagnams/${lagnamToDelete}/`);
+        await axios.delete(`http://20.84.40.134:8080/api/accounts/lagnams/${lagnamToDelete}/`);
         setDeleteConfirmation(false);
         setLagnamToDelete(null);
         fetchLagnams();

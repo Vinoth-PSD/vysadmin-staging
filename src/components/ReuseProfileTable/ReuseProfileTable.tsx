@@ -99,7 +99,7 @@ const ReUseDataTable: React.FC<DataTableProps> = ({
     if (!confirmed) return;
 
     try {
-      await axios.delete(` http://20.246.74.138:5173/api/logindetails/${ContentId}/`, {
+      await axios.delete(` http://20.84.40.134:8080/api/logindetails/${ContentId}/`, {
         data: {
           admin_user_id: adminUserID,  // <-- RAW JSON body
         },

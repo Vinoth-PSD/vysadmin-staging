@@ -36,16 +36,16 @@ const PlaceOfBirthList = () => {
     }, [placesOfBirth, showPopup, deleteConfirmation]);
 
     const fetchPlacesOfBirth = async () => {
-        const response = await axios.get('http://20.246.74.138:5173/api/accounts/place-of-births/');
+        const response = await axios.get('http://20.84.40.134:8080/api/accounts/place-of-births/');
         setPlacesOfBirth(response.data);
     };
 
     const addOrUpdatePlaceOfBirth = async () => {
         const placeData = { place: newPlaceOfBirth };
         if (editPlaceId) {
-            await axios.put(`http://20.246.74.138:5173/api/accounts/place-of-births/${editPlaceId}/`, placeData);
+            await axios.put(`http://20.84.40.134:8080/api/accounts/place-of-births/${editPlaceId}/`, placeData);
         } else {
-            await axios.post('http://20.246.74.138:5173/api/accounts/place-of-births/', placeData);
+            await axios.post('http://20.84.40.134:8080/api/accounts/place-of-births/', placeData);
         }
         setNewPlaceOfBirth('');
         setShowPopup(false);
@@ -67,7 +67,7 @@ const PlaceOfBirthList = () => {
     };
 
     const confirmDeletePlace = async () => {
-        await axios.delete(`http://20.246.74.138:5173/api/accounts/place-of-births/${placeToDelete}/`);
+        await axios.delete(`http://20.84.40.134:8080/api/accounts/place-of-births/${placeToDelete}/`);
         setPlaceToDelete(null);
         setDeleteConfirmation(false);
         fetchPlacesOfBirth();

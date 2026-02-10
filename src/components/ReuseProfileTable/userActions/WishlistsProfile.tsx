@@ -42,7 +42,7 @@ const getWishlistsProfile = async (fromDate: string, toDate: string, page: numbe
     rowsPerPage: rowsPerPage.toString()
   });
 
-  const url = `http://20.246.74.138:5173/api/bookmarks/?${params.toString()}`;
+  const url = `http://20.84.40.134:8080/api/bookmarks/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -199,7 +199,7 @@ const WishlistsProfile: React.FC = () => {
       });
 
       const response = await axios.get(
-        'http://20.246.74.138:5173/api/bookmarks/',
+        'http://20.84.40.134:8080/api/bookmarks/',
         {
           params,
           responseType: 'blob', // Important for binary file data

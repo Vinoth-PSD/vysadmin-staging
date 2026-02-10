@@ -243,7 +243,7 @@ const ViewSuggestedProfile: React.FC<pageProps> = ({
     const fetchStatePreferences = async () => {
       try {
         const response = await axios.post(
-          `http://20.246.74.138:5173/auth/Get_State_Pref/`
+          `http://20.84.40.134:8080/auth/Get_State_Pref/`
         );
 
         console.log("fffffffffffffffffffffff", response);

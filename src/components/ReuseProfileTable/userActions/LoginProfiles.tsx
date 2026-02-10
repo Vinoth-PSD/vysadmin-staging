@@ -48,7 +48,7 @@ const getLoginLogs = async (date: string, fromDate: string, toDate: string, page
   params.append('page_number', (page + 1).toString());
   params.append('per_page', rowsPerPage.toString());
 
-  const url = `http://20.246.74.138:5173/api/login-logs/?${params.toString()}`;
+  const url = `http://20.84.40.134:8080/api/login-logs/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -175,7 +175,7 @@ const LoginProfiles: React.FC = () => {
       if (filters.planId) params.append('plan', filters.planId);
 
       const response = await axios.get(
-        'http://20.246.74.138:5173/api/login-logs/',
+        'http://20.84.40.134:8080/api/login-logs/',
         {
           params,
           responseType: 'blob', // Critical for binary data

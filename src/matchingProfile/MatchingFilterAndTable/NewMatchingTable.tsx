@@ -568,7 +568,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiUrl = `http://20.84.40.134:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),
@@ -606,7 +606,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiUrl = `http://20.84.40.134:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),
@@ -644,7 +644,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:5173/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiUrl = `http://20.84.40.134:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),

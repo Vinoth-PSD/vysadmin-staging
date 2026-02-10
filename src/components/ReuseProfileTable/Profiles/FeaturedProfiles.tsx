@@ -25,9 +25,9 @@ import { Add } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { hasPermission } from '../../utils/auth';
 
-const FEATURED_API_URL = 'http://20.246.74.138:5173/api/featured-profiles/';
-const API_URL = 'http://20.246.74.138:5173/api'; // Base API for delete
-const ADD_PROFILE_API_URL = 'http://20.246.74.138:5173/api/featured-profiles-add/';
+const FEATURED_API_URL = 'http://20.84.40.134:8080/api/featured-profiles/';
+const API_URL = 'http://20.84.40.134:8080/api'; // Base API for delete
+const ADD_PROFILE_API_URL = 'http://20.84.40.134:8080/api/featured-profiles-add/';
 
 export const getFeaturedProfiles = async (
     search: string,
@@ -197,7 +197,7 @@ const FeaturedProfiles: React.FC = () => {
             params.append('export', 'xlsx');
 
             const response = await axios.get(
-                `http://20.246.74.138:5173/api/featured-profiles/`,
+                `http://20.84.40.134:8080/api/featured-profiles/`,
                 {
                     params,
                     responseType: 'blob',

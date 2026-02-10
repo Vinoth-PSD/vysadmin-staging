@@ -43,16 +43,16 @@ const BirthStarList = () => {
     }, [birthStars, showPopup, deleteConfirmation]);
 
     const fetchBirthStars = async () => {
-        const response = await axios.get('http://20.246.74.138:5173/api/accounts/birth-stars/');
+        const response = await axios.get('http://20.84.40.134:8080/api/accounts/birth-stars/');
         setBirthStars(response.data);
     };
 
     const addOrUpdateBirthStar = async () => {
         const starData = { star: newBirthStar };
         if (editStarId) {
-            await axios.put(`http://20.246.74.138:5173/api/accounts/birth-stars/${editStarId}/`, starData);
+            await axios.put(`http://20.84.40.134:8080/api/accounts/birth-stars/${editStarId}/`, starData);
         } else {
-            await axios.post('http://20.246.74.138:5173/api/accounts/birth-stars/', starData);
+            await axios.post('http://20.84.40.134:8080/api/accounts/birth-stars/', starData);
         }
         setNewBirthStar('');
         setShowPopup(false);
@@ -73,7 +73,7 @@ const BirthStarList = () => {
     };
 
     const confirmDeleteStar = async () => {
-        await axios.delete(`http://20.246.74.138:5173/api/accounts/birth-stars/${starToDelete}/`);
+        await axios.delete(`http://20.84.40.134:8080/api/accounts/birth-stars/${starToDelete}/`);
         setStarToDelete(null);
         setDeleteConfirmation(false);
         fetchBirthStars();

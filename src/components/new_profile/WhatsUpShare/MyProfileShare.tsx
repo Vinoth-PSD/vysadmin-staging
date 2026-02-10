@@ -46,8 +46,8 @@ export const MyProfileShare: React.FC<ShareProps> = ({
   // Dynamic URL to the profile share page
   // const shareUrl = `http://matrimonyapp.rainyseasun.com/ProfileImage?data=${encodedData}`;
 
-  const shareUrl = `http://20.246.74.138:5173/auth/profile/${profileId}/`;
-  const shareUrlWithoutImage = `http://20.246.74.138:5173/auth/profile_view/${profileId}/`
+  const shareUrl = `http://20.84.40.134:8080/auth/profile/${profileId}/`;
+  const shareUrlWithoutImage = `http://20.84.40.134:8080/auth/profile_view/${profileId}/`
   const title = 'Check out this profile!';
   const registrationLink = 'vysyamala.com'
 
