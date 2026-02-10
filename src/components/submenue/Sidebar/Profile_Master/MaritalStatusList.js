@@ -38,13 +38,13 @@ const MaritalStatusList = () => {
     }, [maritalStatuses, showAddPopup, showEditPopup, deleteConfirmation, showSuccessPopup]);
 
     const fetchMaritalStatuses = async () => {
-        const response = await axios.get('http://20.84.40.134:8080/api/accounts/marital-statuses/');
+        const response = await axios.get('http://20.246.74.138:8080/api/accounts/marital-statuses/');
         setMaritalStatuses(response.data);
     };
 
     const addMaritalStatus = async () => {
         try {
-            await axios.post('http://20.84.40.134:8080/api/accounts/marital-statuses/', { status: newMaritalStatus });
+            await axios.post('http://20.246.74.138:8080/api/accounts/marital-statuses/', { status: newMaritalStatus });
             setNewMaritalStatus('');
             setShowAddPopup(false);
             setShowSuccessPopup(true); // Show success popup
@@ -55,14 +55,14 @@ const MaritalStatusList = () => {
     };
 
     const editMaritalStatus = async () => {
-        await axios.put(`http://20.84.40.134:8080/api/accounts/marital-statuses/${editMaritalStatusData.id}/`, editMaritalStatusData);
+        await axios.put(`http://20.246.74.138:8080/api/accounts/marital-statuses/${editMaritalStatusData.id}/`, editMaritalStatusData);
         fetchMaritalStatuses();
         setShowEditPopup(false);
         setShowSuccessPopup(true); // Show success popup
     };
 
     const deleteMaritalStatus = async () => {
-        await axios.delete(`http://20.84.40.134:8080/api/accounts/marital-statuses/${statusToDelete}/`);
+        await axios.delete(`http://20.246.74.138:8080/api/accounts/marital-statuses/${statusToDelete}/`);
         setDeleteConfirmation(false);
         setStatusToDelete(null);
         setShowSuccessPopup(true); // Show success popup

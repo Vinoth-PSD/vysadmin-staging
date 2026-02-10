@@ -12,7 +12,7 @@
 
 // // Fetch profiles data function
 // const fetchProfilesData = async (search: string, orderBy: string, order: 'asc' | 'desc', rowsPerPage: number, page: number) => {
-//   const baseUrl = ` http://20.84.40.134:8080/api/newprofile_get/?page_name=7&page=${page}`;
+//   const baseUrl = ` http://20.246.74.138:8080/api/newprofile_get/?page_name=7&page=${page}`;
 //   const params = new URLSearchParams({
 //     page_size: rowsPerPage.toString(),
 //     page: page.toString(),
@@ -66,7 +66,7 @@
 
 // // Fetch profiles data function
 // const fetchProfilesData = async (search: string, orderBy: string, order: 'asc' | 'desc', rowsPerPage: number, page: number,page_name:number) => {
-//   const baseUrl = ` http://20.84.40.134:8080/api/newprofile_get/?page_name=2&page=${page}`;
+//   const baseUrl = ` http://20.246.74.138:8080/api/newprofile_get/?page_name=2&page=${page}`;
 //   const params = new URLSearchParams({
 //     page_size: rowsPerPage.toString(),
 //     page_name: page_name.toString(),
@@ -239,7 +239,7 @@
 //     if (!confirmed) return;
 
 //     try {
-//       await axios.delete(` http://20.84.40.134:8080/api/logindetails/${ContentId}/`);
+//       await axios.delete(` http://20.246.74.138:8080/api/logindetails/${ContentId}/`);
 //       fetchData(); // Refresh the data after deletion
 //     } catch (error) {
 //       console.error('Error deleting data:', error);

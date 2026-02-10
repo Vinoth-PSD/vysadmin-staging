@@ -362,7 +362,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
   const generateShortProfilePDF = async (profileData: number[]) => {
     try {
       const response = await axios.post(
-        'http://20.84.40.134:8080/api/generate_short_profile_pdf/',
+        'http://20.246.74.138:8080/api/generate_short_profile_pdf/',
         {
           profile_id: profileData.join(','),
         },
@@ -449,7 +449,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.84.40.134:8080/api/profiles/export/`;
+      const url = `http://20.246.74.138:8080/api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -487,7 +487,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
       }
 
       const response = await axios.get(
-        'http://20.84.40.134:8080/api/profiles/export/',
+        'http://20.246.74.138:8080/api/profiles/export/',
         {
           params,
           responseType: 'blob',
@@ -526,7 +526,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.84.40.134:8080/api/profiles/export/`;
+      const url = `http://20.246.74.138:8080/api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -559,7 +559,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.84.40.134:8080/api/profiles/export/`;
+      const url = `http://20.246.74.138:8080/api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -592,7 +592,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.84.40.134:8080/api/profiles/export/`;
+      const url = `http://20.246.74.138:8080/api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',

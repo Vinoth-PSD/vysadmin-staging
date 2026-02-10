@@ -142,7 +142,7 @@ const PhotoRequestProfiles: React.FC = () => {
       });
 
       const response = await axios.get(
-        'http://20.84.40.134:8080/api/photo-requests/',
+        'http://20.246.74.138:8080/api/photo-requests/',
         {
           params,
           responseType: 'blob',

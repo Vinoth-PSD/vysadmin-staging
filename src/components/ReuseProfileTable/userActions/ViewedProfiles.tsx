@@ -47,8 +47,8 @@ const getViewedProfiles = async (fromDate: string, toDate: string, page: number,
     params.append('mutual_only', '1');
   }
 
-  // const url = `http://20.84.40.134:8080/api/viewed-profiles/?from_date=${fromDate}&to_date=${toDate}&page=${page + 1}&limit=${rowsPerPage}`;
-  const url = `http://20.84.40.134:8080/api/viewed-profiles/?${params.toString()}`;
+  // const url = `http://20.246.74.138:8080/api/viewed-profiles/?from_date=${fromDate}&to_date=${toDate}&page=${page + 1}&limit=${rowsPerPage}`;
+  const url = `http://20.246.74.138:8080/api/viewed-profiles/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -194,7 +194,7 @@ const ViewedProfiles: React.FC = () => {
       }
 
       const response = await axios.get(
-        'http://20.84.40.134:8080/api/viewed-profiles/',
+        'http://20.246.74.138:8080/api/viewed-profiles/',
         {
           params,
           responseType: 'blob', // Critical for binary files

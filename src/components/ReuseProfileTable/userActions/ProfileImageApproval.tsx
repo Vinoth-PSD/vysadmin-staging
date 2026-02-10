@@ -165,7 +165,7 @@ const ProfileImageApproval: React.FC = () => {
       }
 
       const response = await axios.get(
-        'http://20.84.40.134:8080/api/get_profile-images_approval/',
+        'http://20.246.74.138:8080/api/get_profile-images_approval/',
         {
           params,
           responseType: 'blob', // Important for binary files

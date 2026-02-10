@@ -1103,7 +1103,7 @@ export const uploadProofFiles = async (
 
 
 export const deleteFile = async (profileId, modelType, fieldName) => {
-    const url = 'http://20.84.40.134:8080/api/delete-file/';
+    const url = 'http://20.246.74.138:8080/api/delete-file/';
     const body = {
         model_type: modelType,
         profile_id: profileId,

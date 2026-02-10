@@ -240,7 +240,7 @@ const ExpressInterest: React.FC = () => {
       params.append('export', 'xlsx');
 
       const response = await axios.get(
-        'http://20.84.40.134:8080/api/express-interest/',
+        'http://20.246.74.138:8080/api/express-interest/',
         {
           params,
           responseType: 'blob',

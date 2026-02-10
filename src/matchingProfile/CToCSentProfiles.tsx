@@ -15,7 +15,7 @@
 // import { useLocation } from "react-router-dom";
 
 
-// const API_URL = "http://20.84.40.134:8080/api/call_action_sent/";
+// const API_URL = "http://20.246.74.138:8080/api/call_action_sent/";
 
 // interface ProfileType {
 //   profile_id: string;
@@ -171,7 +171,7 @@ import {
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
-const API_URL = "http://20.84.40.134:8080/api/call_action_sent/";
+const API_URL = "http://20.246.74.138:8080/api/call_action_sent/";
 
 interface ProfileType {
   profile_id: string;
