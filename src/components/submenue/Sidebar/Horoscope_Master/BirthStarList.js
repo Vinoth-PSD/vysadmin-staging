@@ -8,6 +8,7 @@ import feather from 'feather-icons';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import BreadCrumbs from '../../../Breadcrumbs';
+import apiAxios from '../../../../../src/api/apiUrl'
 
 const PaginationRounded = ({ count, page, onChange }) => {
     return (
@@ -43,16 +44,16 @@ const BirthStarList = () => {
     }, [birthStars, showPopup, deleteConfirmation]);
 
     const fetchBirthStars = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/birth-stars/');
+        const response = await apiAxios.get('api/accounts/birth-stars/');
         setBirthStars(response.data);
     };
 
     const addOrUpdateBirthStar = async () => {
         const starData = { star: newBirthStar };
         if (editStarId) {
-            await axios.put(`http://20.246.74.138:8080/api/accounts/birth-stars/${editStarId}/`, starData);
+            await apiAxios.put(`api/accounts/birth-stars/${editStarId}/`, starData);
         } else {
-            await axios.post('http://20.246.74.138:8080/api/accounts/birth-stars/', starData);
+            await apiAxios.post('api/accounts/birth-stars/', starData);
         }
         setNewBirthStar('');
         setShowPopup(false);
@@ -73,7 +74,7 @@ const BirthStarList = () => {
     };
 
     const confirmDeleteStar = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/birth-stars/${starToDelete}/`);
+        await apiAxios.delete(`api/accounts/birth-stars/${starToDelete}/`);
         setStarToDelete(null);
         setDeleteConfirmation(false);
         fetchBirthStars();

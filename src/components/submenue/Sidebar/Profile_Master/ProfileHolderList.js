@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 
 const ProfileHolderList = () => {
@@ -38,7 +39,7 @@ const ProfileHolderList = () => {
     }, []);
 
     const fetchProfileHolders = () => {
-        axios.get('http://20.246.74.138:8080/api/accounts/profile-holders/')
+        apiAxios.get('api/accounts/profile-holders/')
             .then(response => {
                 setProfileHolders(response.data);
             }).catch(error => {
@@ -48,7 +49,7 @@ const ProfileHolderList = () => {
 
     const handleAddOrEditHolder = () => {
         if (editHolderId) {
-            axios.put(`http://20.246.74.138:8080/api/accounts/profile-holders/${editHolderId}/`, newProfileHolder)
+            apiAxios.put(`api/accounts/profile-holders/${editHolderId}/`, newProfileHolder)
                 .then(response => {
                     setProfileHolders(profileHolders.map(holder => holder.id === editHolderId ? response.data : holder));
                     resetForm();
@@ -57,7 +58,7 @@ const ProfileHolderList = () => {
                     console.error(error);
                 });
         } else {
-            axios.post('http://20.246.74.138:8080/api/accounts/profile-holders/', newProfileHolder)
+            apiAxios.post('api/accounts/profile-holders/', newProfileHolder)
                 .then(response => {
                     setProfileHolders([...profileHolders, response.data]);
                     resetForm();
@@ -81,7 +82,7 @@ const ProfileHolderList = () => {
     };
 
     const confirmDeleteHolder = () => {
-        axios.delete(`http://20.246.74.138:8080/api/accounts/profile-holders/${holderToDelete}/`)
+        apiAxios.delete(`api/accounts/profile-holders/${holderToDelete}/`)
             .then(() => {
                 setProfileHolders(profileHolders.filter(holder => holder.id !== holderToDelete));
                 setHolderToDelete(null);

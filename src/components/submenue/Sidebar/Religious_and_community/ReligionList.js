@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 
 const ReligionList = () => {
@@ -38,13 +39,13 @@ const ReligionList = () => {
     }, [religions, showPopup, deleteConfirmation]);
 
     const fetchReligions = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/religions/');
+        const response = await apiAxios.get('api/religions/');
         setReligions(response.data);
     };
 
     const handleAddReligion = async () => {
         if (newReligion.trim() === '') return; // Prevent empty submission
-        await axios.post('http://20.246.74.138:8080/api/religions/', { name: newReligion });
+        await apiAxios.post('api/religions/', { name: newReligion });
         setNewReligion('');
         setShowPopup(false);
         setShowSuccessPopup(true); // Show success popup
@@ -57,7 +58,7 @@ const ReligionList = () => {
     };
 
     const confirmDeleteReligion = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/religions/${religionToDelete}/`);
+        await apiAxios.delete(`api/religions/${religionToDelete}/`);
         setDeleteConfirmation(false);
         setReligionToDelete(null);
         fetchReligions();
@@ -86,7 +87,7 @@ const ReligionList = () => {
 
     const handleUpdateReligion = async () => {
         if (editedReligionName.trim() === '') return; // Prevent empty submission
-        await axios.put(`http://20.246.74.138:8080/api/religions/${editReligionId}/`, { name: editedReligionName });
+        await apiAxios.put(`api/religions/${editReligionId}/`, { name: editedReligionName });
         setEditReligionId(null);
         setEditedReligionName('');
         setShowPopup(false);

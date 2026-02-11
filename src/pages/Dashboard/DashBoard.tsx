@@ -6,6 +6,7 @@ import { CiImageOff } from 'react-icons/ci';
 import { RiAccountPinCircleFill, RiAdminLine, RiPassPendingFill } from 'react-icons/ri';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { apiUrl } from '../../api/apiUrl';
 
 interface DashboardData {
   new_profiles: number;
@@ -26,7 +27,7 @@ const DashBoard: React.FC = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch('http://20.246.74.138:8080/api/dashboard_counts/');
+        const response = await fetch(`${apiUrl.apiUrlConfig}api/dashboard_counts/`);
         const data = await response.json();
         setDashboardData(data);
       } catch (error) {

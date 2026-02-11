@@ -8,6 +8,7 @@ import feather from 'feather-icons';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import BreadCrumbs from '../../../Breadcrumbs';
+import { apiAxios } from '../../../../api/apiUrl';
 
 const DasaBalanceList = () => {
     const [dasaBalances, setDasaBalances] = useState([]);
@@ -36,12 +37,12 @@ const DasaBalanceList = () => {
     }, [dasaBalances, showPopup, deleteConfirmation]);
 
     const fetchDasaBalances = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/dasa-balances/');
+        const response = await apiAxios.get('api/accounts/dasa-balances/');
         setDasaBalances(response.data);
     };
 
     const addDasaBalance = async () => {
-        await axios.post('http://20.246.74.138:8080/api/accounts/dasa-balances/', { balance: newDasaBalance });
+        await apiAxios.post('api/accounts/dasa-balances/', { balance: newDasaBalance });
         setNewDasaBalance('');
         setShowPopup(false);
         fetchDasaBalances();
@@ -49,7 +50,7 @@ const DasaBalanceList = () => {
     };
 
     const deleteDasaBalance = async (id) => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/dasa-balances/${id}/`);
+        await apiAxios.delete(`api/accounts/dasa-balances/${id}/`);
         fetchDasaBalances();
     };
 
@@ -76,7 +77,7 @@ const DasaBalanceList = () => {
     };
 
     const updateDasaBalance = async () => {
-        await axios.put(`http://20.246.74.138:8080/api/accounts/dasa-balances/${editDasaBalanceId}/`, { balance: editedDasaBalance });
+        await apiAxios.put(`api/accounts/dasa-balances/${editDasaBalanceId}/`, { balance: editedDasaBalance });
         setEditDasaBalanceId(null);
         setEditedDasaBalance('');
         setShowPopup(false);

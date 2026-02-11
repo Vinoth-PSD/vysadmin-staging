@@ -8,6 +8,7 @@ import feather from 'feather-icons';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import BreadCrumbs from '../../../Breadcrumbs';
+import { apiAxios } from '../../../../api/apiUrl';
 
 const PlaceOfBirthList = () => {
     const [placesOfBirth, setPlacesOfBirth] = useState([]);
@@ -36,16 +37,16 @@ const PlaceOfBirthList = () => {
     }, [placesOfBirth, showPopup, deleteConfirmation]);
 
     const fetchPlacesOfBirth = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/place-of-births/');
+        const response = await apiAxios.get('api/accounts/place-of-births/');
         setPlacesOfBirth(response.data);
     };
 
     const addOrUpdatePlaceOfBirth = async () => {
         const placeData = { place: newPlaceOfBirth };
         if (editPlaceId) {
-            await axios.put(`http://20.246.74.138:8080/api/accounts/place-of-births/${editPlaceId}/`, placeData);
+            await apiAxios.put(`api/accounts/place-of-births/${editPlaceId}/`, placeData);
         } else {
-            await axios.post('http://20.246.74.138:8080/api/accounts/place-of-births/', placeData);
+            await apiAxios.post('api/accounts/place-of-births/', placeData);
         }
         setNewPlaceOfBirth('');
         setShowPopup(false);
@@ -67,7 +68,7 @@ const PlaceOfBirthList = () => {
     };
 
     const confirmDeletePlace = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/place-of-births/${placeToDelete}/`);
+        await apiAxios.delete(`api/accounts/place-of-births/${placeToDelete}/`);
         setPlaceToDelete(null);
         setDeleteConfirmation(false);
         fetchPlacesOfBirth();

@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -46,9 +47,8 @@ const getViewedProfiles = async (fromDate: string, toDate: string, page: number,
   if (mutualOnly) {
     params.append('mutual_only', '1');
   }
-
-  // const url = `http://20.246.74.138:8080/api/viewed-profiles/?from_date=${fromDate}&to_date=${toDate}&page=${page + 1}&limit=${rowsPerPage}`;
-  const url = `http://20.246.74.138:8080/api/viewed-profiles/?${params.toString()}`;
+  
+  const url = `${apiUrl.apiUrlConfig}api/viewed-profiles/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -193,8 +193,8 @@ const ViewedProfiles: React.FC = () => {
         params.append('mutual_only', '1');
       }
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/viewed-profiles/',
+      const response = await apiAxios.get(
+        'api/viewed-profiles/',
         {
           params,
           responseType: 'blob', // Critical for binary files

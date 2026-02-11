@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const apiUrl = {
   // apiUrlConfig: "https://vysyamaladevnew-aehaazdxdzegasfb.westcentralus-01.azurewebsites.net/",
+  // apiUrlConfig: "https://app.vysyamala.com/",
   apiUrlConfig: "http://20.246.74.138:8080/",
   // apiUrlConfig: "https://vysyamaladevnew-aehaazdxdzegasfb.westcentralus-01.azurewebsites.net/",    // Azure
   //http://103.214.132.20:8000

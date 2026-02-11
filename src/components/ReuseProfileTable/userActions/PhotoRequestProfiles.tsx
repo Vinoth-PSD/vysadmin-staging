@@ -19,6 +19,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { photoRequest } from '../../../services/api';
 import { toast } from 'react-toastify';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -141,8 +142,8 @@ const PhotoRequestProfiles: React.FC = () => {
         export: 'xlsx',
       });
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/photo-requests/',
+      const response = await apiAxios.get(
+        'api/photo-requests/',
         {
           params,
           responseType: 'blob',

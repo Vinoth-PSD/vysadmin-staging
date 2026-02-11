@@ -8,6 +8,7 @@ import feather from 'feather-icons';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import BreadCrumbs from '../../../Breadcrumbs';
+import { apiAxios } from '../../../../api/apiUrl';
 const PaginationRounded = ({ count, page, onChange }) => {
     return (
         <Stack spacing={2}>
@@ -43,16 +44,16 @@ const RasiList = () => {
     }, [rasis, showPopup, deleteConfirmation]);
 
     const fetchRasis = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/rasis/');
+        const response = await apiAxios.get('api/accounts/rasis/');
         setRasis(response.data);
     };
 
     const addOrUpdateRasi = async () => {
         const rasiData = { name: newRasi };
         if (editRasiId) {
-            await axios.put(`http://20.246.74.138:8080/api/accounts/rasis/${editRasiId}/`, rasiData);
+            await apiAxios.put(`api/accounts/rasis/${editRasiId}/`, rasiData);
         } else {
-            await axios.post('http://20.246.74.138:8080/api/accounts/rasis/', rasiData);
+            await apiAxios.post('api/accounts/rasis/', rasiData);
         }
         setNewRasi('');
         setShowPopup(false);
@@ -73,7 +74,7 @@ const RasiList = () => {
     };
 
     const confirmDeleteRasi = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/rasis/${rasiToDelete}/`);
+        await apiAxios.delete(`api/accounts/rasis/${rasiToDelete}/`);
         setRasiToDelete(null);
         setDeleteConfirmation(false);
         fetchRasis();

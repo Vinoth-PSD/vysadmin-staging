@@ -22,6 +22,7 @@ import { API_URL, quickUpload } from '../../../services/api';
 import { GrEdit } from 'react-icons/gr';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaRegEye } from 'react-icons/fa';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 // Function to fetch data from the API
 export const getQuickUploadProfiles = async (
   search: string,
@@ -185,9 +186,9 @@ const QuickUploadProfiles: React.FC = () => {
     const checked = event.target.checked;
     setSelectAll(checked);
     if (checked) {
-      setSelectedRows(data.results.map((row) => row.ProfileId)); // Select all profile IDs
+      setSelectedRows(data.results.map((row) => row.ProfileId)); 
     } else {
-      setSelectedRows([]); // Deselect all
+      setSelectedRows([]); 
     }
   };
 
@@ -195,38 +196,30 @@ const QuickUploadProfiles: React.FC = () => {
     setSelectedRows(
       (prevSelected) =>
         prevSelected.includes(profileId)
-          ? prevSelected.filter((id) => id !== profileId) // Deselect if already selected
-          : [...prevSelected, profileId], // Select if not selected
+          ? prevSelected.filter((id) => id !== profileId) 
+          : [...prevSelected, profileId],
     );
   };
 
   const generateShortProfilePDF = async (profileData: number[]) => {
     try {
-      const response = await axios.post(
-        'http://20.246.74.138:8080/api/generate_short_profile_pdf/',
+      const response = await apiAxios.post(
+        'api/generate_short_profile_pdf/',
         {
           profile_id: profileData.join(','),
         },
         {
-          responseType: 'blob', // Important for handling binary data
+          responseType: 'blob', 
         },
       );
 
-      // Create a URL for the PDF blob
       const url = window.URL.createObjectURL(new Blob([response.data]));
-
-      // Create a link element
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', 'profile.pdf'); // Specify the file name
-
-      // Append to the body
       document.body.appendChild(link);
-
-      // Trigger the download
       link.click();
 
-      // Clean up and remove the link
     } catch (error) {
       console.error('Error downloading the PDF:', error);
     } finally {
@@ -234,51 +227,6 @@ const QuickUploadProfiles: React.FC = () => {
       setSelectAll(false);
     }
   };
-
-  // const handleDownloadExcel = async () => {
-  //   setIsDownloading(true);
-
-  //   try {
-  //     const params: any = {
-  //       export: 'excel',
-  //     };
-
-  //     // include search if applied
-  //     // if (search) {
-  //     //   params.search = search.trim();
-  //     // }
-
-  //     const response = await axios.get(
-  //       'http://20.246.74.138:8080/api/quick-upload/',
-  //       {
-  //         params,
-  //         responseType: 'blob', // ✅ IMPORTANT
-  //       }
-  //     );
-
-  //     const blob = new Blob([response.data], {
-  //       type:
-  //         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  //     });
-
-  //     const downloadUrl = window.URL.createObjectURL(blob);
-
-  //     const link = document.createElement('a');
-  //     link.href = downloadUrl;
-  //     link.setAttribute('download', 'Quick_Upload_Profiles.csv');
-
-  //     document.body.appendChild(link);
-  //     link.click();
-
-  //     link.remove();
-  //     window.URL.revokeObjectURL(downloadUrl);
-  //   } catch (error) {
-  //     console.error('Error downloading Excel:', error);
-  //     alert('Failed to download Excel file');
-  //   } finally {
-  //     setIsDownloading(false);
-  //   }
-  // };
 
   const handleDownloadExcel = async () => {
     setIsDownloading(true);
@@ -288,7 +236,7 @@ const QuickUploadProfiles: React.FC = () => {
     };
 
     try {
-      const url = `http://20.246.74.138:8080/api/quick-upload/`;
+      const url = `${apiUrl.apiUrlConfig}api/quick-upload/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',

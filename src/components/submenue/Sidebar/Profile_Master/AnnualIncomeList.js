@@ -8,6 +8,7 @@ import Sidebar from '../../../Sidebar';
 import Navbar from '../../../Navbar';
 import '../../../css/app.css'; 
 import Popup from '../../../Popup';
+import { apiAxios } from '../../../../api/apiUrl';
 
 const AnnualIncomeList = () => {
     const [annualIncomes, setAnnualIncomes] = useState([]);
@@ -35,12 +36,12 @@ const AnnualIncomeList = () => {
     }, [annualIncomes, showAddPopup, showEditPopup, deleteConfirmation]); // Replace icons after render
 
     const fetchAnnualIncomes = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/annual-incomes/');
+        const response = await apiAxios.get('api/accounts/annual-incomes/');
         setAnnualIncomes(response.data);
     };
 
     const addAnnualIncome = async () => {
-        await axios.post('http://20.246.74.138:8080/api/accounts/annual-incomes/', { income: newAnnualIncome });
+        await apiAxios.post('api/accounts/annual-incomes/', { income: newAnnualIncome });
         setNewAnnualIncome('');
         setShowAddPopup(false);
         fetchAnnualIncomes();
@@ -53,7 +54,7 @@ const AnnualIncomeList = () => {
     };
 
     const confirmDeleteIncome = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/annual-incomes/${incomeToDelete}/`);
+        await apiAxios.delete(`api/accounts/annual-incomes/${incomeToDelete}/`);
         setDeleteConfirmation(false);
         setIncomeToDelete(null);
         fetchAnnualIncomes();
@@ -65,7 +66,7 @@ const AnnualIncomeList = () => {
     };
 
     const editAnnualIncome = async () => {
-        await axios.put(`http://20.246.74.138:8080/api/accounts/annual-incomes/${editAnnualIncomeData.id}/`, editAnnualIncomeData);
+        await apiAxios.put(`api/accounts/annual-incomes/${editAnnualIncomeData.id}/`, editAnnualIncomeData);
         setEditAnnualIncomeData(null);
         setShowEditPopup(false);
         fetchAnnualIncomes();

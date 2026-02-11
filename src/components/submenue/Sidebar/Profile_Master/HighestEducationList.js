@@ -8,6 +8,7 @@ import Popup from '../../../Popup';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 
 const HighestEducationList = () => {
@@ -37,12 +38,12 @@ const HighestEducationList = () => {
     }, [highestEducations, showAddPopup, showEditPopup, deleteConfirmation]); // Replace icons after render
 
     const fetchHighestEducations = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/highest-educations/');
+        const response = await apiAxios.get('api/accounts/highest-educations/');
         setHighestEducations(response.data);
     };
 
     const addHighestEducation = async () => {
-        await axios.post('http://20.246.74.138:8080/api/accounts/highest-educations/', { degree: newHighestEducation });
+        await apiAxios.post('api/accounts/highest-educations/', { degree: newHighestEducation });
         setNewHighestEducation('');
         setShowAddPopup(false);
         fetchHighestEducations();
@@ -56,7 +57,7 @@ const HighestEducationList = () => {
     };
 
     const confirmDeleteEducation = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/highest-educations/${educationToDelete}/`);
+        await apiAxios.delete(`api/accounts/highest-educations/${educationToDelete}/`);
         setDeleteConfirmation(false);
         setEducationToDelete(null);
         fetchHighestEducations();
@@ -68,7 +69,7 @@ const HighestEducationList = () => {
     };
 
     const editHighestEducation = async () => {
-        await axios.put(`http://20.246.74.138:8080/api/accounts/highest-educations/${editHighestEducationData.id}/`, editHighestEducationData);
+        await apiAxios.put(`api/accounts/highest-educations/${editHighestEducationData.id}/`, editHighestEducationData);
         setEditHighestEducationData(null);
         setShowEditPopup(false);
         fetchHighestEducations();

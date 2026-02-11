@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { apiUrl } from "../../api/apiUrl";
 
 interface ActionScore {
     score: number;
@@ -138,7 +139,7 @@ export const ProfileVisibilityTable = () => {
                 console.log("Request Body:", requestBody);
 
                 const response = await fetch(
-                    'http://20.246.74.138:8080/api/Get_visibility_list_match/',
+                    `${apiUrl.apiUrlConfig}api/Get_visibility_list_match/`,
                     {
                         method: 'POST',
                         headers: {

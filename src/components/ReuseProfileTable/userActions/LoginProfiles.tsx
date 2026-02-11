@@ -21,6 +21,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // ✅ import navigate hook
 import { getMembershipPlans } from '../../../api/apiConfig';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -48,7 +49,7 @@ const getLoginLogs = async (date: string, fromDate: string, toDate: string, page
   params.append('page_number', (page + 1).toString());
   params.append('per_page', rowsPerPage.toString());
 
-  const url = `http://20.246.74.138:8080/api/login-logs/?${params.toString()}`;
+  const url = `${apiUrl.apiUrlConfig}api/login-logs/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -174,8 +175,8 @@ const LoginProfiles: React.FC = () => {
       if (filters.toDate) params.append('to_date', filters.toDate);
       if (filters.planId) params.append('plan', filters.planId);
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/login-logs/',
+      const response = await apiAxios.get(
+        `api/login-logs/`,
         {
           params,
           responseType: 'blob', // Critical for binary data

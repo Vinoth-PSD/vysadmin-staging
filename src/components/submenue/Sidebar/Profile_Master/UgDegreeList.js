@@ -8,6 +8,7 @@ import Popup from '../../../Popup';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 const UgDegreeList = () => {
     const [ugDegrees, setUgDegrees] = useState([]);
@@ -38,12 +39,12 @@ const UgDegreeList = () => {
     }, [ugDegrees, showAddPopup, showEditPopup, deleteConfirmation]);
 
     const fetchUgDegrees = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/ug-degrees/');
+        const response = await apiAxios.get('api/accounts/ug-degrees/');
         setUgDegrees(response.data);
     };
 
     const addUgDegree = async () => {
-        await axios.post('http://20.246.74.138:8080/api/accounts/ug-degrees/', { degree: newUgDegree });
+        await apiAxios.post('api/accounts/ug-degrees/', { degree: newUgDegree });
         setNewUgDegree('');
         setShowAddPopup(false);
         fetchUgDegrees();
@@ -56,7 +57,7 @@ const UgDegreeList = () => {
     };
 
     const confirmDeleteUgDegree = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/ug-degrees/${degreeToDelete}/`);
+        await apiAxios.delete(`api/accounts/ug-degrees/${degreeToDelete}/`);
         setDeleteConfirmation(false);
         setDegreeToDelete(null);
         fetchUgDegrees();
@@ -74,7 +75,7 @@ const UgDegreeList = () => {
     };
 
     const editUgDegree = async () => {
-        await axios.put(`http://20.246.74.138:8080/api/accounts/ug-degrees/${editUgDegreeId}/`, { degree: editedUgDegree });
+        await apiAxios.put(`api/accounts/ug-degrees/${editUgDegreeId}/`, { degree: editedUgDegree });
         setEditUgDegreeId(null);
         setEditedUgDegree('');
         setShowEditPopup(false);

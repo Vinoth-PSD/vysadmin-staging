@@ -29,6 +29,7 @@ import {
   getExpressIntrest,
 } from '../../../services/api';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -239,8 +240,8 @@ const ExpressInterest: React.FC = () => {
       }
       params.append('export', 'xlsx');
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/express-interest/',
+      const response = await apiAxios.get(
+        'api/express-interest/',
         {
           params,
           responseType: 'blob',

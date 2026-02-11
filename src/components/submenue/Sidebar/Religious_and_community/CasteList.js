@@ -8,6 +8,7 @@ import BreadCrumbs from '../../../Breadcrumbs';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 
 const CasteList = () => {
@@ -36,13 +37,13 @@ const CasteList = () => {
     }, [castes, showPopup, deleteConfirmation]);
 
     const fetchCastes = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/castes/');
+        const response = await apiAxios.get('api/castes/');
         setCastes(response.data);
     };
 
     const addCaste = async () => {
         if (newCaste.name.trim() === '') return; 
-        await axios.post('http://20.246.74.138:8080/api/castes/', newCaste);
+        await apiAxios.post('api/castes/', newCaste);
         setNewCaste({ name: '' });
         setShowPopup(false);
         setShowSuccessPopup(true); // Show success popup
@@ -50,13 +51,13 @@ const CasteList = () => {
     };
 
     const deleteCaste = async (id) => {
-        await axios.delete(`http://20.246.74.138:8080/api/castes/${id}/`);
+        await apiAxios.delete(`api/castes/${id}/`);
         fetchCastes();
     };
 
     const editCaste = async () => {
         if (editingCaste.name.trim() === '') return;
-        await axios.put(`http://20.246.74.138:8080/api/castes/${editingCaste.id}/`, editingCaste);
+        await apiAxios.put(`api/castes/${editingCaste.id}/`, editingCaste);
         setEditingCaste({ id: null, name: '' });
         setShowPopup(false);
         setShowSuccessPopup(true); // Show success popup

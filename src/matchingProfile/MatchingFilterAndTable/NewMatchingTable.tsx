@@ -339,7 +339,7 @@ import { MdVerified } from 'react-icons/md';
 import { GoUnverified } from 'react-icons/go';
 import { NotifyError, NotifySuccess } from '../../common/Toast/ToastMessage';
 import { MatchingEmailProfile, MatchingPrintProfile, MatchingWhatsappProfile, userMatchingProfiles, userMatchingProfilesFilterListMatch, userMatchingProfilesPrintProfile, userMatchingProfilesSendEmail, userMatchingProfilesWhatsapp } from '../../api/apiConfig';
-
+import { apiUrl } from '../../api/apiUrl';
 interface ActionScore {
     score: number;
     actions: any[];
@@ -568,7 +568,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiurl = `${apiUrl.apiUrlConfig}api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),
@@ -576,7 +576,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             });
 
             // Open the API URL in a new tab
-            const newWindow = window.open(`${apiUrl}?${params.toString()}`, '_blank');
+            const newWindow = window.open(`${apiurl}?${params.toString()}`, '_blank');
 
             if (newWindow) {
                 newWindow.focus();
@@ -606,7 +606,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiurl = `${apiUrl.apiUrlConfig}api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),
@@ -614,7 +614,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             });
 
             // Open the API URL in a new tab
-            const newWindow = window.open(`${apiUrl}?${params.toString()}`, '_blank');
+            const newWindow = window.open(`${apiurl}?${params.toString()}`, '_blank');
 
             if (newWindow) {
                 newWindow.focus();
@@ -644,7 +644,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             setIsPrintProfile(true);
 
             // Construct the API URL with parameters
-            const apiUrl = `http://20.246.74.138:8080/api/admin-match-pdf-with-format/`; // Your API endpoint
+            const apiurl = `${apiUrl.apiUrlConfig}api/admin-match-pdf-with-format/`; // Your API endpoint
             const params = new URLSearchParams({
                 pdf_format: printFormat,
                 profile_ids: selectedProfiles.join(","),
@@ -652,7 +652,7 @@ export const NewMatchingTable = ({ profileID, filters, onBack, No_Image_Availabl
             });
 
             // Open the API URL in a new tab
-            const newWindow = window.open(`${apiUrl}?${params.toString()}`, '_blank');
+            const newWindow = window.open(`${apiurl}?${params.toString()}`, '_blank');
 
             if (newWindow) {
                 newWindow.focus();

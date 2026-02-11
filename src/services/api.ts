@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { notify } from '../components/TostNotification';
+import { apiAxios, apiUrl } from '../api/apiUrl';
 
-export const API_URL = 'http://20.246.74.138:8080/api'; // Replace with your actual API URL
-export const API_URL_Auth = ' http://20.246.74.138:8080/auth';
+export const API_URL = `${apiUrl.apiUrlConfig}api`; // Replace with your actual API URL
+export const API_URL_Auth = `${apiUrl.apiUrlConfig}auth`;
 const adminUserID = sessionStorage.getItem('id') || localStorage.getItem('id');
 // export const API_URL = 'https://gl9hwr3r-8000.inc1.devtunnels.ms/api'; // Replace with your actual API URL
 // export const API_URL_Auth = ' https://gl9hwr3r-8000.inc1.devtunnels.ms/auth';
@@ -25,8 +26,8 @@ export const quickUpload = `${API_URL}/quick-upload/`;
 export const ExpressIntrest = `${API_URL}/express-interest/`;
 
 export const fetchStatePreferences = async () => {
-  const response = await axios.post(
-    'http://20.246.74.138:8080/auth/Get_State_Pref/',
+  const response = await apiAxios.post(
+    'auth/Get_State_Pref/',
   );
   return Object.values(response.data); // Convert response to array
 };
@@ -45,70 +46,14 @@ export const downloadExcel = async () => {
 };
 
 
-
-
-// export const downloadProfilePdf = async (profileId: string, format: string) => {
-//   //const apiUrl = 'http://20.246.74.138:8080/api/generate_short_profile_pdf/';
-//   const apiUrl = `${API_URL}/admin-pdf-with-format/`;
-//   try {
-//     // Show loading indicator
-//     notify('Generating PDF...', { type: 'info' });
-
-//     const response = await fetch(apiUrl, {
-//       // method: 'POST',
-//        method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         format: format,
-//         profile_id: profileId
-//       })
-//     });
-
-//     if (!response.ok) {
-//       throw new Error(`Failed to generate PDF: ${response.statusText}`);
-//     }
-
-//     // Get the PDF as a blob
-//     const pdfBlob = await response.blob();
-
-//     // Create a URL for the blob
-//     const pdfUrl = URL.createObjectURL(pdfBlob);
-
-//     // Try to open in new tab
-//     const newWindow = window.open(pdfUrl, '_blank');
-
-//     if (!newWindow) {
-//       // If popup blocked, offer download
-//       const downloadLink = document.createElement('a');
-//       downloadLink.href = pdfUrl;
-//       downloadLink.download = `profile_${profileId}_${format}.pdf`;
-//       document.body.appendChild(downloadLink);
-//       downloadLink.click();
-//       document.body.removeChild(downloadLink);
-//       notify('PDF downloaded successfully', { type: 'success' });
-//     }
-
-//     // Revoke the blob URL after use
-//     setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
-
-//   } catch (error) {
-//     console.error('Error generating PDF:', error);
-//     notify('Failed to generate PDF. Please try again.', { type: 'error' });
-//   }
-// };
-
-
-
 export const downloadProfilePdf = async (profileId: string, format: string) => {
-  const apiUrl = `http://20.246.74.138:8080/api/admin-pdf-with-format/?profile_id=${encodeURIComponent(profileId)}&pdf_format=${encodeURIComponent(format)}`;
+  const apiurl = `${apiUrl.apiUrlConfig}api/admin-pdf-with-format/?profile_id=${encodeURIComponent(profileId)}&pdf_format=${encodeURIComponent(format)}`;
 
   try {
     // Show loading indicator
     notify('Generating PDF...', { type: 'info' });
 
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiurl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -120,11 +65,11 @@ export const downloadProfilePdf = async (profileId: string, format: string) => {
     }
 
 
-    const newWindow = window.open(apiUrl, "_blank");
+    const newWindow = window.open(apiurl, "_blank");
     if (!newWindow) {
       // If popup blocked, offer download
       const downloadLink = document.createElement('a');
-      downloadLink.href = apiUrl;
+      downloadLink.href = apiurl;
       downloadLink.download = `profile_${profileId}_${format}.pdf`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
@@ -133,34 +78,13 @@ export const downloadProfilePdf = async (profileId: string, format: string) => {
     }
 
     // Revoke the blob URL after use
-    setTimeout(() => URL.revokeObjectURL(apiUrl), 1000);
+    setTimeout(() => URL.revokeObjectURL(apiurl), 1000);
 
   } catch (error) {
     console.error('Error generating PDF:', error);
     notify('Failed to generate PDF. Please try again.', { type: 'error' });
   }
 };
-
-// export const getExpressIntrest = async (
-//   fromDate: string,
-//   toDate: string,
-//   states: number[],
-//   page:number,
-//   rowsPerPage:number
-// ) => {
-//   const params = new URLSearchParams({
-//     from_date: fromDate,
-//     to_date: toDate,
-//     profile_state: states.join(','),
-//     page:page.toString(),
-//     page_size:rowsPerPage.toString
-//   });
-
-//   const url = `http://20.246.74.138:8080/api/express-interest/?${params.toString()}`;
-//   const response = await axios.get(url);
-//   console.log(response.data)
-//   return response.data;
-// };
 
 export const getExpressIntrest = async (
   fromDate: string,
@@ -186,7 +110,7 @@ export const getExpressIntrest = async (
     params.append('status', status);
   }
 
-  const url = `http://20.246.74.138:8080/api/express-interest/?${params.toString()}`;
+  const url = `${apiUrl.apiUrlConfig}api/express-interest/?${params.toString()}`;
 
   try {
     const response = await axios.get(url);
@@ -880,8 +804,8 @@ export const apiService = {
     axios.delete(`${API_URL}/dasa-balances/${id}/`),
 };
 
-export const BirthStarApi = ' http://20.246.74.138:8080/api/birth-stars/';
-export const GothramApi = ' http://20.246.74.138:8080/api/gothrams/';
+export const BirthStarApi = `${apiUrl.apiUrlConfig}api/birth-stars/`;
+export const GothramApi = `${apiUrl.apiUrlConfig}api/gothrams/`;
 
 //rasi api
 
@@ -942,7 +866,7 @@ export const profileImgApproval = `${API_URL}/get_profile-images_approval/`;
 export const photoRequest = `${API_URL}/photo-requests/`;
 
 //addOrUpdateProfileHolder
-export const addOrUpdateProfileHolder = `http://20.246.74.138:8080/api/profile-holders/`;
+export const addOrUpdateProfileHolder = `${apiUrl.apiUrlConfig}api/profile-holders/`;
 
 ///cms page
 export const cmsFetchData = `${API_URL}/page-list/`;
@@ -968,6 +892,6 @@ export const adminsettings = `${API_URL}/admin-settings/`;
 export const adminSettingsUpdate = ` ${API_URL}/admin-settings/update/`;
 
 //edit profile page
-export const getParentOccupation = `http://20.246.74.138:8080/auth/Get_Parent_Occupation/`;
+export const getParentOccupation = `${apiUrl.apiUrlConfig}auth/Get_Parent_Occupation/`;
 //vys assist
 export const vysAssistApi = `${API_URL}/profile-vys-assist/`;

@@ -8,6 +8,7 @@ import Sidebar from '../../../Sidebar';
 import Navbar from '../../../Navbar';
 import '../../../css/app.css'; 
 import Popup from '../../../Popup';
+import { apiAxios } from '../../../../api/apiUrl';
 const HeightList = () => {
     const [heights, setHeights] = useState([]);
     const [newHeight, setNewHeight] = useState({ value: '' });
@@ -34,7 +35,7 @@ const HeightList = () => {
     }, []);
 
     const fetchHeights = () => {
-        axios.get('http://20.246.74.138:8080/api/heights/')
+        apiAxios.get('api/heights/')
             .then(response => {
                 setHeights(response.data);
             }).catch(error => {
@@ -44,7 +45,7 @@ const HeightList = () => {
 
     const handleAddOrEditHeight = () => {
         if (editHeightId) {
-            axios.put(`http://20.246.74.138:8080/api/heights/${editHeightId}/`, newHeight)
+            apiAxios.put(`api/heights/${editHeightId}/`, newHeight)
                 .then(response => {
                     setHeights(heights.map(height => height.id === editHeightId ? response.data : height));
                     resetForm();
@@ -53,7 +54,7 @@ const HeightList = () => {
                     console.error(error);
                 });
         } else {
-            axios.post('http://20.246.74.138:8080/api/heights/', newHeight)
+            apiAxios.post('api/heights/', newHeight)
                 .then(response => {
                     setHeights([...heights, response.data]);
                     resetForm();
@@ -77,7 +78,7 @@ const HeightList = () => {
     };
 
     const confirmDeleteHeight = () => {
-        axios.delete(`http://20.246.74.138:8080/api/heights/${heightToDelete}/`)
+        apiAxios.delete(`api/heights/${heightToDelete}/`)
             .then(() => {
                 setHeights(heights.filter(height => height.id !== heightToDelete));
                 setHeightToDelete(null);

@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../api/apiUrl';
 
 // Interfaces (no changes)
 interface Column {
@@ -67,7 +68,7 @@ const getTransactionHistory = async (params: FilterParams) => {
     if (params.t_status) queryParams.t_status = params.t_status;
     if (params.a_status) queryParams.a_status = params.a_status;
 
-    const url = `http://20.246.74.138:8080/api/transaction-history/`;
+    const url = `${apiUrl.apiUrlConfig}api/transaction-history/`;
     const response = await axios.get(url, { params: queryParams });
     return response.data;
 };
@@ -276,7 +277,7 @@ const TransactionHistoryNew: React.FC = () => {
         if (debouncedSearch) params.search = debouncedSearch;
 
         try {
-            const url = `http://20.246.74.138:8080/api/transaction-export/`;
+            const url = `${apiUrl.apiUrlConfig}api/transaction-export/`;
             const response = await axios.get(url, {
                 params,
                 responseType: 'blob',

@@ -20,6 +20,7 @@ import {
 import axios from 'axios';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -42,7 +43,7 @@ const getWishlistsProfile = async (fromDate: string, toDate: string, page: numbe
     rowsPerPage: rowsPerPage.toString()
   });
 
-  const url = `http://20.246.74.138:8080/api/bookmarks/?${params.toString()}`;
+  const url = `${apiUrl.apiUrlConfig}api/bookmarks/?${params.toString()}`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -198,8 +199,8 @@ const WishlistsProfile: React.FC = () => {
         export: 'xlsx',
       });
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/bookmarks/',
+      const response = await apiAxios.get(
+        'api/bookmarks/',
         {
           params,
           responseType: 'blob', // Important for binary file data

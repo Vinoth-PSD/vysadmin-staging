@@ -8,6 +8,7 @@ import Popup from '../../../Popup';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import feather from 'feather-icons';
+import { apiAxios } from '../../../../api/apiUrl';
 
 
 const ParentsOccupationList = () => {
@@ -38,12 +39,12 @@ const ParentsOccupationList = () => {
     }, [parentsOccupations, showAddPopup, showEditPopup, deleteConfirmation]);
 
     const fetchParentsOccupations = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/parents-occupations/');
+        const response = await apiAxios.get('api/accounts/parents-occupations/');
         setParentsOccupations(response.data);
     };
 
     const addParentsOccupation = async () => {
-        await axios.post('http://20.246.74.138:8080/api/accounts/parents-occupations/', { occupation: newParentsOccupation });
+        await apiAxios.post('api/accounts/parents-occupations/', { occupation: newParentsOccupation });
         setNewParentsOccupation('');
         fetchParentsOccupations();
         setShowAddPopup(false);
@@ -56,7 +57,7 @@ const ParentsOccupationList = () => {
     };
 
     const confirmDeleteOccupation = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/parents-occupations/${occupationToDelete}/`);
+        await apiAxios.delete(`api/accounts/parents-occupations/${occupationToDelete}/`);
         setDeleteConfirmation(false);
         setOccupationToDelete(null);
         fetchParentsOccupations();
@@ -68,7 +69,7 @@ const ParentsOccupationList = () => {
     };
 
     const editParentsOccupation = async () => {
-        await axios.put(`http://20.246.74.138:8080/api/accounts/parents-occupations/${editParentsOccupationData.id}/`, editParentsOccupationData);
+        await apiAxios.put(`api/accounts/parents-occupations/${editParentsOccupationData.id}/`, editParentsOccupationData);
         fetchParentsOccupations();
         setShowEditPopup(false);
         setShowSuccessPopup(true);

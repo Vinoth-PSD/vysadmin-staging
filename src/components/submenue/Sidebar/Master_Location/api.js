@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { apiUrl } from '../../../../api/apiUrl';
 
-const API_URL = 'http://20.246.74.138:8080/api/accounts';
+const API_URL = `${apiUrl.apiUrlConfig}api/accounts`;
 
-// const API_URL = 'http://20.246.74.138:8080/api/';
+// const API_URL = `${apiUrl.apiUrlConfig}api/`;
 
 export const getCountries = () => axios.get(`${API_URL}/countries/`);
 export const addCountry = (country) => axios.post(`${API_URL}/countries/`, country);

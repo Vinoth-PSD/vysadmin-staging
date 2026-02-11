@@ -21,10 +21,11 @@ import axios from 'axios';
 import { MdDeleteOutline } from 'react-icons/md';
 import { GrEdit } from 'react-icons/gr';
 import { FaRegEye } from 'react-icons/fa';
+import { apiAxios, apiAxios, apiUrl } from '../../../api/apiUrl';
 
 // --- 1. Updated API endpoint ---
-const RENEWAL_API_URL = 'http://20.246.74.138:8080/api/renewal-profiles/';
-const API_URL = 'http://20.246.74.138:8080/api'; // Base API for delete
+const RENEWAL_API_URL = 'api/renewal-profiles/';
+const API_URL = `${apiUrl.apiUrlConfig}api`; // Base API for delete
 
 // --- 2. Updated data fetching function ---
 export const getRenewalProfiles = async (
@@ -260,8 +261,8 @@ const RenewalProfiles: React.FC = () => {
 
     const generateShortProfilePDF = async (profileIds: string[]) => {
         try {
-            const response = await axios.post(
-                'http://20.246.74.138:8080/api/generate_short_profile_pdf/',
+            const response = await apiAxios.post(
+                'api/generate_short_profile_pdf/',
                 {
                     profile_id: profileIds.join(','),
                 },
@@ -299,8 +300,8 @@ const RenewalProfiles: React.FC = () => {
             }
             params.append('export', 'xlsx');
 
-            const response = await axios.get(
-                `http://20.246.74.138:8080/api/renewal-profiles/`,
+            const response = await apiAxios.get(
+                `api/renewal-profiles/`,
                 {
                     params,
                     responseType: 'blob',

@@ -20,6 +20,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Notification, { notify } from '../../TostNotification';
+import { apiAxios } from '../../../api/apiUrl';
 
 const EditAdminUserSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -91,8 +92,8 @@ const EditAdminUserForm: React.FC = () => {
     }
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          ` http://20.246.74.138:8080/api/admin-users/`,
+        const response = await apiAxios.get(
+          `api/admin-users/`,
         );
         const users = response.data;
         console.log('Fetched Users:', users);
@@ -118,8 +119,8 @@ const EditAdminUserForm: React.FC = () => {
 
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(
-          ' http://20.246.74.138:8080/api/admin-users/roles/',
+        const response = await apiAxios.get(
+          'api/admin-users/roles/',
         );
         setRoles(response.data);
       } catch (error) {
@@ -133,8 +134,8 @@ const EditAdminUserForm: React.FC = () => {
 
   const onSubmit = async (data: EditAdminUserFormValues) => {
     try {
-      let response = await axios.put(
-        ` http://20.246.74.138:8080/api/admin-user/edit/${id}/`,
+      let response = await apiAxios.put(
+        `api/admin-user/edit/${id}/`,
         data,
       );
       if (response.status >= 200 || response.status <= 299) {

@@ -8,6 +8,7 @@ import feather from 'feather-icons';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import BreadCrumbs from '../../../Breadcrumbs';
+import { apiAxios } from '../../../../api/apiUrl';
 
 const LagnamList = () => {
     const [lagnams, setLagnams] = useState([]);
@@ -37,16 +38,16 @@ const LagnamList = () => {
     }, [lagnams, showPopup, deleteConfirmation]);
 
     const fetchLagnams = async () => {
-        const response = await axios.get('http://20.246.74.138:8080/api/accounts/lagnams/');
+        const response = await apiAxios.get('api/accounts/lagnams/');
         setLagnams(response.data);
     };
 
     const addOrUpdateLagnam = async () => {
         const lagnamData = { name: newLagnam };
         if (editLagnamId) {
-            await axios.put(`http://20.246.74.138:8080/api/accounts/lagnams/${editLagnamId}/`, lagnamData);
+            await apiAxios.put(`api/accounts/lagnams/${editLagnamId}/`, lagnamData);
         } else {
-            await axios.post('http://20.246.74.138:8080/api/accounts/lagnams/', lagnamData);
+            await apiAxios.post('api/accounts/lagnams/', lagnamData);
         }
         setNewLagnam('');
         setShowPopup(false);
@@ -61,7 +62,7 @@ const LagnamList = () => {
     };
 
     const confirmDeleteLagnam = async () => {
-        await axios.delete(`http://20.246.74.138:8080/api/accounts/lagnams/${lagnamToDelete}/`);
+        await apiAxios.delete(`api/accounts/lagnams/${lagnamToDelete}/`);
         setDeleteConfirmation(false);
         setLagnamToDelete(null);
         fetchLagnams();

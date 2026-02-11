@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { MatchingStar } from '../components/new_profile/profile_form_components/Partner_preference';
-import { apiAxios } from './apiUrl';
+import { apiAxios, apiUrl } from './apiUrl';
 import { SubStatus } from '../components/new_profile/viewProfileComponents/ProfileViwePopup/CallManagementModel';
 
 const adminUserID = sessionStorage.getItem('id') || localStorage.getItem('id');
@@ -1103,7 +1103,7 @@ export const uploadProofFiles = async (
 
 
 export const deleteFile = async (profileId, modelType, fieldName) => {
-    const url = 'http://20.246.74.138:8080/api/delete-file/';
+    const url = `${apiUrl.apiUrlConfig}api/delete-file/`;
     const body = {
         model_type: modelType,
         profile_id: profileId,

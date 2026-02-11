@@ -15,6 +15,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import axios from 'axios';
+import { apiAxios } from '../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -99,7 +100,7 @@ const ReUseDataTable: React.FC<DataTableProps> = ({
     if (!confirmed) return;
 
     try {
-      await axios.delete(` http://20.246.74.138:8080/api/logindetails/${ContentId}/`, {
+      await apiAxios.delete(`api/logindetails/${ContentId}/`, {
         data: {
           admin_user_id: adminUserID,  // <-- RAW JSON body
         },

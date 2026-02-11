@@ -18,6 +18,7 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { profileImgApproval } from '../../../services/api';
+import { apiAxios } from '../../../api/apiUrl';
 
 interface Column {
   id: string;
@@ -164,8 +165,8 @@ const ProfileImageApproval: React.FC = () => {
         params.append('to_date', toDate);
       }
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/get_profile-images_approval/',
+      const response = await apiAxios.get(
+        'api/get_profile-images_approval/',
         {
           params,
           responseType: 'blob', // Important for binary files

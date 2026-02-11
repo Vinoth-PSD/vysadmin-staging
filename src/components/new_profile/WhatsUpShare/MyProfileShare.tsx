@@ -1,6 +1,7 @@
 import React from 'react';
 import { WhatsappShareButton } from 'react-share';
 import { MdImage, MdImageNotSupported } from 'react-icons/md';
+import { apiUrl } from '../../../api/apiUrl';
 
 interface ShareProps {
   closePopup: () => void;
@@ -46,8 +47,8 @@ export const MyProfileShare: React.FC<ShareProps> = ({
   // Dynamic URL to the profile share page
   // const shareUrl = `http://matrimonyapp.rainyseasun.com/ProfileImage?data=${encodedData}`;
 
-  const shareUrl = `http://20.246.74.138:8080/auth/profile/${profileId}/`;
-  const shareUrlWithoutImage = `http://20.246.74.138:8080/auth/profile_view/${profileId}/`
+  const shareUrl = `${apiUrl.apiUrlConfig}auth/profile/${profileId}/`;
+  const shareUrlWithoutImage = `${apiUrl.apiUrlConfig}auth/profile_view/${profileId}/`
   const title = 'Check out this profile!';
   const registrationLink = 'vysyamala.com'
 

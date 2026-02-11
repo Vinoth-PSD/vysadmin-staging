@@ -22,6 +22,7 @@ import { API_URL, baseUrl, downloadExcel } from '../../services/api';
 import { GrEdit } from 'react-icons/gr';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaRegEye } from 'react-icons/fa';
+import { apiAxios, apiUrl } from '../../api/apiUrl';
 // import { TextTransformation } from 'ckeditor5';
 
 interface ProbsProfiletableProps {
@@ -361,8 +362,8 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
 
   const generateShortProfilePDF = async (profileData: number[]) => {
     try {
-      const response = await axios.post(
-        'http://20.246.74.138:8080/api/generate_short_profile_pdf/',
+      const response = await apiAxios.post(
+        'api/generate_short_profile_pdf/',
         {
           profile_id: profileData.join(','),
         },
@@ -449,7 +450,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.246.74.138:8080/api/profiles/export/`;
+      const url = `${apiUrl.apiUrlConfig}api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -486,8 +487,8 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
         params.append('search', search);
       }
 
-      const response = await axios.get(
-        'http://20.246.74.138:8080/api/profiles/export/',
+      const response = await apiAxios.get(
+        'api/profiles/export/',
         {
           params,
           responseType: 'blob',
@@ -526,7 +527,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.246.74.138:8080/api/profiles/export/`;
+      const url = `${apiUrl.apiUrlConfig}api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -559,7 +560,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.246.74.138:8080/api/profiles/export/`;
+      const url = `${apiUrl.apiUrlConfig}api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',
@@ -592,7 +593,7 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     });
 
     try {
-      const url = `http://20.246.74.138:8080/api/profiles/export/`;
+      const url = `${apiUrl.apiUrlConfig}api/profiles/export/`;
       const response = await axios.get(url, {
         params,
         responseType: 'blob',

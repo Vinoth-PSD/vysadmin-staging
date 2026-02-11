@@ -20,6 +20,7 @@ import axios from 'axios';
 import { API_URL, baseUrl } from '../services/api';
 import { GrEdit } from 'react-icons/gr';
 import { MdDeleteOutline } from 'react-icons/md';
+import { apiAxios } from '../api/apiUrl';
 // Function to fetch data from the API
 export const getDataTable = async (
   search: string,
@@ -202,8 +203,8 @@ const DataTable: React.FC = () => {
   };
   const generateShortProfilePDF = async (profileData: number[]) => {
     try {
-      const response = await axios.post(
-        'http://20.246.74.138:8080/api/generate_short_profile_pdf/',
+      const response = await apiAxios.post(
+        'api/generate_short_profile_pdf/',
         {
           profile_id: profileData.join(','),
         },

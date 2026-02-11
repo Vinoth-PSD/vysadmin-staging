@@ -19,6 +19,7 @@ import Notification, { notifyDelete } from '../../TostNotification';
 import DeleteConfirmationDialog from '../../DeleteConfirmationPopUp';
 import { MdDeleteOutline } from 'react-icons/md';
 import { GrEdit } from 'react-icons/gr';
+import { apiAxios } from '../../../api/apiUrl';
 interface User {
   id: number;
   username: string;
@@ -42,8 +43,8 @@ const AdminTable: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          ' http://20.246.74.138:8080/api/admin-users/',
+        const response = await apiAxios.get(
+          'api/admin-users/',
         );
         const data = response.data.map((item: any) => ({
           id: item.id,
@@ -81,8 +82,8 @@ const AdminTable: React.FC = () => {
     if (selectedUserId === null) return; // Ensure a user is selected
 
     try {
-      let response = await axios.delete(
-        ` http://20.246.74.138:8080/api/admin-user/delete/${selectedUserId}/`,
+      let response = await apiAxios.delete(
+        `api/admin-user/delete/${selectedUserId}/`,
       );
 
       if (response.status >= 200 && response.status <= 299) {

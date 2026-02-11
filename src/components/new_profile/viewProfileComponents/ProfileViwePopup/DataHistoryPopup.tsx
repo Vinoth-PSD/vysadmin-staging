@@ -2,6 +2,7 @@ import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, Table, Ta
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { apiAxios } from "../../../../api/apiUrl";
 
 interface DataHistoryItem {
     profile_id: string;
@@ -33,8 +34,8 @@ export const DataHistoryPopup: React.FC<DataHistoryProps> = ({ open, onClose, pr
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(
-                `http://20.246.74.138:8080/api/data-history/`,
+            const response = await apiAxios.get(
+                `api/data-history/`,
                 {
                     params: {
                         profile_id: profileId

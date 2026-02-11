@@ -6,6 +6,7 @@ import { fetchEditProfileDetails, fetchMatchPreferences } from '../../action';
 import MatchingStars from '../../components/PartnerPreference/MatchingStars';
 import Select from 'react-select';
 import { useSearchParams } from 'react-router-dom';
+import { apiUrl } from '../../api/apiUrl';
 // Type definitions (same as before)
 interface AnnualIncome {
     income_id: number;
@@ -283,7 +284,7 @@ export const UserProfileVisibilityFilter = () => {
         setLoadingVisibility(true);
         try {
             const response = await fetch(
-                'http://20.246.74.138:8080/auth/Get_profile_visibility/',
+                `${apiUrl.apiUrlConfig}auth/Get_profile_visibility/`,
                 {
                     method: 'POST',
                     headers: {
