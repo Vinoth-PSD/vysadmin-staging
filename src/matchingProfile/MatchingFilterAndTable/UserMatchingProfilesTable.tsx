@@ -224,8 +224,8 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
         return (
             <div>
                 {actions.map((action, index) => {
-                    const date = new Date(action.datetime);
-                    const formattedDate = date.toLocaleDateString();
+                    // const date = new Date(action.datetime);
+                    const formattedDate = action.datetime.split("T")[0];
 
                     return (
                         <div key={index}>

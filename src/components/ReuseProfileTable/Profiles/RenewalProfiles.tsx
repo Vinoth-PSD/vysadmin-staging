@@ -21,7 +21,7 @@ import axios from 'axios';
 import { MdDeleteOutline } from 'react-icons/md';
 import { GrEdit } from 'react-icons/gr';
 import { FaRegEye } from 'react-icons/fa';
-import { apiAxios, apiAxios, apiUrl } from '../../../api/apiUrl';
+import { apiAxios, apiUrl } from '../../../api/apiUrl';
 
 // --- 1. Updated API endpoint ---
 const RENEWAL_API_URL = 'api/renewal-profiles/';
