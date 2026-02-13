@@ -10,6 +10,7 @@ interface DataHistoryItem {
     status_name: string;
     others: string | null;
     plan_name: string | null;
+    username: string;
 }
 
 interface DataHistoryProps {
@@ -133,7 +134,7 @@ export const DataHistoryPopup: React.FC<DataHistoryProps> = ({ open, onClose, pr
                                 {data.map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{formatDate(item.date_time)}</TableCell>
-                                        <TableCell>N/A</TableCell>
+                                        <TableCell>{item.username || "N/A"}</TableCell>
                                         <TableCell>{item.status_name}</TableCell>
                                         <TableCell>{item.plan_name || "N/A"}</TableCell>
                                         <TableCell>{item.others || "N/A"}</TableCell>
