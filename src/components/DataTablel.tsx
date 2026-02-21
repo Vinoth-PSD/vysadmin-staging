@@ -34,7 +34,7 @@ export const getDataTable = async (
   const params = new URLSearchParams({
     page_size: rowsPerPage.toString(),
     page: page.toString(),
-    page_name:'0'
+    page_name: '0'
     // Pass the page_name parameter
   });
 
@@ -73,7 +73,7 @@ const columns: Column[] = [
   { id: 'highest_education', label: 'Education Details' },
   { id: 'family_status', label: 'Family Status' },
   { id: 'anual_income', label: 'Annual Income' },
-  { id: 'Last_login_date', label: 'Last Act Date' },
+  { id: 'Last_login_date', label: 'Last Action Date' },
 
   { id: 'Profile_for', label: 'Profile For' },
 
@@ -98,8 +98,26 @@ const DataTable: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // To track selected profile IDs
   console.log(selectedRows);
   const adminUserId = sessionStorage.getItem('id') || localStorage.getItem('id');
-  // Here you can define a value for page_name
-  // Change this to the desired page name value
+
+  const formatDateTime = (dateString: any) => {
+    if (!dateString || dateString === 'null' || dateString === '') return 'N/A';
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) return 'N/A';
+
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+
+    const time = date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+
+    return `${yyyy}-${mm}-${dd}, ${time}`;
+  };
 
   useEffect(() => {
     fetchData();
@@ -347,6 +365,16 @@ const DataTable: React.FC = () => {
                     </TableCell>
                     {columns.map((column) => {
                       const value = row[column.id];
+                      let displayValue;
+                      if (column.id === 'DateOfJoin') {
+                        displayValue = formatDateTime(value);
+                      }
+                      else if (column.id === 'Last_login_date') {
+                        displayValue = value && value !== 'null' ? String(value).split(/[T ]/)[0] : 'N/A';
+                      }
+                      else {
+                        displayValue = (value === null || value === undefined || value === '' || value === 'null') ? 'N/A' : value;
+                      }
                       return (
                         <TableCell
                           sx={{
@@ -376,10 +404,10 @@ const DataTable: React.FC = () => {
                                 '&:hover': { textDecoration: 'underline' },
                               }}
                             >
-                              {value}
+                              {displayValue}
                             </Typography>
                           ) : (
-                            value
+                            displayValue
                           )}
                         </TableCell>
                       );
@@ -409,7 +437,7 @@ const DataTable: React.FC = () => {
 
         </TableContainer>
 
-       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
           <Typography variant="body2">
             Page <strong>{page + 1}</strong> of <strong>{Math.ceil(data.count / rowsPerPage)}</strong>
           </Typography>

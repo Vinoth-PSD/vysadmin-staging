@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { apiAxios } from "../../../../api/apiUrl";
+import { apiAxios, apiUrl } from "../../../../api/apiUrl";
 import { NotifyError, NotifySuccess } from "../../../../common/Toast/ToastMessage";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -13,23 +13,6 @@ function currencyToNumber(v: string | number | null | undefined) {
   const x = typeof v === "number" ? v : Number(String(v).replace(/[^0-9.-]/g, ""));
   return Number.isFinite(x) ? x : 0;
 }
-
-// const MAIN_PACKAGES = [
-//   { key: "Gold", label: "Gold", price: 4900, fixed: true, category: "new" },
-//   { key: "Platinum", label: "Platinum", price: 7900, fixed: true, category: "new" },
-//   { key: "PlatinumPrivate", label: "Platinum Private", price: 9900, fixed: true, category: "new" },
-//   { key: "VysyamalaDelight", label: "Vysyamala Delight", price: null, fixed: false, category: "new" }, // custom
-//   { key: "Mini10", label: "Mini10", price: 2000, fixed: true, category: "new" },
-//   { key: "Mini20", label: "Mini20", price: 3000, fixed: true, category: "new" },
-//   { key: "Mini30", label: "Mini30", price: 4000, fixed: true, category: "new" },
-//   // --- Renewals ---
-//   { key: "RenewalGold", label: "Renewal - Gold", price: 2000, fixed: true, category: "renewal" },
-//   { key: "RenewalPlatinum", label: "Renewal - Platinum", price: 3000, fixed: true, category: "renewal" },
-//   { key: "RenewalPlatinumPrivate", label: "Renewal - Platinum Private", price: 4000, fixed: true, category: "renewal" },
-//   { key: "RenewalVysyamalaDelight", label: "Renewal - Vysyamala Delight", price: null, fixed: false, category: "renewal" }, // custom
-//   { key: "Upgrade", label: "Upgrade", price: null, fixed: false, category: "new" }, // custom
-//   { key: "Others", label: "Others", price: null, fixed: false, category: "new" }, // custom
-// ];
 
 interface PaymentPopupProps {
   open: boolean;
@@ -115,19 +98,19 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [mainPackage, setMainPackage] = useState("");
   console.log("mainPackage", mainPackage)
-  const [mainAmount, setMainAmount] = useState(0); // auto for fixed, editable for custom
-  const [selectedAddons, setSelectedAddons] = useState<Record<number, boolean>>({}); // {key: true|false}
+  const [mainAmount, setMainAmount] = useState(0); 
+  const [selectedAddons, setSelectedAddons] = useState<Record<number, boolean>>({}); 
   const [discount, setDiscount] = useState(0);
-  const [validFrom, setValidFrom] = useState(""); // YYYY-MM-DD
-  const [validTo, setValidTo] = useState(""); // YYYY-MM-DD
-  const [offerAny, setOfferAny] = useState(""); // free text
-  const [hintToSave, setHintToSave] = useState(""); // rich text area (simple)
+  const [validFrom, setValidFrom] = useState("");
+  const [validTo, setValidTo] = useState(""); 
+  const [offerAny, setOfferAny] = useState(""); 
+  const [hintToSave, setHintToSave] = useState("");
   // Payment details
-  const [paymentType, setPaymentType] = useState(""); // RazorPay | OnlineGpay | ManualGpay | AccountTransfer | Cash
-  const [paymentDate, setPaymentDate] = useState(""); // YYYY-MM-DD (Added this, as it's required for handleSave)
-  const [gpayNumber, setGpayNumber] = useState(""); // required when ManualGpay
-  const [referenceId, setReferenceId] = useState(""); // UTR / Razorpay id / Txn ref
-  const [paymentStatus, setPaymentStatus] = useState(""); // Success | Failure
+  const [paymentType, setPaymentType] = useState(""); 
+  const [paymentDate, setPaymentDate] = useState(""); 
+  const [gpayNumber, setGpayNumber] = useState(""); 
+  const [referenceId, setReferenceId] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState(""); 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [addons, setAddons] = useState<AddonPackage[]>([]);
   const [addonsLoading, setAddonsLoading] = useState(false);
@@ -217,10 +200,9 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     if (pkg.fixed && typeof pkg.price === "number") {
       setMainAmount(pkg.price);
     } else {
-      // Custom amount for non-fixed packages
       setMainAmount(0);
     }
-    setSelectedPlanId(pkg.id); // Set the plan ID from the selected package
+    setSelectedPlanId(pkg.id);
   }
 
   function onToggleAddon(packageId: number) {
@@ -235,7 +217,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
       setAddonsLoading(true);
       const response = await apiAxios.post<AddonApiResponse>(
         "auth/Get_addon_packages/",
-        {} // empty payload if required, or add any required parameters
+        {} 
       );
 
       if (response.data.status === "success") {
@@ -263,10 +245,10 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     setHintToSave("");
     setPaymentType("");
     setGpayNumber("");
-    setPaymentDate(""); // Reset new field
+    setPaymentDate(""); 
     setReferenceId("");
     setPaymentStatus("Success");
-    setSelectedPlanId(null); // Reset plan ID
+    setSelectedPlanId(null); 
     setPackageFilter("");
     setErrors({});
   }
@@ -1114,10 +1096,8 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
                                 <div>
                                   <p className="text-sm text-gray-500">Payment Date</p>
                                   <p className="font-medium text-gray-800">
-                                    {payment.payment_date
-                                      ? new Date(payment.payment_date).toLocaleDateString()
-                                      : 'N/A'
-                                    }
+                                
+                                    {payment.payment_date ? payment.payment_date.split('T')[0] : 'N/A'}
                                   </p>
                                 </div>
                                 <div>

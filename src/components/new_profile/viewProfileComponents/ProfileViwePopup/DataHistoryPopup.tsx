@@ -45,8 +45,8 @@ export const DataHistoryPopup: React.FC<DataHistoryProps> = ({ open, onClose, pr
             );
             setData(response.data);
         } catch (err: any) {
-            setError(err.response?.data?.message || "Failed to fetch data history");
-            console.error("Error fetching data history:", err);
+            setError(err.response?.data?.message || "Failed to fetch date history");
+            console.error("Error fetching date history:", err);
         } finally {
             setLoading(false);
         }
@@ -87,7 +87,7 @@ export const DataHistoryPopup: React.FC<DataHistoryProps> = ({ open, onClose, pr
         <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
             <DialogTitle>
                 <Box sx={{ display: "flex", justifyContent: "start", alignItems: "start", marginBottom: "1px" }}>
-                    Data History
+                    Date History
                 </Box>
                 <IconButton
                     onClick={onClose}
@@ -114,7 +114,7 @@ export const DataHistoryPopup: React.FC<DataHistoryProps> = ({ open, onClose, pr
                     </Box>
                 ) : data.length === 0 ? (
                     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "200px" }}>
-                        <Typography>No data history found</Typography>
+                        <Typography>No date history found</Typography>
                     </Box>
                 ) : (
                     <TableContainer>

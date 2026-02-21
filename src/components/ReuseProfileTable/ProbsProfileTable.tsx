@@ -275,6 +275,32 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     'Last_login_date'      // Last Login
   ];
 
+  const formatDateTimeWithComma = (dateString: any) => {
+    if (!dateString || dateString === 'null' || dateString === 'N/A') return 'N/A';
+
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'N/A';
+
+      // Get Date Part: YYYY-MM-DD
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const datePart = `${year}-${month}-${day}`;
+
+      // Get Time Part: hh:mm AM/PM
+      const timePart = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+
+      return `${datePart}, ${timePart}`;
+    } catch (error) {
+      return 'N/A';
+    }
+  };
+
   const columns = allColumns.filter(column => {
     const membershipIds = ['membership_startdate', 'membership_enddate'];
     const mediaIds = ['has_horo', 'has_photo'];
@@ -331,6 +357,11 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
     // }
 
     return true;
+  }).map(column => {
+    if (column.id === 'DateOfJoin' && pageNameValue === 0) {
+      return { ...column, label: 'Date & Time of Registration' };
+    }
+    return column;
   });
 
 
@@ -824,8 +855,17 @@ const ProbsProfiletable: React.FC<ProbsProfiletableProps> = ({
                             </Typography>
                           ) : column.id === "Last_login_date" ? (
                             row.Last_login_date
-                              ? String(row.Last_login_date).split(/[T ]/)[0]   // ✅ removes time (T or space)
+                              ? String(row.Last_login_date).split(/[T ]/)[0]
                               : "N/A"
+                          ) : column.id === "DateOfJoin" ? (
+                            /* DATE FORMATTING LOGIC */
+                            pageNameValue === 0 ? (
+                              // Page 0 (New Profiles): Show Date with Time
+                              formatDateTimeWithComma(row.DateOfJoin)
+                            ) : (
+                              // All Other Pages: Show ONLY Date (YYYY-MM-DD)
+                              row.DateOfJoin ? String(row.DateOfJoin).split(/[T ]/)[0] : "N/A"
+                            )
                           ) : (
                             value
                           )}

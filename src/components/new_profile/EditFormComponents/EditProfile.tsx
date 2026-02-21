@@ -7,7 +7,6 @@ import {
   Settings,
   WhatsApp,
 } from '@mui/icons-material';
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { notify, notifyDelete } from '../../TostNotification';
 import {
@@ -325,6 +324,7 @@ const EditViewProfile: React.FC<pageProps> = ({
   const exp_int_count = watch('profileView.exp_int_count');
   const payment_date = watch('profileView.payment_date');
   const payment_mode = watch('profileView.payment_mode');
+  const payment_status = watch('profileView.payment_status');
   const add_on_pack_name = watch('profileView.add_on_pack_name');
   const planStatus = watch("profileView.plan_status");
   console.log("edit planStatus", planStatus)
@@ -594,6 +594,7 @@ const EditViewProfile: React.FC<pageProps> = ({
       setValue('profileView.membership_todate', data.membership_todate ?? '');
       setValue('profileView.membership_status', data.membership_status ?? '');
       setValue('profileView.others', data.others ?? '');
+      setValue('profileView.payment_status', data.payment_status ?? '');
 
       if (data?.DateOfJoin) {
         const formattedDate = new Date(data.DateOfJoin)
@@ -1052,7 +1053,7 @@ const EditViewProfile: React.FC<pageProps> = ({
                           onClick={() => setOpenDataHistory(true)}
                           className={`bg-blue-700 text-white px-10 py-1 text-md h-auto rounded `}
                         >
-                          Data History
+                          Date History
                         </button>
                         <DataHistoryPopup
                           open={openDataHistory}
@@ -1108,7 +1109,10 @@ const EditViewProfile: React.FC<pageProps> = ({
                             Payment Info:
                             <span className="text-green-700">
                               {' '}
-                              {payment_date}/{Package_name} /{add_on_pack_name}/{payment_mode}{' '}
+                              {payment_date ? payment_date.split('T')[0] : 'N/A'}/{Package_name} /{add_on_pack_name} /{payment_mode} /
+                              <span className={`font-bold ${payment_status?.toLowerCase() === 'failed' ? 'text-red-600' : 'text-green-700'}`}>
+                                {payment_status || 'N/A'}
+                              </span>{' '}
                             </span>
                           </p>
                         </div>

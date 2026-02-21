@@ -807,7 +807,7 @@ const ViewProfile: React.FC<pageProps> = ({
                   className="bg-blue-700 whitespace-nowrap"
                   onClick={() => setOpenDataHistory(true)}
                 >
-                  Data History
+                  Date History
                 </Button>
 
                 <div>
@@ -840,7 +840,10 @@ const ViewProfile: React.FC<pageProps> = ({
                     <p className="text-[#5a5959e6] font-semibold">
                       Payment Info:
                       <span className="text-green-700 ml-1">
-                        {profileView.payment_date}/{profileView.Package_name} /{profileView.add_on_pack_name}/{profileView.payment_mode}
+                        {profileView.payment_date ? profileView.payment_date.split('T')[0] : 'N/A'}/{profileView.Package_name} /{profileView.add_on_pack_name} /{profileView.payment_mode} /
+                        <span className={`font-bold ${profileView.payment_status?.toLowerCase() === 'failed' ? 'text-red-600' : 'text-green-700'}`}>
+                          {profileView.payment_status || 'N/A'}
+                        </span>
                       </span>
                     </p>
                   </div>

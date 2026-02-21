@@ -24,7 +24,7 @@ import { FaRegEye } from 'react-icons/fa';
 import { apiAxios, apiUrl } from '../../../api/apiUrl';
 
 // --- 1. Updated API endpoint ---
-const RENEWAL_API_URL = 'api/renewal-profiles/';
+const RENEWAL_API_URL = `${apiUrl.apiUrlConfig}api/renewal-profiles/`;
 const API_URL = `${apiUrl.apiUrlConfig}api`; // Base API for delete
 
 // --- 2. Updated data fetching function ---

@@ -146,6 +146,7 @@ export interface profileView {
         membership_fromdate: string | null;
         membership_status: string;
         others: string;
+        payment_status?: string;
     }
 
 }
