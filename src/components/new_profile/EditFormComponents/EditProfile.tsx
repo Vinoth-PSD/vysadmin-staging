@@ -1109,9 +1109,9 @@ const EditViewProfile: React.FC<pageProps> = ({
                             Payment Info:
                             <span className="text-green-700">
                               {' '}
-                              {payment_date ? payment_date.split('T')[0] : 'N/A'}/{Package_name} /{add_on_pack_name} /{payment_mode} /
+                              {payment_date ? payment_date.split('T')[0] : ''}/{Package_name} /{add_on_pack_name} /{payment_mode} /
                               <span className={`font-bold ${payment_status?.toLowerCase() === 'failed' ? 'text-red-600' : 'text-green-700'}`}>
-                                {payment_status || 'N/A'}
+                                {payment_status || ''}
                               </span>{' '}
                             </span>
                           </p>
