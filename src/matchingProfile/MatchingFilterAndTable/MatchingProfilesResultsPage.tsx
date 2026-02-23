@@ -3,9 +3,10 @@
 import { useLocation } from 'react-router-dom';
 import { UserMatchingProfilesTable } from './UserMatchingProfilesTable';
 import { Typography } from '@mui/material';
+import No_Image_Available from '../../images/No_Image_Available .jpg';
 
 // Assume you have a path to your placeholder image
-const No_Image_Available = "/path/to/your/No_Image_Available.png";
+//const No_Image_Available = "/path/to/your/No_Image_Available.png";
 
 export const MatchingProfilesResultsPage = () => {
     const location = useLocation();

@@ -80,7 +80,7 @@ const getColumns = (profileType: 'matching' | 'suggested') => {
         { id: 'state', label: 'State' },
         { id: 'city', label: 'City' },
         { id: 'family_status', label: 'Family Status' },
-        { id: 'father_occupation', label: 'Father Business' },
+        { id: 'father_occupation', label: 'Father Business', minWidth: '250px' },
         { id: 'suya_gothram', label: 'Suya Gothram' },
         { id: 'chevvai', label: 'Admin Chevvai' },
         { id: 'raguketu', label: 'Admin Raghu/Kethu' },
@@ -97,8 +97,8 @@ const getColumns = (profileType: 'matching' | 'suggested') => {
     } else {
         return [
             ...baseColumns,
-            { id: "matching_score", label: "Suggested Score" },
-            { id: 'action_score', label: 'Action' }
+            // { id: "matching_score", label: "Suggested Score" },
+            // { id: 'action_score', label: 'Action' }
         ];
     }
 };
@@ -180,9 +180,10 @@ interface UserMatchingProfilesTableProps {
     filters: any;
     onBack: () => void;
     profileType: 'matching' | 'suggested';
+    No_Image_Available?: any;
 }
 
-export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileType }: UserMatchingProfilesTableProps) => {
+export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileType,No_Image_Available }: UserMatchingProfilesTableProps) => {
     const navigate = useNavigate();
     const { windowWidth, zoomLevel, tableWidth, cellWidth } = useZoomLevel();
     const [matchingData, setMatchingData] = useState<UserMatchingProfilesProps[]>([]);
@@ -240,6 +241,21 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
     useEffect(() => {
         setSelectedProfiles([]);
     }, [activeStatus, selectedActionType, search]);
+
+    const filteredProfiles = matchingData.filter((profile) => {
+        if (!search.trim()) return true;
+
+        const searchTerm = search.toLowerCase();
+
+        return (
+            profile.profile_name?.toLowerCase().includes(searchTerm) ||
+            profile.profile_id?.toLowerCase().includes(searchTerm) ||
+            profile.profession?.toLowerCase().includes(searchTerm) ||
+            profile.work_place?.toLowerCase().includes(searchTerm) ||
+            profile.plan?.toLowerCase().includes(searchTerm) ||
+            profile.state?.toLowerCase().includes(searchTerm)
+        );
+    });
 
     const fetchMatchingData = async () => {
         if (!profileID) return;
@@ -316,7 +332,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
     };
     useEffect(() => {
         fetchMatchingData();
-    }, [profileID, filters, profileType, selectedActionType, activeStatus, search]);
+    }, [profileID, filters, profileType, selectedActionType, activeStatus]);
 
     // Handle status button change
     const handleStatusChange = (status: string) => {
@@ -731,7 +747,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                     <div className="relative w-100 mt-5">
                         <input
                             type="text"
-                            placeholder="Search name / id / profession"
+                            placeholder="Search name / id / profession / mode / work place / state"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             onKeyPress={handleKeyPress}
@@ -751,20 +767,25 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
 
             <div className="flex justify-between items-center mt-4 px-4 py-2 bg-gray-50">
                 <div className="text-sm text-gray-600">
-                    Showing {totalItems} records
+                    {/* Showing {totalItems} records */}
+                    Showing {filteredProfiles.length} of {totalItems} records
                 </div>
             </div>
 
             {/* highlight-start */}
             <div className="py-4" style={{ width: tableWidth, overflowX: 'auto', margin: '0 auto' }}>
                 {/* highlight-end */}
-                <TableContainer component={Paper} sx={{ width: '100%', overflowX: 'auto' }}>
+                <TableContainer component={Paper} sx={{
+                    width: '100%', overflowX: 'auto', maxHeight: '650px',
+                    boxShadow: 'none',
+                    border: '1px solid #E0E0E0'
+                }}>
                     <Table sx={{ minWidth: windowWidth >= 2000 ? '2000px' : '100%' }} aria-label="responsive table" stickyHeader>
                         <TableHead
                             style={{
                                 background: "#FFF8B3",
-                                padding: "17px",
-                                transform: "translateX(-8px)", // shift left smoothly
+                                //padding: "17px",
+                                //transform: "translateX(-8px)", // shift left smoothly
                             }}
                         >
                             <TableRow>
@@ -778,10 +799,7 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                             fontSize: windowWidth >= 2000 ? "0.875rem" : "1rem",
                                             whiteSpace: "nowrap",
                                             backgroundColor: "#FFF8B3",
-                                            position:
-                                                column.id === "select" || column.id === "profile_id"
-                                                    ? "sticky"
-                                                    : "static",
+                                            position: "sticky",
                                             left:
                                                 column.id === "select"
                                                     ? 0
@@ -789,7 +807,8 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                                         ? SELECT_COLUMN_WIDTH
                                                         : "auto",
                                             zIndex: column.id === "select" || column.id === "profile_id" ? 2 : 1,
-                                            width:
+                                            width: column.id === "degree" ? "250px" : "auto",
+                                            minwidth:
                                                 column.id === "select"
                                                     ? SELECT_COLUMN_WIDTH
                                                     : column.id === "profile_id"
@@ -802,7 +821,9 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                                         ? PROFILE_ID_COLUMN_WIDTH
                                                         : cellWidth,
                                             maxWidth: windowWidth >= 2000 ? cellWidth : 'none',
-                                            padding: windowWidth >= 2000 ? '8px 4px' : '16px',
+                                            padding: windowWidth >= 2000 ? '8px 12px' : '16px 12px',
+                                            // textAlign: 'left',
+                                            textAlign: column.id === 'profile_img' ? 'center' : 'left',
                                         }}
                                     >
                                         {column.id === "select" ? (
@@ -844,8 +865,10 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                         <CircularProgress />
                                     </TableCell>
                                 </TableRow>
-                            ) : matchingData && matchingData.length > 0 ? (
-                                matchingData.map((row) => (
+                                // ) : matchingData && matchingData.length > 0 ? (
+                                //     matchingData.map((row) => (
+                            ) : filteredProfiles.length > 0 ? (
+                                filteredProfiles.map((row) => (
                                     <TableRow
                                         key={row.profile_id}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -888,10 +911,21 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                         }}>
                                             <img
                                                 className="rounded-full"
-                                                src={row.profile_img || BASE64_PLACEHOLDER}
+                                                src={row.profile_img || BASE64_PLACEHOLDER || No_Image_Available}
                                                 alt="Profile"
-                                                width={windowWidth >= 2000 ? 40 : 50}
-                                                height={windowWidth >= 2000 ? 40 : 50}
+                                                style={{
+                                                    width: '45px',
+                                                    height: '45px',
+                                                    minWidth: '45px',
+                                                    minHeight: '45px',
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover',
+                                                    display: 'block',
+                                                    margin: '0 auto',
+                                                    border: '1px solid #E0E0E0',
+                                                    objectPosition: 'top',
+
+                                                }}
                                                 onError={(e) => {
                                                     e.currentTarget.src = BASE64_PLACEHOLDER;
                                                 }}
@@ -975,8 +1009,8 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                         </TableCell>
 
                                         <TableCell sx={{
-                                            minWidth: cellWidth,
-                                            maxWidth: windowWidth >= 2000 ? cellWidth : 'none',
+                                            minWidth: row.degree ? "250px" : cellWidth,
+                                            maxWidth: row.degree ? "300px" : (windowWidth >= 2000 ? cellWidth : 'none'),
                                             padding: windowWidth >= 2000 ? '4px' : '8px',
                                             fontSize: windowWidth >= 2000 ? '12px' : '14px',
                                             overflow: 'hidden',
@@ -1063,8 +1097,8 @@ export const UserMatchingProfilesTable = ({ profileID, filters, onBack, profileT
                                         </TableCell>
 
                                         <TableCell sx={{
-                                            minWidth: cellWidth,
-                                            maxWidth: windowWidth >= 2000 ? cellWidth : 'none',
+                                            minWidth: row.father_occupation ? "250px" : cellWidth,
+                                            maxWidth: row.father_occupation ? "300px" : (windowWidth >= 2000 ? cellWidth : 'none'),
                                             padding: windowWidth >= 2000 ? '4px' : '8px',
                                             fontSize: windowWidth >= 2000 ? '12px' : '14px',
                                             overflow: 'hidden',
