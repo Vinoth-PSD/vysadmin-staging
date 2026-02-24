@@ -366,16 +366,18 @@ export const UserMatchingProfilesFilter = ({ profileID, onFilterSubmit, loading,
         if (profileDetails && matchStars && matchStars.length > 0) {
             const { partner_pref_details } = profileDetails;
 
-            if (partner_pref_details && partner_pref_details.pref_porutham_star_rasi) {
-                const savedPairs = new Set(partner_pref_details.pref_porutham_star_rasi.split(','));
+            // Use pref_porutham_star as the primary source for checked IDs
+            if (partner_pref_details && partner_pref_details.pref_porutham_star) {
+                const savedIds = new Set(partner_pref_details.pref_porutham_star.split(','));
                 const initialSelectedStars: SelectedStarIdItem[] = [];
 
+                // Flatten the matchStars array (which is grouped by porutham count)
                 matchStars.flat().forEach(starOption => {
-                    const currentPair = `${starOption.dest_star_id}-${starOption.dest_rasi_id}`;
+                    const stringId = starOption.id.toString();
 
-                    if (savedPairs.has(currentPair)) {
+                    if (savedIds.has(stringId)) {
                         initialSelectedStars.push({
-                            id: starOption.id.toString(),
+                            id: stringId,
                             star: starOption.dest_star_id.toString(),
                             rasi: starOption.dest_rasi_id.toString(),
                             label: `${starOption.matching_starname} (${starOption.matching_rasiname})`
