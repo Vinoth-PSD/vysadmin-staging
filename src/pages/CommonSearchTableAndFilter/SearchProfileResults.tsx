@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { userMatchingProfilesFilter, userMatchingProfilesSendEmail, userMatchingProfilesPrintProfile, userMatchingProfilesWhatsapp } from '../../api/apiConfig';
+import { userMatchingProfilesFilter, userMatchingProfilesSendEmail, userMatchingProfilesPrintProfile, userMatchingProfilesWhatsapp, commonSearchExport } from '../../api/apiConfig';
 import { NotifyError, NotifySuccess } from '../../common/Toast/ToastMessage';
 import { MdVerified } from 'react-icons/md';
 import { GoUnverified } from 'react-icons/go';
@@ -40,6 +40,11 @@ interface SearchProfileProps {
   matching_score: number;
   wish_list: number;
   verified: number;
+  mode: string;
+  status: string;
+  family_status: string;
+  state: string;
+  Created_by: string;
 }
 
 interface SearchProfileResultsProps {
@@ -54,15 +59,22 @@ const columns = [
   { id: 'profile_id', label: 'Profile ID' },
   { id: 'profile_name', label: 'Name' },
   { id: 'profile_age', label: 'Age' },
-  { id: 'profile_gender', label: 'Gender' },
-  { id: 'height', label: 'Height' },
-  { id: 'weight', label: 'Weight' },
-  { id: 'degree', label: 'Degree' },
-  { id: 'profession', label: 'Profession' },
-  { id: 'location', label: 'Location' },
+  { id: 'Created_by ', label: 'Created By' },
+  { id: 'mode', label: 'Mode' },
+  { id: 'status', label: 'Status' },
+  { id: 'family_status', label: 'Family Status' },
+  { id: 'degree', label: 'Education' },
+  { id: 'state', label: 'State' },
+  { id: 'location', label: 'City' },
+  // { id: 'profile_gender', label: 'Gender' },
+  // { id: 'height', label: 'Height' },
+  // { id: 'weight', label: 'Weight' },
+  // { id: 'degree', label: 'Degree' },
+  // { id: 'profession', label: 'Profession' },
+  // { id: 'location', label: 'Location' },
   { id: 'star', label: 'Star' },
-  { id: 'matching_score', label: 'Matching Score' },
-  { id: 'verified', label: 'Verified' },
+  // { id: 'matching_score', label: 'Matching Score' },
+  // { id: 'verified', label: 'Verified' },
 ];
 
 const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchProfileResultsProps) => {
@@ -84,68 +96,14 @@ const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchPro
   const [isPrintProfile, setIsPrintProfile] = useState<boolean>(false);
   const [whatsappFormat, setWhatsappFormat] = useState<string>('');
   const [iswhatsappProfile, setIsWhatsappProfile] = useState<boolean>(false);
+  const [exportLoading, setExportLoading] = useState(false);
   const location = useLocation();
-
-  // useEffect(() => {
-  //   const fetchFilteredData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const MatchingprofileFilter = await userMatchingProfilesFilter(
-  //         String(filters.profileID),
-  //         currentPage + 1,
-  //         itemsPerPage,
-  //         String(filters.selectedComplexions),
-  //         String(filters.selectedEducation),
-  //         String(filters.heightFrom),
-  //         String(filters.heightTo),
-  //         String(filters.minAnnualIncome),
-  //         String(filters.maxAnnualIncome),
-  //         filters.foreignInterest,
-  //         String(filters.selectedState),
-  //         String(filters.selectedCity),
-  //         String(filters.selectedMembership),
-  //         filters.hasphotos,
-  //         filters.selectedBirthStars,
-  //         String(filters.ageDifference),
-  //         filters.selectedProfessions.join(','),
-  //         String(filters.ageFrom),
-  //         String(filters.ageTo),
-  //         String(filters.sarpaDhosam),
-  //         String(filters.chevvaiDhosam),
-  //         String(filters.profileName),
-  //         String(filters.fatherAlive),
-  //         String(filters.motherAlive),
-  //         String(filters.mobileNo),    // Add mobile_no
-  //         String(filters.gender),   // Gender
-  //         String(filters.emailId),  // EmailId
-  //         filters.dobDay, // day component
-  //         filters.dobMonth, // month component
-  //         filters.dobYear, // year component
-  //         String(filters.selectedProfileStatus),
-  //         String(filters.selectedMaritalStatus),
-  //         String(filters.selectedFamilyStatus)
-  //       );
-
-  //       setMatchingData(MatchingprofileFilter.profiles || []);
-  //       setTotalItems(MatchingprofileFilter.total_count || 0);
-  //     } catch (error: any) {
-  //       NotifyError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (filters) {
-  //     fetchFilteredData();
-  //   }
-  // }, [filters, currentPage, itemsPerPage]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const view = searchParams.get('view');
 
     if (view === 'results') {
-      // Extract and split DOB back into individual parts for your API
       const dob = searchParams.get('dob') || '';
       let d = '', m = '', y = '';
       if (dob.includes('-')) {
@@ -155,8 +113,7 @@ const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchPro
       const fetchFilteredData = async () => {
         try {
           setLoading(true);
-          
-          // Map URL parameters to your userMatchingProfilesFilter function
+
           const response = await userMatchingProfilesFilter(
             searchParams.get('profileID') || '',
             currentPage + 1,
@@ -183,6 +140,57 @@ const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchPro
       fetchFilteredData();
     }
   }, [location.search, currentPage, itemsPerPage]);
+
+  const handleExport = async () => {
+    try {
+      setExportLoading(true);
+      const searchParams = new URLSearchParams(location.search);
+
+      const dob = searchParams.get('dob') || '';
+      let d = '', m = '', y = '';
+      if (dob.includes('-')) {
+        [y, m, d] = dob.split('-');
+      }
+
+      const exportPayload = {
+        profile_id: searchParams.get('profileID') || '',
+        city: searchParams.get('city') || '',
+        age_from: searchParams.get('ageFrom') || '',
+        age_to: searchParams.get('ageTo') || '',
+        profile_name: searchParams.get('profileName') || '',
+        mobile_no: searchParams.get('mobile') || '',
+        gender: searchParams.get('gender') || '',
+        email_id: searchParams.get('email') || '',
+        dob_date: d,
+        dob_month: m,
+        dob_year: y,
+        page_number: 1,
+        per_page: totalItems > 0 ? totalItems : 1000, // Pass totalItems to export all
+        export_type: "excel",
+      };
+
+      const response = await commonSearchExport(exportPayload);
+
+      if (response instanceof Blob) {
+        const url = window.URL.createObjectURL(response);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `Matching_Search_Results_${new Date().toISOString().slice(0, 10)}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode?.removeChild(link);
+      } else if (response.Status === 1 && response.file_url) {
+        window.open(response.file_url, '_blank');
+      } else {
+        NotifyError("Export failed or no data available.");
+      }
+    } catch (error) {
+      console.error("Export Error:", error);
+      NotifyError("An error occurred during export.");
+    } finally {
+      setExportLoading(false);
+    }
+  };
 
   const handleChangePage = (newPage: number) => {
     setCurrentPage(newPage);
@@ -322,14 +330,26 @@ const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchPro
 
   return (
     <div className="container mx-auto p-4">
-      <Button
-        variant="contained"
-        onClick={onBack}
-        sx={{ mb: 2 }}
-      >
-        Back to Filters
-      </Button>
-
+      <div className="flex justify-between items-center mb-4">
+        <Button
+          variant="contained"
+          onClick={onBack}
+          sx={{ mb: 2 }}
+        >
+          Back to Filters
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={handleExport}
+          // FIX: Changed data.length to matchingData.length
+          disabled={exportLoading || matchingData.length === 0}
+          startIcon={exportLoading ? <CircularProgress size={20} color="inherit" /> : null}
+          sx={{ fontWeight: 'bold' }}
+        >
+          {exportLoading ? 'Exporting...' : 'Export Profiles'}
+        </Button>
+      </div>
       <div className="flex items-center justify-end space-x-10 mb-4">
 
       </div>
@@ -414,22 +434,23 @@ const SearchProfileResults = ({ filters, onBack, No_Image_Available }: SearchPro
                           {row.profile_id}
                         </TableCell>
                         <TableCell>{row.profile_name}</TableCell>
-                        <TableCell>{row.profile_age}</TableCell>
-                        <TableCell>{row.profile_gender}</TableCell>
-                        <TableCell>{row.height}</TableCell>
-                        <TableCell>{row.weight || 'N/A'}</TableCell>
-                        <TableCell>{row.degree}</TableCell>
-                        <TableCell>{row.profession}</TableCell>
-                        <TableCell>{row.location}</TableCell>
-                        <TableCell>{row.star}</TableCell>
-                        <TableCell>{row.matching_score}</TableCell>
+                        <TableCell>{row.profile_age || "N/A"}</TableCell>
+                        <TableCell>{row.Created_by || "N/A"}</TableCell>
+                        <TableCell>{row.mode || "N/A"}</TableCell>
+                        <TableCell>{row.status || "N/A"}</TableCell>
+                        <TableCell>{row.family_status || 'N/A'}</TableCell>
+                        <TableCell>{row.degree || "N/A"}</TableCell>
+                        <TableCell>{row.state || "N/A"}</TableCell>
+                        <TableCell>{row.location || "N/A"}</TableCell>
+                        <TableCell>{row.star || "N/A"}</TableCell>
+                        {/* <TableCell>{row.matching_score}</TableCell>
                         <TableCell>
                           {row.verified === 0 ? (
                             <MdVerified className="text-green-600" />
                           ) : (
                             <GoUnverified className="text-red-600" />
                           )}
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     ))
                   ) : (

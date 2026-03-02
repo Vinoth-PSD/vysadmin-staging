@@ -27,12 +27,19 @@ const CommonSearchResults = ({ filters, onBack, No_Image_Available }: any) => {
         { id: 'profile_id', label: 'Profile ID' },
         { id: 'profile_name', label: 'Name' },
         { id: 'profile_age', label: 'Age' },
-        { id: 'profile_gender', label: 'Gender' },
-        { id: 'height', label: 'Height' },
-        { id: 'profession', label: 'Profession' },
-        { id: 'location', label: 'Location' },
+        { id: 'Created_by ', label: 'Created By' },
+        { id: 'mode', label: 'Mode' },
+        { id: 'status', label: 'Status' },
+        { id: 'family_status', label: 'Family Status' },
+        { id: 'degree', label: 'Education' },
+        { id: 'state', label: 'State' },
+        { id: 'location', label: 'City' },
+        // { id: 'profile_gender', label: 'Gender' },
+        // { id: 'height', label: 'Height' },
+        // { id: 'profession', label: 'Profession' },
+        // { id: 'location', label: 'Location' },
         { id: 'star', label: 'Star' },
-        { id: 'verified', label: 'Verified' },
+        // { id: 'verified', label: 'Verified' },
     ];
 
     useEffect(() => {
@@ -375,15 +382,18 @@ const CommonSearchResults = ({ filters, onBack, No_Image_Available }: any) => {
                                                     </span>
                                                 </TableCell>
                                                 <TableCell>{row.profile_name}</TableCell>
-                                                <TableCell>{row.profile_age}</TableCell>
-                                                <TableCell>{row.profile_gender}</TableCell>
-                                                <TableCell>{row.height}</TableCell>
-                                                <TableCell>{row.profession}</TableCell>
-                                                <TableCell>{row.location}</TableCell>
-                                                <TableCell>{row.star}</TableCell>
-                                                <TableCell>
+                                                <TableCell>{row.profile_age || "N/A"}</TableCell>
+                                                <TableCell>{row.Created_by || "N/A"}</TableCell>
+                                                <TableCell>{row.mode || "N/A"}</TableCell>
+                                                <TableCell>{row.status || "N/A"}</TableCell>
+                                                <TableCell>{row.family_status || "N/A"}</TableCell>
+                                                <TableCell>{row.degree || "N/A"}</TableCell>
+                                                <TableCell>{row.state || "N/A"}</TableCell>
+                                                <TableCell>{row.location || "N/A"}</TableCell>
+                                                <TableCell>{row.star || "N/A"}</TableCell>
+                                                {/* <TableCell>
                                                     {row.verified === 1 ? <MdVerified color="green" /> : <GoUnverified color="red" />}
-                                                </TableCell>
+                                                </TableCell> */}
                                             </TableRow>
                                         ))
                                     ) : (
