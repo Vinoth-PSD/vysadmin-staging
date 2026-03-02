@@ -98,19 +98,19 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [mainPackage, setMainPackage] = useState("");
   console.log("mainPackage", mainPackage)
-  const [mainAmount, setMainAmount] = useState(0); 
-  const [selectedAddons, setSelectedAddons] = useState<Record<number, boolean>>({}); 
+  const [mainAmount, setMainAmount] = useState(0);
+  const [selectedAddons, setSelectedAddons] = useState<Record<number, boolean>>({});
   const [discount, setDiscount] = useState(0);
   const [validFrom, setValidFrom] = useState("");
-  const [validTo, setValidTo] = useState(""); 
-  const [offerAny, setOfferAny] = useState(""); 
+  const [validTo, setValidTo] = useState("");
+  const [offerAny, setOfferAny] = useState("");
   const [hintToSave, setHintToSave] = useState("");
   // Payment details
-  const [paymentType, setPaymentType] = useState(""); 
-  const [paymentDate, setPaymentDate] = useState(""); 
-  const [gpayNumber, setGpayNumber] = useState(""); 
+  const [paymentType, setPaymentType] = useState("");
+  const [paymentDate, setPaymentDate] = useState("");
+  const [gpayNumber, setGpayNumber] = useState("");
   const [referenceId, setReferenceId] = useState("");
-  const [paymentStatus, setPaymentStatus] = useState(""); 
+  const [paymentStatus, setPaymentStatus] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [addons, setAddons] = useState<AddonPackage[]>([]);
   const [addonsLoading, setAddonsLoading] = useState(false);
@@ -149,6 +149,18 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
   }, [discount, subtotal]);
 
   const netAmount = useMemo(() => subtotal - safeDiscount, [subtotal, safeDiscount]);
+
+  const latestPaymentId = useMemo(() => {
+    if (!paymentDetails.length) return null;
+
+    const sorted = [...paymentDetails].sort(
+      (a, b) =>
+        new Date(b.payment_date || b.payment_date).getTime() -
+        new Date(a.payment_date || a.payment_date).getTime()
+    );
+
+    return sorted[0]?.id || null;
+  }, [paymentDetails]);
 
   function needsRefId(type: string) {
     return type === "RazorPay" || type === "OnlineGpay" || type === "ManualGpay";
@@ -217,7 +229,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
       setAddonsLoading(true);
       const response = await apiAxios.post<AddonApiResponse>(
         "auth/Get_addon_packages/",
-        {} 
+        {}
       );
 
       if (response.data.status === "success") {
@@ -245,10 +257,10 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
     setHintToSave("");
     setPaymentType("");
     setGpayNumber("");
-    setPaymentDate(""); 
+    setPaymentDate("");
     setReferenceId("");
     setPaymentStatus("Success");
-    setSelectedPlanId(null); 
+    setSelectedPlanId(null);
     setPackageFilter("");
     setErrors({});
   }
@@ -1096,7 +1108,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
                                 <div>
                                   <p className="text-sm text-gray-500">Payment Date</p>
                                   <p className="font-medium text-gray-800">
-                                
+
                                     {payment.payment_date ? payment.payment_date.split('T')[0] : 'N/A'}
                                   </p>
                                 </div>
@@ -1106,55 +1118,57 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, profileId, s
                                 </div>
 
                               </div>
-                              <div className="flex space-x-3">
-                                {/* {showAddButton && !(isAdding || isEditing) && ( */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleEdit(payment)}
-                                  disabled={payment.is_sent_email}
-                                  className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition ${payment.is_sent_email
-                                    ? 'bg-[#A4A7AE] text-black cursor-not-allowed opacity-70'
-                                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                                    }`}
-                                >
-                                  Edit
-                                </button>
-                                {/* )} */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleInvoice(payment)}
-                                  className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-emerald-600 transition"
-                                >
-                                  {/* <FaFileInvoice className="text-white" size={14} /> */}
-                                  Invoice
-                                </button>
+                              {payment.id === latestPaymentId && (
+                                <div className="flex space-x-3">
+                                  {/* {showAddButton && !(isAdding || isEditing) && ( */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleEdit(payment)}
+                                    disabled={payment.is_sent_email}
+                                    className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition ${payment.is_sent_email
+                                      ? 'bg-[#A4A7AE] text-black cursor-not-allowed opacity-70'
+                                      : 'bg-blue-500 text-white hover:bg-blue-600'
+                                      }`}
+                                  >
+                                    Edit
+                                  </button>
+                                  {/* )} */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleInvoice(payment)}
+                                    className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-emerald-600 transition"
+                                  >
+                                    {/* <FaFileInvoice className="text-white" size={14} /> */}
+                                    Invoice
+                                  </button>
 
-                                <button
-                                  type="button"
-                                  onClick={() => handleSend(payment)}
-                                  disabled={sendingEmail === payment.id}
-                                  className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition ${sendingEmail === payment.id
-                                    ? 'bg-indigo-400 cursor-not-allowed'
-                                    : 'bg-indigo-500 hover:bg-indigo-600'
-                                    } text-white`}
-                                >
-                                  {sendingEmail === payment.id ? (
-                                    <>
-                                      {/* Loading spinner */}
-                                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                      </svg>
-                                      Sending Email...
-                                    </>
-                                  ) : (
-                                    <>
-                                      {/* <FaPaperPlane className="text-white" size={13} /> */}
-                                      Send Email
-                                    </>
-                                  )}
-                                </button>
-                              </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleSend(payment)}
+                                    disabled={sendingEmail === payment.id}
+                                    className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg shadow-sm transition ${sendingEmail === payment.id
+                                      ? 'bg-indigo-400 cursor-not-allowed'
+                                      : 'bg-indigo-500 hover:bg-indigo-600'
+                                      } text-white`}
+                                  >
+                                    {sendingEmail === payment.id ? (
+                                      <>
+                                        {/* Loading spinner */}
+                                        <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Sending Email...
+                                      </>
+                                    ) : (
+                                      <>
+                                        {/* <FaPaperPlane className="text-white" size={13} /> */}
+                                        Send Email
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           ))
                         )}

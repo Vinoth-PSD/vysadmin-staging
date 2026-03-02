@@ -254,6 +254,7 @@ const BasicDetails: React.FC<formProps> = ({
         'BasicDetail.WhatsAppNumber',
         EditData[0].Profile_whatsapp || '');
       setValue('BasicDetail.pincode', EditData[0].Profile_pincode || '' || null);
+      setValue('BasicDetail.Profile_height', EditData[0].Profile_height || '');
       setAddonPackagecheck(EditData[0].Addon_package || '' || null)
 
       if (EditData && EditData[0]?.Profile_city &&
