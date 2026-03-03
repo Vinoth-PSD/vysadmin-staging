@@ -273,8 +273,21 @@ const AddProfile = () => {
       ? `${dasaYear} Years, ${dasaMonth} Months, ${dasaDay} Days`
       : "";
 
-    const today = new Date();
-    const DateOfJoinToday = today.toISOString().split('T')[0];
+    //const today = new Date();
+    // const DateOfJoinToday = today.toISOString().split('T')[0];
+    // const DateOfJoinToday = today.toISOString().slice(0, 19).replace('T', ' ');
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    // .getHours() natively returns 00 to 23 (Railway Time)
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    const DateOfJoinToday = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    // Result: "2026-03-03 17:11:33"
     //console.log("today",DateOfJoinToday)
     const ownerID = localStorage.getItem('role_id');
     const adminUserID = sessionStorage.getItem('id') || localStorage.getItem('id');

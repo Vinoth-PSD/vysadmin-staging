@@ -312,16 +312,34 @@ const AdvanceSearchFilters = ({ onFilterSubmit, loading }: AdvanceSearchFiltersP
 
     return (
         <form onSubmit={handleSubmit} className="container mx-auto p-4 bg-gray-50 rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-8 pb-4">
-                <h1 className="text-3xl font-bold text-black">Advance Search</h1>
+            {/* Header Container */}
+            {/* Sticky Button Wrapper */}
+            <div className="fixed top-[80px] mr-10 right-8 z-[9999]">
                 <Button
                     type="submit"
                     variant="contained"
                     disabled={loading}
-                    sx={{ minWidth: '180px', height: '45px', fontWeight: 'bold' }}
+                    sx={{
+                        minWidth: '180px',
+                        height: '45px',
+                        fontWeight: 'bold',
+                        // Deep shadow to make it "float" over the form content
+                        boxShadow: '0px 8px 25px rgba(0, 0, 0, 0.25)',
+                        backgroundColor: '#1976d2',
+                        '&:hover': {
+                            backgroundColor: '#1565c0',
+                        },
+                        // Ensuring it has a solid border to separate from overlapping text
+                        border: '1px solid rgba(255,255,255,0.3)'
+                    }}
                 >
                     {loading ? <CircularProgress size={24} color="inherit" /> : 'Search Profiles'}
                 </Button>
+            </div>
+
+            {/* Title stays in the normal flow */}
+            <div className="mb-8 pb-4">
+                <h1 className="text-3xl font-bold text-black">Advance Search</h1>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -351,14 +369,24 @@ const AdvanceSearchFilters = ({ onFilterSubmit, loading }: AdvanceSearchFiltersP
             <CollapsibleSection title="Demographics">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="flex gap-4 w-full">
-                        <div className="w-40">
-                            <FilterInput label="Age From" type="number" value={ageFrom} onChange={setAgeFrom} />
+                        {/* flex-1 allows both divs to take up equal remaining space */}
+                        <div className="flex-1 min-w-[80px]">
+                            <FilterInput
+                                label="Age From"
+                                type="number"
+                                value={ageFrom}
+                                onChange={setAgeFrom}
+                            />
                         </div>
-                        <div className="w-40">
-                            <FilterInput label="Age To" type="number" value={ageTo} onChange={setAgeTo} />
+                        <div className="flex-1 min-w-[80px]">
+                            <FilterInput
+                                label="Age To"
+                                type="number"
+                                value={ageTo}
+                                onChange={setAgeTo}
+                            />
                         </div>
                     </div>
-
                     <div className="flex flex-col">
                         <label className="font-semibold mb-1 text-black">Gender</label>
                         <Select
@@ -563,8 +591,8 @@ const AdvanceSearchFilters = ({ onFilterSubmit, loading }: AdvanceSearchFiltersP
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                     <FilterInput label="Reg From Date" type="date" value={regFromDate} onChange={setRegFromDate} />
                     <FilterInput label="Reg To Date" type="date" value={regToDate} onChange={setRegToDate} />
-                    <FilterInput label="Last Action From Date" type="date" value={lastActionDate} onChange={setLastActionDate} />
-                    <FilterInput label="Last Action To Date" type="date" value={lastActionToDate} onChange={setLastActionToDate} />
+                    <FilterInput label="From Date History" type="date" value={lastActionDate} onChange={setLastActionDate} />
+                    <FilterInput label="To Date History" type="date" value={lastActionToDate} onChange={setLastActionToDate} />
                     <FilterInput label="Marriage From Date" type="date" value={marriageFromDate} onChange={setMarriageFromDate} />
                     <FilterInput label="Marriage To Date" type="date" value={marriageToDate} onChange={setMarriageToDate} />
                     <FilterInput label="Engagement From Date" type="date" value={engagementFromDate} onChange={setEngagementFromDate} />

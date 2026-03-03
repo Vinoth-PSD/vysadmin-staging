@@ -1202,6 +1202,17 @@ const EditViewProfile: React.FC<pageProps> = ({
                                     ))}
                                   </select>
                                 )}
+                              {/* <div className="flex items-center gap-1">
+                              
+                                <select
+                                 
+                                  className="px-2 py-3 border rounded  border-[#b5b2b2e6]  text-[#222020e6] focus:outline-none"
+                                >
+                                  <option value="">Select Courier</option>
+                                  <option value="yes">Yes</option>
+                                  <option value="no">No</option>
+                                </select>
+                              </div> */}
                             </div>
 
                             <div className="flex mt-5 mb-4 justify-center">
