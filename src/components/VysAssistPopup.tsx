@@ -52,7 +52,8 @@ interface VysAssistPopupProps {
 
 const VysAssistPopup: React.FC<VysAssistPopupProps> = ({ vysassistId, onClose }) => {
   const ownerId = localStorage.getItem("id") || sessionStorage.getItem("id");
-  const firstName = localStorage.getItem("first_name") || sessionStorage.getItem("first_name");
+  // const firstName = localStorage.getItem("first_name") || sessionStorage.getItem("first_name");
+  const firstName = localStorage.getItem("username") || sessionStorage.getItem("username");
 
   const [followUpData, setFollowUpData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

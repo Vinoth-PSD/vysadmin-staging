@@ -1,241 +1,155 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useEffect, useState } from 'react';
-import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
-import axios from 'axios';
-// import No_Image_Available from './images/No_Image_Available.jpg';
-import { useLocation } from 'react-router-dom';
-import { MdVerified } from 'react-icons/md';
-import { GoUnverified } from 'react-icons/go';
-import { VysyaAssistProfileApi } from '../../services/api';
+import React, { useState } from 'react';
+import {
+  Paper, Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow, TablePagination, TextField, Link,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import VysAssistPopup from '../VysAssistPopup';
 
-interface VysProfileType {
-  vys_profileid: string;
-  vys_profile_name: string;
-  vys_Profile_img: string;
-  vys_profile_age: number;
-  vys_verified: number;
-  vys_height: string;
-  vys_star: string;
-  vys_profession: string;
-  vys_city: string;
-  vys_degree: string;
-  vys_match_score: number;
-  vys_views: number;
-  vys_lastvisit: string;
-  vys_userstatus: string;
-  vys_horoscope: string;
-  vys_profile_wishlist: number;
+// 1. Structure Definitions
+interface Column {
+  id: string;
+  label: string;
+  minWidth?: number;
+  align?: 'right' | 'left' | 'center';
 }
 
-const columns = [
-  { id: 'vys_Profile_img', label: 'Image' },
-  { id: 'vys_profileid', label: 'Profile ID' },
-  { id: 'vys_profile_name', label: 'Name' },
-  { id: 'vys_profile_age', label: 'Age' },
-  { id: 'vys_verified', label: 'Verified' },
-  { id: 'vys_height', label: 'Height' },
-  { id: 'vys_star', label: 'Star' },
-  { id: 'vys_profession', label: 'Profession' },
-  { id: 'vys_city', label: 'Location' },
-  { id: 'vys_degree', label: 'Degree' },
-  { id: 'vys_match_score', label: 'Matching Score' },
-  { id: 'vys_views', label: 'Views' },
-  { id: 'vys_lastvisit', label: 'Last Visit' },
-  { id: 'vys_userstatus', label: 'User Status' },
+// 2. Mock Data for UI Testing
+const MOCK_DATA = [
+  {
+    profile_vysasst_id: "VYS001",
+    profile_from_id: "USR101",
+    profile_from_name: "Ahmed Al Harthy",
+    profile_from_mobile: "9681234567",
+    profile_to_id: "USR202",
+    profile_to_name: "Khalid Al Habsi",
+    profile_to_mobile: "9687654321",
+    to_message: "Interested in partnership",
+    req_datetime: "2023-10-01T10:00:00",
+    response_datetime: "2023-10-02T14:00:00",
+    status: "Completed"
+  }
 ];
 
-export default function VysaAssistProfile() {
-  const [profileData, setProfileData] = useState<VysProfileType[]>([]);
-  const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [totalRecords, setTotalRecords] = useState<number>(0);
-  const [fromDate, setFromDate] = useState<string>('');
-  const [toDate, setToDate] = useState<string>('');
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const profileId = queryParams.get('profileId');
+const VysAssist: React.FC = () => {
+  // 3. State Management
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [search, setSearch] = useState('');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const getViewedProfiles = async (
-    id: string | null,
-    pageNumber: number,
-    perPage: number,
-  ) => {
-    try {
-      //   const response = await axios.post('http://192.168.1.18:8000/api/Viewed_profiles/', {
-      //     profile_id: id,
-      //     page_number: pageNumber + 1,
-      //     per_page: perPage,
-      //   });
-      const params = new URLSearchParams();
-      params.append('profile_id', id || '');
-      params.append('page_number', (pageNumber + 1).toString());
-      params.append('per_page', perPage.toString());
-      params.append('from_date', fromDate);
-      params.append('to_date', toDate);
-      const response = await axios.post(
-        VysyaAssistProfileApi,
-        params.toString(),
-        {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        },
-      );
-      const data = response.data.data.profiles as VysProfileType[];
-      setProfileData(data);
-      setTotalRecords(response.data.data.total_records);
-    } catch (error) {
-      console.error('Error fetching viewed profiles:', error);
-    }
-  };
+  const columns: Column[] = [
+    { id: 'profile_vysasst_id', label: 'Vysassist Id', align: 'center' },
+    { id: 'profile_from_id', label: 'From Profile ID', align: 'center' },
+    { id: 'profile_from_name', label: 'From Name' },
+    { id: 'profile_from_mobile', label: 'From Mobile' },
+    { id: 'profile_to_id', label: 'To Profile ID' },
+    { id: 'profile_to_name', label: 'To Name' },
+    { id: 'profile_to_mobile', label: 'To Mobile' },
+    { id: 'to_message', label: 'Message' },
+    { id: 'req_datetime', label: 'Request Date' },
+    { id: 'response_datetime', label: 'Response Date' },
+    { id: 'status', label: 'Status' },
+  ];
 
-  useEffect(() => {
-    getViewedProfiles(profileId, page, rowsPerPage);
-  }, [profileId, page, rowsPerPage, toDate, fromDate]);
-
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    if (name === 'fromDate') {
-      setFromDate(value);
-    } else if (name === 'toDate') {
-      setToDate(value);
-    }
-  };
-  const ClearDate = () => {
-    setFromDate('');
-    setToDate('');
-    getViewedProfiles(profileId, page, rowsPerPage);
-  };
-  console.log(fromDate, toDate);
   return (
-    <div>
-      {profileData ? (
-        <>
-          <Typography
-            sx={{
-              marginBottom: '20px',
-              color: 'black',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
-          >
-            VysaAssist Profiles for Profile ID {profileId}
-          </Typography>
-          <Box sx={{display:"flex" ,gap:"5px",marginBottom:"10px"}}>
-          <TextField
-            label="From Date"
-            type="date"
-            name="fromDate"
-            value={fromDate}
-            onChange={handleDateChange}
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
-            label="To Date"
-            type="date"
-            name="toDate"
-            value={toDate}
-            onChange={handleDateChange}
-            InputLabelProps={{ shrink: true }}
-          />
-          <Button variant="contained" onClick={ClearDate} sx={{ textTransform: 'none' }}>
-            Reset Date
-          </Button>
-          </Box>
-          <TableContainer sx={{border: '1px solid #E0E0E0',}} component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead style={{ background: '#FFF9C9', padding: '17px' }}>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      sx={{
-                        color: '#ee3448',
-                        fontWeight: 'bold',
-                        fontSize: '1rem',
-                        whiteSpace: 'nowrap',
-                      }}
-                      key={column.id}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
+    <>
+      <h1 className="text-2xl font-bold mb-4 text-black">Vys Assist</h1>
+      
+      {/* Search Bar */}
+      <div className="w-full p-2">
+        <TextField
+          label="Search"
+          variant="outlined"
+          size="small"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-              <TableBody>
-                {profileData.map((row) => (
-                  <TableRow
-                    key={row.vys_profileid}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } , whiteSpace: 'nowrap'}}
+      <Paper className="w-full">
+        <TableContainer sx={{ border: '1px solid #E0E0E0' }} className="bg-white">
+          <Table stickyHeader>
+            {/* Header Structure */}
+            <TableHead>
+              <TableRow>
+                {columns.map((col) => (
+                  <TableCell 
+                    key={col.id} 
+                    align={col.align} 
+                    sx={{ background: '#FFF9C9', color: '#DC2635', fontWeight: 600 }}
                   >
+                    {col.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+
+            {/* Body Structure */}
+            <TableBody>
+              {MOCK_DATA
+                .filter(row => JSON.stringify(row).toLowerCase().includes(search.toLowerCase()))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => (
+                  <TableRow hover key={index}>
                     <TableCell>
-                      <img
-                        className="rounded-full"
-                        src={row.vys_Profile_img || 'No_Image_Available'}
-                        alt="Profile"
-                        width={80}
-                      />
+                      <Link 
+                        component="button" 
+                        onClick={() => setSelectedId(row.profile_vysasst_id)}
+                        sx={{ color: 'blue', cursor: 'pointer' }}
+                      >
+                        {row.profile_vysasst_id}
+                      </Link>
                     </TableCell>
-                    <TableCell>{row.vys_profileid}</TableCell>
-                    <TableCell>{row.vys_profile_name}</TableCell>
-                    <TableCell>{row.vys_profile_age}</TableCell>
-                    <TableCell>
-                      {row.vys_verified === 1 ? (
-                        <MdVerified className="text-green-600" />
-                      ) : (
-                        <GoUnverified className="text-red-600" />
-                      )}
+                    
+                    <TableCell 
+                      onClick={() => navigate(`/viewProfile?profileId=${row.profile_from_id}`)}
+                      sx={{ color: 'blue', cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+                    >
+                      {row.profile_from_id}
                     </TableCell>
-                    <TableCell>{row.vys_height}</TableCell>
-                    <TableCell>{row.vys_star}</TableCell>
-                    <TableCell>{row.vys_profession}</TableCell>
-                    <TableCell>{row.vys_city}</TableCell>
-                    <TableCell>{row.vys_degree}</TableCell>
-                    <TableCell>{row.vys_match_score}</TableCell>
-                    <TableCell>{row.vys_views}</TableCell>
-                    <TableCell>{row.vys_lastvisit}</TableCell>
-                    <TableCell>{row.vys_userstatus}</TableCell>
+
+                    <TableCell>{row.profile_from_name}</TableCell>
+                    <TableCell>{row.profile_from_mobile}</TableCell>
+                    
+                    <TableCell 
+                      onClick={() => navigate(`/viewProfile?profileId=${row.profile_to_id}`)}
+                      sx={{ color: 'blue', cursor: 'pointer' }}
+                    >
+                      {row.profile_to_id}
+                    </TableCell>
+
+                    <TableCell>{row.profile_to_name}</TableCell>
+                    <TableCell>{row.profile_to_mobile}</TableCell>
+                    <TableCell>{row.to_message}</TableCell>
+                    
+                    <TableCell>{row.req_datetime.split('T')[0]}</TableCell>
+                    <TableCell>{row.response_datetime.split('T')[0]}</TableCell>
+                    <TableCell>{row.status}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 100]}
-            component="div"
-            count={totalRecords}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      ) : (
-        <Typography
-          sx={{
-            marginBottom: '20px',
-            color: 'black',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          }}
-        >
-          No Viewed Data
-        </Typography>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* Pagination Structure */}
+        <TablePagination
+          component="div"
+          count={MOCK_DATA.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
+        />
+      </Paper>
+
+      {/* Popup Logic */}
+      {selectedId && (
+        <VysAssistPopup vysassistId={selectedId} onClose={() => setSelectedId(null)} />
       )}
-    </div>
+    </>
   );
-}
+};
+
+export default VysAssist;

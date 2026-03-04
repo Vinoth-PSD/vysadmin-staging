@@ -14,7 +14,7 @@ interface AdminDetaisProps {
 
 //Schema --> MArriageSettled Details
 const marriageSettleDetailsSchema = z.object({
-  marriage_date: z.string().min(1, "Marriage date is required"),
+  marriage_date: z.string().optional(),
   groom_bride_name: z.string().optional(),
   groombridefathername: z.string().optional(),
   groombridecity: z.string().optional(),
@@ -27,7 +27,7 @@ const marriageSettleDetailsSchema = z.object({
   marriage_invitation_details: z.string().optional(),
   engagement_photo_details: z.string().optional(),
   engagement_invitation_details: z.string().optional(),
-  admin_marriage_comments: z.string().optional(),
+  admin_marriage_comments: z.string().min(3, "Admin Marriage Comments is required"),
   others: z.string().optional(),
   admin_others: z.string().optional(),
   marriage_location: z.string().optional(),
@@ -110,7 +110,8 @@ export const AdminDetailsPopup: React.FC<AdminDetaisProps> = ({ open, onClose })
       NotifySuccess(response.message || "Marriage settle details created successfully")
       console.log("Marriage settle details created successfully", response);
     } catch (error: any) {
-      NotifyError("Error creating marriage settle details", error)
+      const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+      NotifyError(errorMessage);
       console.error("Error creating marriage settle details", error);
     }
   };
@@ -234,160 +235,6 @@ export const AdminDetailsPopup: React.FC<AdminDetaisProps> = ({ open, onClose })
       </DialogTitle>
       <Divider sx={{ borderWidth: "3px" }} />
 
-
-      {/* <Box
-        className="flex flex-wrap items-center gap-4 p-4 bg-gray-100 rounded-lg"
-        sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2 }}
-      >
-       
-        <TextField
-          label="Course No"
-          variant="outlined"
-          placeholder=""
-          sx={{ width: '100%', maxWidth: '400px' }}
-        />
-       
-        <FormControlLabel
-          control={
-            <Checkbox
-            />
-          }
-          label="is Verified"
-        />
-        <TextField
-          label="Source"
-          variant="outlined"
-          placeholder="Source"
-          sx={{ width: '100%', maxWidth: '400px' }}
-        />
-        <Button variant="contained" color="success"
-       
-        >
-          Submit
-        </Button>
-        <Button variant="contained" color="error"
-      
-        >
-          Cancel
-        </Button>
-      </Box> */}
-
-      {/* <DialogTitle>
-        <Box sx={{ display: "flex", justifyContent: "start", alignItems: "start", color: "red" }}>Payment Details</Box>
-      </DialogTitle>
-
-      <Box sx={{ maxWidth: 800, mx: "auto", p: 2 }}>
-
-        <FormControl
-          sx={{ marginBottom: "10px", width: 375 }}
-
-          error={!!paymentErrors.payment_type} // This makes the helper text red
-        >
-          <InputLabel required
-            shrink={true}
-            sx={{ backgroundColor: "#fff", "& .MuiFormLabel-asterisk": { color: "red" }, }}>Payment Type</InputLabel>
-          <Select
-          value={paymentwatch("payment_type") || ""}
-        
-          displayEmpty
-          variant="outlined"
-          {...registerPayment("payment_type")}
-        >
-            <MenuItem value="" disabled>
-              Select Payment Type
-            </MenuItem>
-            <MenuItem value="Cash">Cash</MenuItem>
-            <MenuItem value="Online">Online</MenuItem>
-            <MenuItem value="Others">Others</MenuItem>
-          </Select>
-          <FormHelperText sx={{ marginLeft: "0px" }}>{paymentErrors.payment_type?.message}</FormHelperText>
-        </FormControl>
-
-        <Grid container spacing={2}>
-          
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Payment Details"
-              multiline
-              fullWidth
-              minRows={1}  // Starts with 1 row
-              maxRows={10}  // Expands up to 6 rows
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                "& .MuiInputLabel-asterisk": {
-                  color: "red", // Makes only the asterisk red
-                },
-                "& .MuiFormHelperText-root": {
-                  marginLeft: "0px", // Move the error text slightly to the left
-                },
-              }}
-              {...registerPayment("payment_details")}
-              error={!!paymentErrors.payment_details}
-              helperText={paymentErrors.payment_details?.message}
-              required
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Payment Reference No"
-              multiline
-              fullWidth
-              minRows={1}  // Starts with 1 row
-              maxRows={10}  // Expands up to 6 rows
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                "& .MuiInputLabel-asterisk": {
-                  color: "red", // Makes only the asterisk red
-                },
-                "& .MuiFormHelperText-root": {
-                  marginLeft: "0px", // Move the error text slightly to the left
-                },
-              }}
-              {...registerPayment("payment_refno")}
-              error={!!paymentErrors.payment_refno}
-              helperText={paymentErrors.payment_refno?.message}
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              multiline
-              minRows={1}
-              maxRows={10}
-              label="Balance Amount Payment"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              {...registerPayment("balance_amount")}
-              error={!!paymentErrors.balance_amount}
-              helperText={paymentErrors.balance_amount?.message}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Discount (out of 100)"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              {...registerPayment("discount_amont")}
-              error={!!paymentErrors.discount_amont}
-              helperText={paymentErrors.discount_amont?.message}
-            />
-          </Grid>
-        
-          <div className="w-full py-2 flex justify-end">
-            <Button variant="contained" color="primary"
-              onClick={handlePaymentSubmit(onPaymentSubmit)}
-            >
-              Save
-            </Button>
-          </div>
-        </Grid>
-
-      </Box> */}
       <DialogTitle>
         <Box sx={{ display: "flex", justifyContent: "start", alignItems: "start", color: "red" }}>Marriage Settled Details</Box>
       </DialogTitle>
@@ -404,17 +251,14 @@ export const AdminDetailsPopup: React.FC<AdminDetaisProps> = ({ open, onClose })
                 shrink: true,
               }}
               sx={{
-                "& .MuiInputLabel-asterisk": {
-                  color: "red", // Makes only the asterisk red
-                },
                 "& .MuiFormHelperText-root": {
-                  marginLeft: "0px", // Move the error text slightly to the left
+                  marginLeft: "0px",
                 },
               }}
               {...register("marriage_date")}
               error={!!errors.marriage_date}
               helperText={errors.marriage_date?.message}
-              required
+
             />
           </Grid>
 
@@ -656,11 +500,20 @@ export const AdminDetailsPopup: React.FC<AdminDetaisProps> = ({ open, onClose })
               {...register("admin_marriage_comments")}
               error={!!errors.admin_marriage_comments}
               helperText={errors.admin_marriage_comments?.message}
+              required
+              sx={{
+                "& .MuiFormLabel-asterisk": {
+                  /* If there is a value (typed), use 'inherit' or default color; otherwise, red */
+                  color: watch("admin_marriage_comments") ? "inherit" : "red",
+                },
+                "& .Mui-focused + .MuiFormHelperText-root": {
+                  display: "none",
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl sx={{ marginBottom: "10px", width: 375 }}>
-
               <InputLabel shrink={true} sx={{ backgroundColor: "#fff" }}>Admin Settle Thru</InputLabel>
               <Select
                 value={watch("admin_settled_thru") || ""}
