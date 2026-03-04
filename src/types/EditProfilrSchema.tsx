@@ -53,14 +53,16 @@ export const EditSchemaProfileView = z.object({
         // }, {
         //     message: "Membership to date is required"
         // }),
-        membership_fromdate: shouldShowMembershipDates
-            ? z.string().min(1, "Membership from date is required")
-            : z.string().optional(),
+        // membership_fromdate: shouldShowMembershipDates
+        //     ? z.string().min(1, "Membership from date is required")
+        //     : z.string().optional(),
 
-        membership_todate: shouldShowMembershipDates
-            ? z.string().min(1, "Membership to date is required")
-            : z.string().optional(),
-
+        // membership_todate: shouldShowMembershipDates
+        //     ? z.string().min(1, "Membership to date is required")
+        //     : z.string().optional(),
+        membership_fromdate: z.string().optional(),
+        membership_todate: z.string().optional(),
+        
         // membership_fromdate: z.string().optional(),
         // membership_todate: z.string().optional(),
         membership_status: z.string().optional(),
