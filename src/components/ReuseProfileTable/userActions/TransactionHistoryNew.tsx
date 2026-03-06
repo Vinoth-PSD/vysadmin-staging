@@ -222,6 +222,7 @@ const TransactionHistoryNew: React.FC = () => {
         { id: 'status', label: 'T. Status', minWidth: 120 },
         { id: 'order_id', label: 'Order ID', minWidth: 180 },
         { id: 'plan_name', label: 'Selected Plan', minWidth: 120 },
+        { id: 'addon_packages', label: 'Add-on Packages', minWidth: 200 }, // New column added here
         { id: 'a_status', label: 'A. Status', minWidth: 150 },
         { id: 'ProfileId', label: 'Profile ID', minWidth: 120 },
         { id: 'Profile_name', label: 'Name', minWidth: 150 },
